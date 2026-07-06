@@ -1,0 +1,152 @@
+/* ============================================================
+   Banner Details form – clean & professional layout
+   Used by: backend/home-page/banner-details/create & edit
+   ============================================================ */
+
+.banner-form .form-label {
+    font-weight: 600;
+    color: #2f2f3b;
+    margin-bottom: .5rem;
+}
+
+.banner-form .form-control {
+    border-radius: .5rem;
+}
+
+.banner-form .card-header h4 {
+    font-weight: 600;
+}
+
+/* CKEditor look & feel */
+.banner-form .ck.ck-editor {
+    width: 100%;
+}
+
+.banner-form .ck.ck-toolbar {
+    border: 1px solid #e6e8ef !important;
+    border-top-left-radius: .5rem !important;
+    border-top-right-radius: .5rem !important;
+    background: #f8f9fb !important;
+}
+
+.banner-form .ck.ck-editor__main > .ck-editor__editable {
+    border: 1px solid #e6e8ef !important;
+    border-top: none !important;
+    border-bottom-left-radius: .5rem !important;
+    border-bottom-right-radius: .5rem !important;
+    min-height: 110px;
+    padding: .5rem .85rem;
+}
+
+.banner-form #editor ~ .ck .ck-editor__editable {
+    min-height: 90px;
+}
+
+.banner-form .ck-editor__editable.ck-focused {
+    border-color: #7366ff !important;
+    box-shadow: none !important;
+}
+
+/* Image preview box */
+.banner-form .banner-image-preview-box {
+    border: 1px dashed #cfd3de;
+    border-radius: .5rem;
+    background: #fafbfc;
+    min-height: 120px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* ============================================================
+   Repeater card blocks (SEBI Services, etc.)
+   ============================================================ */
+.banner-form .item-block {
+    background: #fdfdfe;
+    border: 1px solid #e6e8ef !important;
+    border-radius: .65rem !important;
+    padding: 1.15rem 1.25rem !important;
+    transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+.banner-form .item-block:hover {
+    border-color: #d4d7e2 !important;
+    box-shadow: 0 4px 14px rgba(43, 45, 66, .06);
+}
+
+.banner-form .item-block .item-block-title {
+    font-weight: 600;
+    color: #2f2f3b;
+    letter-spacing: .2px;
+}
+
+.banner-form .item-block .item-block-title .block-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    margin-left: 2px;
+    border-radius: 999px;
+    background: #7366ff;
+    color: #fff;
+    font-size: .72rem;
+}
+
+.banner-form .item-block .btn-remove-item {
+    line-height: 1;
+}
+
+/* Image preview thumbnails inside repeaters */
+.banner-form .img-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 150px;
+    min-height: 96px;
+    padding: 8px;
+    border: 1px dashed #cfd3de;
+    border-radius: .5rem;
+    /* light checker-ish background so white / transparent icons stay visible */
+    background-color: #f4f5f8;
+    background-image:
+        linear-gradient(45deg, #e9ebf0 25%, transparent 25%),
+        linear-gradient(-45deg, #e9ebf0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e9ebf0 75%),
+        linear-gradient(-45deg, transparent 75%, #e9ebf0 75%);
+    background-size: 14px 14px;
+    background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+    overflow: hidden;
+}
+
+.banner-form .img-preview:empty::before {
+    content: "No image";
+    color: #9aa0ac;
+    font-size: .78rem;
+}
+
+.banner-form .img-preview img {
+    max-height: 78px;
+    max-width: 100%;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+/* Larger preview for background/photo images (e.g. Proofs cards) */
+.banner-form .bg-image-preview {
+    max-width: 100%;
+    min-height: 150px;
+}
+
+.banner-form .bg-image-preview img {
+    max-height: 150px;
+    width: 100%;
+    object-fit: cover;
+    padding: 0;
+}
