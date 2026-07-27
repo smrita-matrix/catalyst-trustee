@@ -22,12 +22,12 @@
                     <a href="#">About <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="company-overview.html">Company Overview</a></li>
-                        <li><a href="leadership.html">Our Leadership</a></li>
-                        <li><a href="group-companies.html">Group Companies </a></li>
+                        <li><a href="{{ route('frontend.company_overview') }}">Company Overview</a></li>
+                        <li><a href="{{ route('frontend.leadership') }}">Our Leadership</a></li>
+                        <li><a href="{{ route('frontend.group_companies') }}">Group Companies </a></li>
                         <!--<li><a href="#">Governance & Compliance </a></li>-->
-                        <li><a href="our-landmark-transactions.html">Our Landmark Transactions</a></li>
-                        <li><a href="our-journey.html">Our Journey </a></li>
+                        <!-- <li><a href="our-landmark-transactions.html">Our Landmark Transactions</a></li> -->
+                        <li><a href="{{ route('frontend.our_journey') }}">Our Journey </a></li>
                       </ul>
                     </div>
                   </li>
@@ -37,50 +37,21 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="row">
-                            <div class="col-md-2 list-item border-right-one">
+                            @foreach(($serviceMenu ?? []) as $cat)
+                            <div class="col-md-2 list-item {{ $loop->last ? '' : 'border-right-one' }}">
                               <div class="mega-main-heading">
-                                <div class="icon"><img src="{{ asset('frontend/assets/images/icons/repairing-service.png')}}" alt="icon"></div>
-                                <h3><a href="#">Sebi Regulated Services</a></h3>
+                                @if(!empty($cat['icon']))
+                                <div class="icon"><img src="{{ asset('services/categories/'.$cat['icon']) }}" alt="icon"></div>
+                                @endif
+                                <h3><a href="#">{{ $cat['name'] }}</a></h3>
                               </div>
                               <ul>
-                                <li><a href="#">Debenture Trustee Services (Listed)</a></li> 
-                                <li><a href="#">Securatization (Listed PTC) </a></li> 
-                                <li><a href="#">Alternative Investment Funds  </a></li> 
+                                @foreach(($cat['items'] ?? []) as $item)
+                                <li><a href="{{ $item['link'] ?? '#' }}">{{ $item['title'] ?? '' }}</a></li>
+                                @endforeach
                               </ul>
                             </div>
-                            <div class="col-md-2 list-item border-right-one">
-                              <div class="mega-main-heading">
-                                <div class="icon"><img src="{{ asset('frontend/assets/images/icons/customer.png')}}" alt="icon"></div>
-                                <h3><a href="#">Non Sebi Regulated Services</a></h3>
-                              </div>                              
-                              <ul>
-                                <li><a href="#">Debenture Trustee (Unlisted) </a></li>
-                                <li><a href="#">Securatization Trustee (DA/Unlisted PTC) </a></li>
-                                <li><a href="#">Security Trustee </a></li>
-                                <li><a href="#">Employee Benefit Trust Management </a></li>
-                                <li><a href="#">Share Monitoring </a></li>
-                                <li><a href="#">Facility Agent  </a></li>
-                                <li><a href="#">Software Escrow Service </a></li>
-                                <li><a href="#">Safe Custody of Documents </a></li>
-                                <li><a href="#">Trustee For Public Deposits </a></li>
-                                <li><a href="#">Escrow Agent </a></li>
-                              </ul>
-                            </div>
-                            <div class="col-md-2 list-item">
-                              <div class="mega-main-heading">
-                                <div class="icon"><img src="{{ asset('frontend/assets/images/icons/settings.png')}}" alt="icon"></div>
-                                <h3><a href="#">GIFT City Services</a></h3>
-                              </div> 
-                              <ul>
-                                <li><a href="#">Introduction</a></li>
-                                <li><a href="#">AIF in GIFT City</a></li> 
-                                <li><a href="#">Facility Agent </a></li>
-                                <li><a href="#">Bond/Debenture Trustee </a></li>
-                                <li><a href="#">Corporate Services </a></li>
-                                <li><a href="#">Family Investment Funds </a></li>
-                                <!--<li><a href="#">Grievance Redressal – Contact us</a></li> -->
-                              </ul>
-                            </div>
+                            @endforeach
                           </div>
                         </div>
                       </div>

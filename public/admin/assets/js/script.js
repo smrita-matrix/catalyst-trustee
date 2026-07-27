@@ -374,12 +374,14 @@
   // ================== show and hide input start
   const toggle = document.getElementById("searchIcon")
   let newinput = false
-  toggle.addEventListener("click", function(){
+  if (toggle) toggle.addEventListener("click", function(){
     newinput = !newinput
+    var si = document.getElementById("searchInput");
+    if (!si) return;
     if(newinput){
-      document.getElementById("searchInput").classList.add("show")
+      si.classList.add("show")
     }else{
-      document.getElementById("searchInput").classList.remove("show")
+      si.classList.remove("show")
     }
   })
   // ================ show and hide input css end 

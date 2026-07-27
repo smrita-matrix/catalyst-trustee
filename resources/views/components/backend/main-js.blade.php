@@ -7,12 +7,12 @@
     <script src="{{ asset('admin/assets/js/icons/feather-icon/feather-icon.js') }}"></script>
     <!-- scrollbar js-->
     <script src="{{ asset('admin/assets/js/scrollbar/simplebar.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/scrollbar/custom.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/scrollbar/custom.js') }}?v=sidebarfix2"></script>
     <!-- Sidebar jquery-->
     <script src="{{ asset('admin/assets/js/config.js') }}"></script>
     <!-- Plugins JS start-->
     <script src="{{ asset('admin/assets/js/sidebar-menu.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/sidebar-pin.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/sidebar-pin.js') }}?v=sidebarfix2"></script>
     <script src="{{ asset('admin/assets/js/slick/slick.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/slick/slick.js') }}"></script>
     <script src="{{ asset('admin/assets/js/header-slick.js') }}"></script>
@@ -34,91 +34,35 @@
             <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
     <!-- Theme js-->
-    <script src="{{ asset('admin/assets/js/script.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/script.js') }}?v=sidebarfix2"></script>
 
-    <script>new WOW().init();</script>
+    <script>if (typeof WOW !== 'undefined') { new WOW().init(); }</script>
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    let editor;
-    ClassicEditor
-        .create(document.querySelector('#editor'))
-        .then(newEditor => {
-            editor = newEditor;
-        })
-        .catch(error => { console.error(error); });
-
-    // Attach submit listener to the form
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        // Update textarea value with CKEditor data
-        if (editor) {
-            document.querySelector('#editor').value = editor.getData();
-        }
+    // Initialise CKEditor only where the target textarea exists (guards other pages).
+    ['#editor', '#editor1', '#editor3'].forEach(function (sel) {
+        var el = document.querySelector(sel);
+        if (!el || typeof ClassicEditor === 'undefined') return;
+        var editor;
+        ClassicEditor.create(el).then(function (ed) { editor = ed; }).catch(function (e) { console.error(e); });
+        var form = el.closest('form');
+        if (form) form.addEventListener('submit', function () { if (editor) el.value = editor.getData(); });
     });
-});
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    let editor;
-    ClassicEditor
-        .create(document.querySelector('#editor1'))
-        .then(newEditor => {
-            editor = newEditor;
-        })
-        .catch(error => { console.error(error); });
-
-    // Attach submit listener to the form
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        // Update textarea value with CKEditor data
-        if (editor) {
-            document.querySelector('#editor1').value = editor.getData();
-        }
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    let editor;
-    ClassicEditor
-        .create(document.querySelector('#editor3'))
-        .then(newEditor => {
-            editor = newEditor;
-        })
-        .catch(error => { console.error(error); });
-
-    // Attach submit listener to the form
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        // Update textarea value with CKEditor data
-        if (editor) {
-            document.querySelector('#editor3').value = editor.getData();
-        }
-    });
-});
-</script>
-<script>
-  $(document).ready(function() {
-    $('#summernote').summernote({
-      height: 200, // Adjust height as needed
-      focus: true   // Focus the editor when initialized
-    });
-  });
+  if (typeof $ !== 'undefined' && $('#summernote').length) {
+    $('#summernote').summernote({ height: 200, focus: true });
+  }
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const passwordInput = document.querySelector('input[name="password"]');
-        const showHideSpan = document.querySelector('.show-hide .show');
-
+        var passwordInput = document.querySelector('input[name="password"]');
+        var showHideSpan = document.querySelector('.show-hide .show');
+        if (!showHideSpan || !passwordInput) return;
         showHideSpan.addEventListener('click', function () {
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
-            }
+            passwordInput.type = (passwordInput.type === 'password') ? 'text' : 'password';
         });
     });
 </script>
@@ -167,5 +111,3 @@ document.addEventListener('DOMContentLoaded', function () {
         })(jQuery);
     </script>
 @endif
-
-

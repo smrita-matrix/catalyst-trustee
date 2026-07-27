@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
  @include('components.frontend.head')
 </head>
-  <body> 
+<body> 
     <div class="body-overlay"></div> 
-   
     <header> 
       @include('components.frontend.header')
     </header>
-
     <div id="smooth-wrapper">
       <div id="smooth-content">
-
         <section class="hero-banner">
           <div class="owl-carousel banner-slider">
             @forelse ($banners as $banner)
@@ -40,7 +37,6 @@
             @endforelse
           </div>
         </section>
-
         <div class="marquee-strip">
           <div class="marquee-inner">
             @foreach ($marquee as $item)
@@ -48,7 +44,6 @@
             @endforeach
           </div>
         </div>
-
         <section class="counter-wrap" id="choose">
           <div class="container-fluid">
             <div class="row row-flex">
@@ -89,7 +84,6 @@
             </div>
           </div>
         </section>
-
         <section class="why-wrap cnt-portfolio-ptb">
           <div class="container-fluid">
             <div class="heading heading-white heading-center">
@@ -118,15 +112,9 @@
             </div>
           </div>
         </section>
-
         <section class="all-services-wrap">
-         
           <section class="sebi-services-wrap">
             <div class="container-fluid">
-              <!-- <div class="heading heading-center heading-white">
-                <h2>SEBI-Regulated Trustee Services </h2>
-              </div> -->
-
               <div class="srv-divider fade-in visible" data-aos="fade-up" data-aos-duration="1000">
                 <div class="srv-divider-label">{{ $sebi?->heading }}</div>
                 <div class="srv-divider-line"></div>
@@ -154,7 +142,7 @@
                               <p>{{ $item['description'] ?? '' }}</p>
                               <a href="{{ ($item['read_more_link'] ?? '') ?: '#' }}" class="read-more-btn">
                                 <span>Read more</span>
-                                <img src="images/icons/right-arrow-bold.svg">
+                                <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}">
                               </a>
                             </div>
                           </div>
@@ -167,7 +155,6 @@
               </div>
             </div>
           </section>
-
           <section class="nonsebi-services-wrap">
             <div class="container-fluid">
               <!-- <div class="heading heading-center">
@@ -205,7 +192,6 @@
             </div>
           </section>
         </section>
-
         <section class="giftcity-services-wrap">
           <div class="container-fluid">
             <div class="row">
@@ -233,7 +219,7 @@
                       </p>
                     </div>
                     <a class="project-btn" href="{{ ($item['title_link'] ?? '') ?: '#' }}">
-                      <img src="images/icons/right-arrow.png">
+                      <img src="{{ asset('frontend/assets/images/icons/right-arrow.png')}}">
                     </a>
                   </div>
                 </div>
@@ -247,7 +233,6 @@
             </div>
           </div>
         </section>
-
         <section class="leadership-wrap">
           <div class="container-fluid">
             <div class="row row-flex">
@@ -272,7 +257,7 @@
                           <span class="team-designation">{{ $leader['designation'] ?? '' }}</span>
                         </div>
                         <div class="team-anchor">
-                          <a data-toggle="modal" data-target="#team{{ $i }}"><img src="images/icons/right-arrow-bold.svg"/></a>
+                          <a data-toggle="modal" data-target="#team{{ $i }}"><img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}"/></a>
                         </div>
                       </div>
                     </div>
@@ -306,7 +291,6 @@
             </div>
           </div>
         </section>
-
         <section class="performance-wrap">
           <div class="container-fluid">
             <div class="row">
@@ -322,7 +306,6 @@
             </div>
           </div>
         </section>
-
         <section class="casestudy-section">
           <div class="container-fluid">
             <div class="row">
@@ -346,7 +329,7 @@
                       <p>{{ $item['description'] ?? '' }}</p>
                       <a href="{{ ($item['link'] ?? '') ?: '#' }}" class="read-more-btn">
                       <span>Read more</span>
-                      <img src="images/icons/right-arrow-bold.svg" alt="">
+                      <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}" alt="">
                       </a>
                     </div>
                     @endforeach
@@ -404,14 +387,9 @@
             </div>
           </div>
         </section>
-
         @include('components.frontend.footer')
-     
-
       </div>
     </div>
-
-
     <!-- Leadership Modals -->
     @foreach ($leadership?->leaders ?? [] as $i => $leader)
     <div class="modal fade" id="team{{ $i }}" role="dialog">
@@ -430,163 +408,6 @@
       </div>
     </div>
     @endforeach
-
-    <!-- 1. Adani Airport -->
-    <div class="modal fade" id="adaniairport" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Adani Airport</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>successfully acted as the Facility Agent for a landmark $750 Million External Commercial Borrowing (ECB) facility for Adani Airport Holdings Limited, concluded on 30 May 2025. This transaction underscores our expertise in structuring and managing complex cross-border financing arrangements.</p>
-              <p>As the central coordinating entity between the borrower and multiple international lenders, we ensured seamless execution, robust regulatory compliance, and transparent communication across stakeholders. This milestone further reinforces our position as a trusted partner in enabling large-scale infrastructure financing on a global platform.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. GMR Airports Ltd -->
-    <div class="modal fade" id="gmrairports" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">GMR Airports Ltd</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>acted as the Debenture Trustee for the issuance of ₹5,900 Crore Listed, Rated, Secured, Redeemable Non-Convertible Debentures (NCDs) by GMR Airports Limited. This transaction reinforces our strong presence in the infrastructure sector, where scale, precision, and trust are paramount. Our role ensured robust monitoring, regulatory adherence, and stakeholder alignment, further strengthening our position as a reliable partner in large-scale infrastructure financing.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. HDFC ABS Deal -->
-    <div class="modal fade" id="hdfcabsdeal" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">India’s Largest ABS Securitisation Deal Concluded by HDFC Bank</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>HDFC Bank Limited has successfully concluded India’s largest Asset-Backed Securitization (ABS) deal, securitizing a pool of new car loans worth ₹12,372 crore. The landmark transaction, finalized on 27th November 2024, is backed by a provisional AAA rating and structured as a Listed Pass-Through Certificate (PTC) transaction. Catalyst Trusteeship Limited acted as the trustee for this recordbreaking deal, showcasing the strength and innovation within India's financial markets. This monumental transaction not only sets a new benchmark for the securitization market but also reinforces investor confidence in high-quality retail loan-backed securities.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. Mankind Pharma -->
-    <div class="modal fade" id="mankindpharma" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Mankind Pharma Limited</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>Mankind Pharma Limited completed a significant Rs. 13,768 Crore acquisition of Bharat Serums and Vaccines Limited, funded through internal resources and a debt issuance of Rs. 5000 Crores. The debt was raised via Listed, Secured, NonConvertible Debentures (NCDs) in three series, with Catalyst Trusteeship Limited proudly acting as the Debenture Trustee for this transaction. This landmark deal was executed in September.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. Adani Enterprises -->
-    <div class="modal fade" id="adanienterprises" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Adani Enterprises</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>₹7,500 crore by Adani Enterprises. These transactions highlight our expertise in managing complex debt structures with strong covenant monitoring, timely security creation, and robust regulatory compliance.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6. Union Bank -->
-    <div class="modal fade" id="unionbank" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Union Bank</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>We are pleased to have acted as Debenture Trustee in the successful issuance by UnionBank of India, for the ₹7,500 crore listed, secured debenture issuance, with an allotment of ₹3,000 crore completed on March 24, 2026. This transaction underscores continued investor confidence in large public sector institutions and reflects our strong capabilities in managing high-value, complex mandates.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 7. JSW Steel -->
-    <div class="modal fade" id="jswsteel" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">JSW Steel</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>are proud to have acted as the Debenture Trustee for the issuance of ₹7,000 Crore Listed, Rated, Secured, Redeemable Non-Convertible Debentures (NCDs) by JTPM Metal Traders Private Limited.</p>
-              <p>This landmark mandate stands among our largest transactions, highlighting our capability to manage high-value and complex debt issuances within the metals and commodities sector. Through rigorous oversight and structured governance, we ensured investor protection and seamless execution across the entire transaction lifecycle.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 8. Bajaj Finance -->
-    <div class="modal fade" id="bajajfinance" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Bajaj Finance Limited</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>Debenture Trustee for ₹5,000 Cr NCD Issuance. We are pleased to share that we acted as the debenture trustee for the issuance of Listed, Rated, Secured, Redeemable Non-Convertible Debentures (NCDs) aggregating to ₹5,000 crore by Bajaj Finance Limited. This transaction underscores our continued role in strengthening India’s financial markets through diligent and trusted trusteeship services.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 9. Poonawalla Fincorp -->
-    <div class="modal fade" id="poonawalafincorp" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Poonawala Fincorp</h4>
-          </div>
-          <div class="modal-body">
-            <div class="team-text-box">
-              <p>successfully acted as the Debenture Trustee for the issuance of ₹5,000 Crore NCDs, raised in two tranches of ₹2,000 Crore and ₹3,000 Crore by Poonawalla Fincorp Limited.</p>
-              <p>This transaction reflects our continued leadership in the NBFC space, supporting prominent financial institutions in strengthening their capital base. Through vigilant monitoring of financial covenants, security assets, and compliance frameworks, we ensured comprehensive investor protection across multiple issuances.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
      @include('components.frontend.main-js')
 
   </body>

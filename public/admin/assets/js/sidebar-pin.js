@@ -3,6 +3,7 @@
   const pinTitle = document.querySelector(".pin-title");
   let pinIcon = document.querySelectorAll(".sidebar-list .fa-thumb-tack");
   function togglePinnedName() {
+    if (!pinTitle) return;
     if (document.getElementsByClassName("pined").length) {
       if (!pinTitle.classList.contains("show")) pinTitle.classList.add("show");
     } else {
@@ -11,7 +12,8 @@
   }
 
   pinIcon.forEach((item, index) => {
-    var linkName = item.parentNode.querySelector("span").innerHTML;
+    var span = item.parentNode.querySelector("span");
+    var linkName = span ? span.innerHTML : "";
     var InitialLocalStorage = JSON.parse(localStorage.getItem("pins") || false);
 
     if (InitialLocalStorage && InitialLocalStorage.includes(linkName)) {

@@ -128,3 +128,15 @@
             </div> -->
           </div>
         </footer>
+         <div class="copyright-area">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="copyright-item">
+                <p>Copyright © 2026 Catalyst Trustee. All rights reserved. Designed By <a
+                    href="https://www.matrixbricks.com/in/" target="_blank">Matrix Bricks</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
