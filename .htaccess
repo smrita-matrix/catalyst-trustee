@@ -1,0 +1,37 @@
+# ============================================================
+#  Laravel — ROOT .htaccess
+#  Sits next to app/  vendor/  public/  artisan
+#
+#  Forwards every request into public/ so the site works at
+#  /catalyst-trustee/ instead of /catalyst-trustee/public/.
+#  Works at any folder depth and on any host.
+# ============================================================
+
+# Never show a directory listing
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Pass the Authorization header through (needed for logins / API tokens)
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Send everything into public/.
+    # Skip requests that already point at public/, otherwise the rule
+    # would re-apply to its own output and produce public/public/...
+    RewriteCond %{REQUEST_URI} !/public(/|$)
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Safety net: block direct access to sensitive files
+# (matters only if mod_rewrite is ever disabled)
+<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|package\.json|artisan|phpunit\.xml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
