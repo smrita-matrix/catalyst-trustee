@@ -41,11 +41,20 @@ use App\Http\Controllers\Backend\services\ProductCategoryController;
 use App\Http\Controllers\Backend\services\ServiceLayout3Controller;
 use App\Http\Controllers\Backend\services\ServiceLayout2Controller;
 use App\Http\Controllers\Backend\services\ServiceFifController;
+// Public Notice controllers
+use App\Http\Controllers\Backend\PublicNotice\NoticeController;
+// Newsletter controllers
+use App\Http\Controllers\Backend\Newsletter\ArticleController;
+// Contact controllers
+use App\Http\Controllers\Backend\Contact\ContactController as BackendContactController;
 
 //Frontend controller
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AboutUsController;
 use App\Http\Controllers\Frontend\ServicesSebiController;
+use App\Http\Controllers\Frontend\PublicNoticeController;
+use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Frontend\ContactController;
 
 
 // Backend
@@ -121,6 +130,19 @@ Route::match(['put', 'post'], 'service-layout2/{product}', [ServiceLayout2Contro
 Route::get('service-fif/{product}/edit', [ServiceFifController::class, 'edit'])->name('service-fif.edit');
 Route::match(['put', 'post'], 'service-fif/{product}', [ServiceFifController::class, 'update'])->name('service-fif.update');
 
+//Public Notice
+Route::post('notices-banner', [NoticeController::class, 'updateBanner'])->name('notices.banner.update');
+Route::resource('notices', NoticeController::class);
+
+//Newsletter
+Route::post('articles-banner', [ArticleController::class, 'updateBanner'])->name('articles.banner.update');
+Route::resource('articles', ArticleController::class);
+
+//Contact Us
+Route::get('contact-content/edit', [BackendContactController::class, 'editContent'])->name('contact.content.edit');
+Route::post('contact-content', [BackendContactController::class, 'updateContent'])->name('contact.content.update');
+Route::resource('contact', BackendContactController::class)->parameters(['contact' => 'office']);
+
 
 //Frontend Pages
 Route::get('/', [HomeController::class, 'home'])->name('frontend.index');
@@ -130,4 +152,7 @@ Route::get('/group-companies', [AboutUsController::class, 'group_companies'])->n
 Route::get('/our-journey', [AboutUsController::class, 'our_journey'])->name('frontend.our_journey');
 Route::get('/debenture-trustee-listed', [ServicesSebiController::class, 'debenture_trustee_listed'])->name('frontend.debenture_trustee_listed');
 Route::get('/services/{slug}', [ServicesSebiController::class, 'show'])->name('frontend.product_page');
+Route::get('/notices-and-announcements', [PublicNoticeController::class, 'notices'])->name('frontend.notices');
+Route::get('/newsletter/articles', [NewsletterController::class, 'articles'])->name('frontend.articles');
+Route::get('/contact-us', [ContactController::class, 'contact'])->name('frontend.contact');
 

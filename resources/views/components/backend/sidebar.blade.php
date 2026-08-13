@@ -160,7 +160,8 @@
                       </ul>
                     </li>
                     <li>
-                      <a class="submenu-title {{ $groupCompaniesActive ? 'active' : '' }}" href="javascript:void(0)">Group Companies
+                   
+                    <a class="submenu-title {{ $groupCompaniesActive ? 'active' : '' }}" href="javascript:void(0)">Group Companies
                         <div class="according-menu"><i class="fa fa-angle-{{ $groupCompaniesActive ? 'down' : 'right' }}"></i></div>
                       </a>
                       <ul class="nav-sub-childmenu submenu-content" @if ($groupCompaniesActive) style="display: block;" @endif>
@@ -208,6 +209,57 @@
                     <li><a href="{{ route('product-category.index') }}" class="{{ $productActive ? 'active' : '' }}">Product Categories</a></li>
                     <li><a href="{{ route('product-services.index') }}" class="{{ $productPageActive ? 'active' : '' }}">Product Services</a></li>
                     <li><a href="{{ route('layout-guide') }}" class="{{ request()->routeIs('layout-guide') ? 'active' : '' }}">Layout Guide</a></li>
+                  </ul>
+                </li>
+
+                @php $publicNoticeActive = request()->routeIs('notices.*'); @endphp
+                <li class="sidebar-list {{ $publicNoticeActive ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title {{ $publicNoticeActive ? 'active' : '' }}" href="#">
+                    <svg class="stroke-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                    </svg>
+                    <span>Public Notice</span>
+                  </a>
+                  <ul class="sidebar-submenu" @if ($publicNoticeActive) style="display: block;" @endif>
+                    <li><a href="{{ route('notices.index') }}" class="{{ $publicNoticeActive ? 'active' : '' }}">Notices &amp; Announcements</a></li>
+                  </ul>
+                </li>
+
+                @php $newsletterActive = request()->routeIs('articles.*'); @endphp
+                <li class="sidebar-list {{ $newsletterActive ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title {{ $newsletterActive ? 'active' : '' }}" href="#">
+                    <svg class="stroke-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                    </svg>
+                    <span>Newsletter</span>
+                  </a>
+                  <ul class="sidebar-submenu" @if ($newsletterActive) style="display: block;" @endif>
+                    <li><a href="{{ route('articles.index') }}" class="{{ $newsletterActive ? 'active' : '' }}">Articles</a></li>
+                  </ul>
+                </li>
+
+                @php $contactActive = request()->routeIs('contact.*'); @endphp
+                <li class="sidebar-list {{ $contactActive ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title {{ $contactActive ? 'active' : '' }}" href="#">
+                    <svg class="stroke-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-contact') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-contact') }}"></use>
+                    </svg>
+                    <span>Contact Us</span>
+                  </a>
+                  <ul class="sidebar-submenu" @if ($contactActive) style="display: block;" @endif>
+                    <li><a href="{{ route('contact.index') }}" class="{{ $contactActive ? 'active' : '' }}">Contact Page</a></li>
                   </ul>
                 </li>
               </ul>

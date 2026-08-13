@@ -61,7 +61,7 @@
                     <a href="#">Public Notice    <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="#">Notices & Announcements </a></li>
+                        <li><a href="{{ route('frontend.notices') }}">Notices & Announcements </a></li>
                         <li><a href="#">Regulatory Disclosures </a></li>
                       </ul>
                     </div>
@@ -79,7 +79,7 @@
                     <a href="#">Newsletter <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="#">Articles</a></li>
+                        <li><a href="{{ route('frontend.articles') }}">Articles</a></li>
                         <li><a href="#">News & Media </a></li>
                       </ul>
                     </div>
@@ -107,12 +107,12 @@
                   
 
                   <li class="menu-item-has-children right-menu">
-                    <a href="#">Contact   <i class="fa fa-angle-down"></i></a>
+                    <a href="{{ route('frontend.contact') }}">Contact   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="#">Office Locations</a></li>
-                        <li><a href="#">Enquiry Form </a></li>
-                        <li><a href="#">Contact Information </a></li>
+                        <li><a href="{{ route('frontend.contact') }}#office-locations">Office Locations</a></li>
+                        <li><a href="{{ route('frontend.contact') }}#enquiry-form">Enquiry Form </a></li>
+                        <li><a href="{{ route('frontend.contact') }}#contact-information">Contact Information </a></li>
                       </ul>
                     </div>
                   </li>
