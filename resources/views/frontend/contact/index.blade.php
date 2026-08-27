@@ -120,12 +120,6 @@
                       </div>
                     @endif
 
-                    {{-- Filled in by the client-side checks when a submit is blocked. --}}
-                    <div class="alert alert-danger" id="enquiry-form-errors" style="display:none;">
-                      <strong>Please correct the following:</strong>
-                      <ul class="mb-0"></ul>
-                    </div>
-
                     <div class="cf-form-row">
                       <div class="cf-field">
                         <label for="firstName">First Name<span class="required">*</span></label>
@@ -281,17 +275,6 @@
       var EMAIL   = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       var PHONE   = /^[0-9+\s-]{7,20}$/;
 
-      var LABELS = {
-        first_name: 'First Name',
-        last_name:  'Last Name',
-        mobile:     'Mobile Number',
-        email:      'Email',
-        service:    'Services',
-        comments:   'Comments / Questions'
-      };
-
-      var summary = document.getElementById('enquiry-form-errors');
-
       function problem(field) {
         var name  = field.getAttribute('name');
         var value = (field.value || '').trim();
@@ -351,41 +334,47 @@
         });
       });
 
+      /**
+       * Bring the first field that needs fixing into view.
+       *
+       * The message now sits under the field rather than in a list at the top,
+       * so the page has to move to it — otherwise a problem below the fold
+       * would look like nothing happened. The site runs GSAP ScrollSmoother,
+       * which hijacks the scroll position, so hand the job to it when it is
+       * there and fall back to normal scrolling when it is not.
+       */
+      function reveal(field) {
+        var smooth = (window.ScrollSmoother && typeof window.ScrollSmoother.get === 'function')
+          ? window.ScrollSmoother.get()
+          : null;
+
+        if (smooth && typeof smooth.scrollTo === 'function') {
+          smooth.scrollTo(field, true, 'center center');
+        } else if (typeof field.scrollIntoView === 'function') {
+          field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        field.focus({ preventScroll: true });
+      }
+
       form.addEventListener('submit', function (e) {
-        var failures = [];
+        var failed = [];
 
         fields.forEach(function (field) {
           var message = problem(field);
           if (message) {
             showError(field, message);
-            failures.push({ field: field, text: LABELS[field.getAttribute('name')] + ': ' + message });
+            failed.push(field);
           } else {
             clearError(field);
           }
         });
 
-        if (failures.length) {
+        if (failed.length) {
           e.preventDefault();
-
-          if (summary) {
-            var list = summary.querySelector('ul');
-            list.innerHTML = '';
-            failures.forEach(function (f) {
-              var li = document.createElement('li');
-              li.textContent = f.text;
-              list.appendChild(li);
-            });
-            summary.style.display = 'block';
-            if (typeof summary.scrollIntoView === 'function') {
-              summary.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          }
-
-          failures[0].field.focus({ preventScroll: true });
+          reveal(failed[0]);
           return;
         }
-
-        if (summary) { summary.style.display = 'none'; }
 
         var button = form.querySelector('button[type="submit"]');
         if (button) {
