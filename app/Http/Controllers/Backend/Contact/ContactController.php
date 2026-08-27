@@ -34,6 +34,10 @@ class ContactController extends Controller
         $request->validate([
             'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'form_image'              => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'services_options'        => 'nullable|string|max:5000',
+            'location_options'        => 'nullable|string|max:5000',
+            'notify_email'            => 'nullable|email|max:255',
+            'notify_cc'               => 'nullable|string|max:500',
         ]);
 
         $content = ContactPageDetails::whereNull('deleted_at')->latest('id')->first();
@@ -42,6 +46,7 @@ class ContactController extends Controller
             'banner_title', 'banner_breadcrumb_parent',
             'info_heading', 'phone', 'phone_link', 'email', 'email_link', 'address', 'address_link',
             'enquiry_heading', 'form_heading', 'services_options', 'location_options',
+            'notify_email', 'notify_cc',
             'office_heading', 'main_office_subtitle', 'other_office_subtitle', 'notice_text',
         ]);
 

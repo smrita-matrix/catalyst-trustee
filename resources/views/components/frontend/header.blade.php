@@ -32,7 +32,7 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="services.html">Services <i class="fa fa-angle-down"></i></a>
+                    <a href="#">Services <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar" id="style-3">
                       <div class="row">
                         <div class="col-md-12">
@@ -58,20 +58,76 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="#">Public Notice    <i class="fa fa-angle-down"></i></a>
-                    <div class="sub-menu single-column-menu">
-                      <ul>
-                        <li><a href="{{ route('frontend.notices') }}">Notices & Announcements </a></li>
-                        <li><a href="#">Regulatory Disclosures </a></li>
-                      </ul>
+                    <a href="#">Public Notice <i class="fa fa-angle-down"></i></a>
+                    <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar" id="style-3">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            @php
+                              // Match the approved design: a category that has sub categories puts
+                              // them in its own column, and its plain links spill into a second,
+                              // heading-less column beside it.
+                              $menuColumns = [];
+                              foreach (($noticeMenu ?? []) as $cat) {
+                                  $subCats = $cat->children->filter(fn ($c) => $c->children->count())->values();
+                                  $links   = $cat->children->filter(fn ($c) => !$c->children->count())->values();
+
+                                  if ($subCats->count()) {
+                                      $menuColumns[] = ['category' => $cat, 'items' => $subCats, 'heading' => true];
+                                      if ($links->count()) {
+                                          $menuColumns[] = ['category' => $cat, 'items' => $links, 'heading' => false];
+                                      }
+                                  } else {
+                                      $menuColumns[] = ['category' => $cat, 'items' => $links, 'heading' => true];
+                                  }
+                              }
+                            @endphp
+
+                            @foreach($menuColumns as $col)
+                            @php $cat = $col['category']; $hasFlyout = $col['items']->contains(fn ($i) => $i->children->count()); @endphp
+                            <div class="col-md-2 list-item {{ $loop->last ? '' : 'border-right-one' }}">
+                              @if($col['heading'])
+                              <div class="mega-main-heading">
+                                @if($cat->icon)
+                                <div class="icon"><img src="{{ asset('public-notice/icons/'.$cat->icon) }}" alt="icon"></div>
+                                @endif
+                                <h3><a href="{{ $cat->url ?: '#' }}">{{ $cat->name }}</a></h3>
+                              </div>
+                              @else
+                              <div class="public-notices-mt-custom-sec"></div>
+                              @endif
+
+                              <ul @if($hasFlyout) class="sebi-compliance-main-menu-custom-sec" @endif>
+                                @foreach($col['items'] as $item)
+                                <li>
+                                  <a href="{{ $item->url ?: '#' }}" @if(in_array($item->link_type, ['pdf', 'url'], true)) target="_blank" rel="noopener noreferrer" @endif>{{ $item->name }}</a>
+                                  @if($item->children->count())
+                                  <div class="sebi-compliance-subsub-menu-custom-sec">
+                                    <ul>
+                                      @foreach($item->children as $sub)
+                                      <li>
+                                        <a href="{{ $sub->url ?: '#' }}" @if(in_array($sub->link_type, ['pdf', 'url'], true)) target="_blank" rel="noopener noreferrer" @endif><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{ $sub->name }}</a>
+                                      </li>
+                                      @endforeach
+                                    </ul>
+                                  </div>
+                                  @endif
+                                </li>
+                                @endforeach
+                              </ul>
+                            </div>
+                            @endforeach
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </li>
                   <li class="menu-item-has-children">
                     <a href="#">Grievance   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="#">Investor Grievance</a></li>
-                        <li><a href="#">Contact for Support </a></li>
+                        <li><a href="{{ route('frontend.investor_grievance') }}">Investor Grievance</a></li>
+                        <li><a href="{{ $supportPdf ?? '#' }}" @if(!empty($supportPdf)) target="_blank" rel="noopener noreferrer" @endif>Contact for Support </a></li>
                       </ul>
                     </div>
                   </li>
@@ -80,17 +136,17 @@
                     <div class="sub-menu single-column-menu">
                       <ul>
                         <li><a href="{{ route('frontend.articles') }}">Articles</a></li>
-                        <li><a href="#">News & Media </a></li>
+                        <li><a href="{{ route('frontend.news_media') }}">News & Media </a></li>
                       </ul>
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="#">Careers   <i class="fa fa-angle-down"></i></a>
+                    <a href="{{ route('frontend.careers') }}">Careers   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="#">Life at Catalyst</a></li>
-                        <li><a href="#">Current Openings </a></li>
-                        <li><a href="#">Internship / Graduate Opportunities</a></li>
+                        <li><a href="{{ route('frontend.careers') }}#life-at-catalyst">Life at Catalyst</a></li>
+                        <li><a href="{{ route('frontend.careers') }}#current-openings">Current Openings </a></li>
+                        <li><a href="{{ route('frontend.careers') }}#submit-resume">Internship / Graduate Opportunities</a></li>
                       </ul>
                     </div>
                   </li>
@@ -125,11 +181,13 @@
             <div class="header-item header-right-item item-right">
               <ul class="nav-icon">
                 <li class="hvr-icon-push nav-search">
-                  <a href="#" class="nav-icon-item icon-search">
+                  <a href="javascript:void(0)" class="nav-icon-item icon-search" id="site-search-toggle"
+                     aria-label="Search the website" aria-expanded="false">
                     <img src="{{ asset('frontend/assets/images/icons/search.svg')}}" class="hvr-icon">
                   </a>
 
-                  <a class="btn-default" href="#">Get Started</a>
+
+                  <a class="btn-default" href="{{ optional($siteLinks)->get_started_link ?: route('frontend.contact') }}">{{ optional($siteLinks)->get_started_text ?: 'Get Started' }}</a>
                 </li>
               </ul>
               <!-- mobile menu trigger -->

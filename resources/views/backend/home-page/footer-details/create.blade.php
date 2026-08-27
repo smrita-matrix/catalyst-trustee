@@ -92,6 +92,72 @@
                                 <textarea class="form-control" id="address" name="address" rows="1" placeholder="e.g. 901, 9th Floor, Towr-B, Peninsula Business Park...">{{ old('address') }}</textarea>
                             </div>
 
+
+                            <!-- ============ Site Buttons & Quick Links ============ -->
+                            <div class="col-12">
+                                <hr class="mt-2">
+                                <h5 class="mb-3">Header Button</h5>
+                                <div class="row g-4">
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Button Text</label>
+                                        <input class="form-control" type="text" name="get_started_text" value="{{ old('get_started_text', $footer->get_started_text ?? '') }}" placeholder="Get Started">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <label class="form-label">Button Link</label>
+                                        <input class="form-control" type="text" name="get_started_link" value="{{ old('get_started_link', $footer->get_started_link ?? '') }}" placeholder="e.g. /contact-us or https://...">
+                                        <small class="text-secondary d-block mt-1">
+                                            <i class="fa fa-info-circle"></i>
+                                            The button at the top right of every page. Leave blank to send visitors to the Contact page.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <hr class="mt-2">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="mb-0">Footer Quick Links</h5>
+                                    <button type="button" id="btn-add-quick" class="btn btn-outline-primary btn-sm">
+                                        <i class="fa fa-plus"></i> Add More
+                                    </button>
+                                </div>
+
+                                <div class="table-responsive custom-scrollbar">
+                                    <table class="table table-bordered align-middle" id="quick-table">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:45px;">#</th>
+                                                <th style="width:280px;">Link Text</th>
+                                                <th>Link URL</th>
+                                                <th style="width:50px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="quick-tbody">
+                                            @php
+                                                $quickRows = old('quick_link_label')
+                                                    ? array_map(fn ($l, $u) => ['label' => $l, 'url' => $u],
+                                                                old('quick_link_label', []), old('quick_link_url', []))
+                                                    : ($footer->quick_links ?? []);
+                                                if (!count($quickRows)) { $quickRows = [['label' => '', 'url' => '']]; }
+                                            @endphp
+                                            @foreach ($quickRows as $i => $row)
+                                            <tr class="quick-row">
+                                                <td class="quick-index">{{ $i + 1 }}</td>
+                                                <td><input class="form-control" type="text" name="quick_link_label[]" value="{{ $row['label'] ?? '' }}" placeholder="e.g. Privacy Policy"></td>
+                                                <td><input class="form-control" type="text" name="quick_link_url[]" value="{{ $row['url'] ?? '' }}" placeholder="e.g. /contact-us or https://..."></td>
+                                                <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm btn-remove-quick"><i class="fa fa-trash"></i></button></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <small class="text-secondary">
+                                    <i class="fa fa-info-circle"></i>
+                                    These are the links under <b>Quick Links</b> in the website footer. Rows with no text are ignored.
+                                    A full address starting with http opens in a new tab.
+                                </small>
+                            </div>
+
                             <!-- ============ Social Links (repeater) ============ -->
                             <div class="col-12">
                                 <hr class="mt-2">
@@ -209,6 +275,40 @@
         });
     });
 </script>
+
+<script>
+  // Repeater for the footer Quick Links.
+  document.addEventListener('DOMContentLoaded', function () {
+    var tbody  = document.getElementById('quick-tbody');
+    var addBtn = document.getElementById('btn-add-quick');
+    if (!tbody || !addBtn) { return; }
+
+    function reindex() {
+      tbody.querySelectorAll('.quick-row').forEach(function (row, i) {
+        row.querySelector('.quick-index').textContent = i + 1;
+      });
+    }
+
+    addBtn.addEventListener('click', function () {
+      var row = tbody.querySelector('.quick-row').cloneNode(true);
+      row.querySelectorAll('input').forEach(function (el) { el.value = ''; });
+      tbody.appendChild(row);
+      reindex();
+    });
+
+    tbody.addEventListener('click', function (e) {
+      var btn = e.target.closest('.btn-remove-quick');
+      if (!btn) { return; }
+      if (tbody.querySelectorAll('.quick-row').length > 1) {
+        btn.closest('.quick-row').remove();
+      } else {
+        btn.closest('.quick-row').querySelectorAll('input').forEach(function (el) { el.value = ''; });
+      }
+      reindex();
+    });
+  });
+</script>
+
 </body>
 
 </html>

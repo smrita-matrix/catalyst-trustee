@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\home\LeadershipDetailsController;
 use App\Http\Controllers\Backend\home\BusinessPerformanceDetailsController;
 use App\Http\Controllers\Backend\home\LandmarkDetailsController;
 use App\Http\Controllers\Backend\home\ProofsDetailsController;
+use App\Http\Controllers\Backend\home\TestimonialDetailsController;
 use App\Http\Controllers\Backend\home\CtaDetailsController;
 use App\Http\Controllers\Backend\home\FooterDetailsController;
 // About Us controllers
@@ -42,19 +43,34 @@ use App\Http\Controllers\Backend\services\ServiceLayout3Controller;
 use App\Http\Controllers\Backend\services\ServiceLayout2Controller;
 use App\Http\Controllers\Backend\services\ServiceFifController;
 // Public Notice controllers
-use App\Http\Controllers\Backend\PublicNotice\NoticeController;
+use App\Http\Controllers\Backend\PublicNotice\NoticeCategoryController;
+// Grievance controllers
+use App\Http\Controllers\Backend\Grievance\GrievancePageController;
+use App\Http\Controllers\Backend\Grievance\GrievanceSubmissionController;
+use App\Http\Controllers\Backend\Grievance\SupportController;
+// Careers controllers
+use App\Http\Controllers\Backend\Career\CareerPageController;
+use App\Http\Controllers\Backend\Career\CareerOpeningController;
+use App\Http\Controllers\Backend\Career\CareerApplicationController;
 // Newsletter controllers
 use App\Http\Controllers\Backend\Newsletter\ArticleController;
+use App\Http\Controllers\Backend\Newsletter\NewsMediaController;
 // Contact controllers
 use App\Http\Controllers\Backend\Contact\ContactController as BackendContactController;
+use App\Http\Controllers\Backend\Contact\ContactEnquiryController;
+use App\Http\Controllers\Backend\Policy\PolicyPageController;
 
 //Frontend controller
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AboutUsController;
 use App\Http\Controllers\Frontend\ServicesSebiController;
 use App\Http\Controllers\Frontend\PublicNoticeController;
+use App\Http\Controllers\Frontend\GrievanceController;
+use App\Http\Controllers\Frontend\CareerController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\SearchController;
+use App\Http\Controllers\Frontend\PolicyController;
 
 
 // Backend
@@ -88,6 +104,7 @@ Route::resource('leadership-details', LeadershipDetailsController::class);
 Route::resource('business-performance-details', BusinessPerformanceDetailsController::class);
 Route::resource('landmark-details', LandmarkDetailsController::class);
 Route::resource('proofs-details', ProofsDetailsController::class);
+Route::resource('testimonial-details', TestimonialDetailsController::class);
 Route::resource('cta-details', CtaDetailsController::class);
 Route::resource('footer-details', FooterDetailsController::class);
 
@@ -131,17 +148,44 @@ Route::get('service-fif/{product}/edit', [ServiceFifController::class, 'edit'])-
 Route::match(['put', 'post'], 'service-fif/{product}', [ServiceFifController::class, 'update'])->name('service-fif.update');
 
 //Public Notice
-Route::post('notices-banner', [NoticeController::class, 'updateBanner'])->name('notices.banner.update');
-Route::resource('notices', NoticeController::class);
+Route::get('notice-layout-guide', [NoticeCategoryController::class, 'layoutGuide'])->name('notice-layout-guide');
+Route::post('notice-category-banner', [NoticeCategoryController::class, 'updateBanner'])->name('notice-category.banner.update');
+Route::resource('notice-category', NoticeCategoryController::class)
+    ->parameters(['notice-category' => 'category']);
+
+//Grievance
+Route::resource('grievance-page', GrievancePageController::class)->parameters(['grievance-page' => 'content']);
+Route::get('grievance-support', [SupportController::class, 'index'])->name('grievance-support.index');
+Route::post('grievance-support', [SupportController::class, 'update'])->name('grievance-support.update');
+Route::delete('grievance-support', [SupportController::class, 'destroy'])->name('grievance-support.destroy');
+Route::get('grievance-submission', [GrievanceSubmissionController::class, 'index'])->name('grievance-submission.index');
+Route::get('grievance-submission/{grievance}', [GrievanceSubmissionController::class, 'show'])->name('grievance-submission.show');
+Route::delete('grievance-submission/{grievance}', [GrievanceSubmissionController::class, 'destroy'])->name('grievance-submission.destroy');
+
+//Careers
+Route::resource('career-page', CareerPageController::class)->parameters(['career-page' => 'content']);
+Route::resource('career-opening', CareerOpeningController::class)->parameters(['career-opening' => 'opening']);
+Route::get('career-application', [CareerApplicationController::class, 'index'])->name('career-application.index');
+Route::get('career-application/{application}', [CareerApplicationController::class, 'show'])->name('career-application.show');
+Route::get('career-application/{application}/download', [CareerApplicationController::class, 'download'])->name('career-application.download');
+Route::delete('career-application/{application}', [CareerApplicationController::class, 'destroy'])->name('career-application.destroy');
 
 //Newsletter
+Route::post('news-media-banner', [NewsMediaController::class, 'updateBanner'])->name('news-media.banner.update');
+Route::resource('news-media', NewsMediaController::class);
 Route::post('articles-banner', [ArticleController::class, 'updateBanner'])->name('articles.banner.update');
 Route::resource('articles', ArticleController::class);
 
 //Contact Us
+Route::get('contact-enquiry', [ContactEnquiryController::class, 'index'])->name('contact-enquiry.index');
+Route::get('contact-enquiry/{enquiry}', [ContactEnquiryController::class, 'show'])->name('contact-enquiry.show');
+Route::delete('contact-enquiry/{enquiry}', [ContactEnquiryController::class, 'destroy'])->name('contact-enquiry.destroy');
 Route::get('contact-content/edit', [BackendContactController::class, 'editContent'])->name('contact.content.edit');
 Route::post('contact-content', [BackendContactController::class, 'updateContent'])->name('contact.content.update');
 Route::resource('contact', BackendContactController::class)->parameters(['contact' => 'office']);
+
+//Policy Pages (Privacy Policy, Terms of Use, Disclaimer)
+Route::resource('policy-pages', PolicyPageController::class)->except('show');
 
 
 //Frontend Pages
@@ -153,6 +197,26 @@ Route::get('/our-journey', [AboutUsController::class, 'our_journey'])->name('fro
 Route::get('/debenture-trustee-listed', [ServicesSebiController::class, 'debenture_trustee_listed'])->name('frontend.debenture_trustee_listed');
 Route::get('/services/{slug}', [ServicesSebiController::class, 'show'])->name('frontend.product_page');
 Route::get('/notices-and-announcements', [PublicNoticeController::class, 'notices'])->name('frontend.notices');
+Route::get('/public-notice/{slug}', [PublicNoticeController::class, 'show'])->name('frontend.notice_page');
+Route::get('/careers', [CareerController::class, 'careers'])->name('frontend.careers');
+Route::post('/careers', [CareerController::class, 'store'])->name('frontend.careers.store');
+Route::get('/thank-you', [GrievanceController::class, 'thankYou'])->name('frontend.thank_you');
+Route::get('/investor-grievance', [GrievanceController::class, 'investorGrievance'])->name('frontend.investor_grievance');
+Route::post('/investor-grievance', [GrievanceController::class, 'store'])->name('frontend.investor_grievance.store');
+Route::get('/newsletter/news-and-media', [NewsletterController::class, 'newsMedia'])->name('frontend.news_media');
 Route::get('/newsletter/articles', [NewsletterController::class, 'articles'])->name('frontend.articles');
+Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('frontend.search.suggest');
 Route::get('/contact-us', [ContactController::class, 'contact'])->name('frontend.contact');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('frontend.contact.store');
 
+/*
+ * Policy pages (Privacy Policy, Terms of Use, Disclaimer) resolve from their
+ * slug, so they get clean addresses like /privacy-policy.
+ *
+ * This is registered LAST on purpose: Laravel matches routes in order, so every
+ * real route above still wins and only leftover single-segment addresses reach
+ * here. An unknown slug is a normal 404.
+ */
+Route::get('/{slug}', [PolicyController::class, 'show'])
+    ->where('slug', '[a-z0-9-]+')
+    ->name('frontend.policy');

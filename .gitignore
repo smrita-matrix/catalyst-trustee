@@ -21,3 +21,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Archives - never belong in the repo (a 198MB css zip once blocked a push)
+*.zip
+*.rar
+*.7z

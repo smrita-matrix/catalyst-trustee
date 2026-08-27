@@ -25,13 +25,19 @@
                   <div class="footer-service">
                     <h3>Quick Links</h3>
                     <ul>
-                      <li><a href="#">Home </a></li>
-                      <li><a href="#">About Us</a></li> 
-                      <li><a href="#">Careers </a></li>
-                      <li><a href="#">Contact Us </a></li>
-                      <li><a href="#">Privacy Policy </a></li>
-                      <li><a href="#">Terms & Conditions</a></li>
-                      <li><a href="#">Disclaimer </a></li>
+                      @forelse ($quickLinks ?? collect() as $link)
+                        <li>
+                          <a href="{{ $link['url'] }}"
+                             @if($link['external']) target="_blank" rel="noopener noreferrer" @endif>
+                            {{ $link['label'] }}
+                          </a>
+                        </li>
+                      @empty
+                        <li><a href="{{ route('frontend.index') }}">Home</a></li>
+                        <li><a href="{{ route('frontend.company_overview') }}">About Us</a></li>
+                        <li><a href="{{ route('frontend.careers') }}">Careers</a></li>
+                        <li><a href="{{ route('frontend.contact') }}">Contact Us</a></li>
+                      @endforelse
                     </ul>
                   </div>
                 </div>
@@ -133,8 +139,17 @@
           <div class="row">
             <div class="col-md-12">
               <div class="copyright-item">
-                <p>Copyright © 2026 Catalyst Trustee. All rights reserved. Designed By <a
+                <p>Copyright © {{ date('Y') }} Catalyst Trustee. All rights reserved. Designed By <a
                     href="https://www.matrixbricks.com/in/" target="_blank">Matrix Bricks</a></p>
+
+                {{-- Privacy Policy and any other legal pages ticked "show in footer". --}}
+                @if(($policyLinks ?? collect())->isNotEmpty())
+                  <ul class="policy-links">
+                    @foreach($policyLinks as $policy)
+                      <li><a href="{{ $policy->url }}">{{ $policy->title }}</a></li>
+                    @endforeach
+                  </ul>
+                @endif
               </div>
             </div>
           </div>

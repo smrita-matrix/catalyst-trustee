@@ -28,6 +28,8 @@ class ContactPageDetails extends Model
         'form_image',
         'services_options',
         'location_options',
+        'notify_email',
+        'notify_cc',
         'office_heading',
         'main_office_subtitle',
         'other_office_subtitle',

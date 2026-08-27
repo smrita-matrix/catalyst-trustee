@@ -39,6 +39,9 @@ class FooterDetailsController extends Controller
             'email'        => $request->email,
             'address'      => $request->address,
             'social_links' => $this->buildSocialLinks($request),
+            'quick_links'  => $this->buildQuickLinks($request),
+            'get_started_text' => $request->get_started_text,
+            'get_started_link' => $request->get_started_link,
             'created_at'   => Carbon::now(),
             'created_by'   => Auth::id(),
         ];
@@ -71,6 +74,9 @@ class FooterDetailsController extends Controller
             'email'        => $request->email,
             'address'      => $request->address,
             'social_links' => $this->buildSocialLinks($request),
+            'quick_links'  => $this->buildQuickLinks($request),
+            'get_started_text' => $request->get_started_text,
+            'get_started_link' => $request->get_started_link,
             'modified_at'  => Carbon::now(),
             'modified_by'  => Auth::id(),
         ];
@@ -130,6 +136,30 @@ class FooterDetailsController extends Controller
     /**
      * Build the social links JSON array [{ icon, url }].
      */
+    /** Footer "Quick Links" repeater rows, dropping any without a label. */
+    private function buildQuickLinks(Request $request)
+    {
+        $labels = $request->input('quick_link_label', []);
+        $urls   = $request->input('quick_link_url', []);
+
+        $links = [];
+
+        foreach ($labels as $i => $label) {
+            $label = trim((string) $label);
+
+            if ($label === '') {
+                continue;
+            }
+
+            $links[] = [
+                'label' => $label,
+                'url'   => trim((string) ($urls[$i] ?? '')),
+            ];
+        }
+
+        return $links;
+    }
+
     private function buildSocialLinks(Request $request)
     {
         $icons = $request->input('social_icon', []);

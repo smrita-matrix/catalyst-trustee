@@ -106,7 +106,7 @@
               </div>
               <!-- <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="why-img sticky-img">
-                  <img src="images/home/why-img2.webp" class="img-responsive">
+                  <img src="{{ asset('frontend/assets/images/home/why-img2.webp') }}" class="img-responsive">
                 </div>
               </div> -->
             </div>
@@ -182,7 +182,7 @@
                       <div class="service-content">
                         <h4 class="title"><a href="{{ ($item['title_link'] ?? '') ?: '#' }}">{{ $item['title'] ?? '' }}</a></h4>
                         <p class="desc">{{ $item['description'] ?? '' }}</p>
-                        <a class="text-btn" href="{{ ($item['read_more_link'] ?? '') ?: '#' }}"><span class="btn-text"><span>Learn More <img src="images/icons/right-arrow-bold-white.svg"></span></span></a>
+                        <a class="text-btn" href="{{ ($item['read_more_link'] ?? '') ?: '#' }}"><span class="btn-text"><span>Learn More <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold-white.svg') }}"></span></span></a>
                       </div>
                     </div>
                     @endforeach
@@ -370,23 +370,66 @@
           </div>
           @endforeach
         </section>
-        <section class="cta-section" @if ($cta?->background_image) style="background-image:url('{{ asset('home/cta/' . $cta->background_image) }}');" @endif>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="cta-text">
-                  <div class="heading">
+
+          @php $testimonialItems = optional($testimonial)->items ?? []; @endphp
+          @if(count($testimonialItems))
+          <section class="employee-testimonials-custom-sec">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="heading heading-center" data-aos="fade-up" data-aos-duration="1000">
+                <h2>{{ optional($testimonial)->heading ?: 'Testimonials' }}</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="owl-carousel employee-testimonials-carousel">
+
+                @foreach($testimonialItems as $item)
+                <!-- Testimonial {{ $loop->iteration }} -->
+                <div class="employee-testimonial-card">
+                  <span class="testimonial-shape"></span>
+                  <div class="testimonial-icon">
+                    <i class="fa fa-quote-left"></i>
+                  </div>
+                  <p class="testimonial-text">{!! nl2br(e($item['text'] ?? '')) !!}</p>
+                  <div class="testimonial-footer">
+                    <div class="testimonial-info">
+                      <h4>{{ $item['name'] ?? '' }}</h4>
+                      <span>{{ $item['designation'] ?? '' }}@if(!empty($item['designation']) && !empty($item['company'])), @endif @if(!empty($item['company']))<br>{{ $item['company'] }}@endif</span>
+                    </div>
+                  </div>
+                </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+          @endif
+
+        <section class="cta-section">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="cta-text">
+                 <div class="heading">
                     <h2 data-aos="fade-up" data-aos-duration="1000">{{ $cta?->heading }}</h2>
                     {!! $cta?->description !!}
                   </div>
                   @if ($cta?->button_text)
                   <a class="btn-default btn-black" href="{{ $cta?->button_link ?: '#' }}">{{ $cta->button_text }}</a>
-                  @endif
+                  @endif              
+                
                 </div>
-              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
+
+        
         @include('components.frontend.footer')
       </div>
     </div>

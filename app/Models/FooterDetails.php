@@ -19,6 +19,9 @@ class FooterDetails extends Model
         'email',
         'address',
         'social_links',
+        'quick_links',
+        'get_started_text',
+        'get_started_link',
         'created_at',
         'created_by',
         'modified_at',
@@ -29,5 +32,6 @@ class FooterDetails extends Model
 
     protected $casts = [
         'social_links' => 'array',
+        'quick_links'  => 'array',
     ];
 }

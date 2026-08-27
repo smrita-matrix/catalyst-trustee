@@ -17,6 +17,7 @@ use App\Models\MarqueeInnerDetails;
 use App\Models\NonSebiServiceDetails;
 use App\Models\ProofsDetails;
 use App\Models\SebiServiceDetails;
+use App\Models\TestimonialDetails;
 use App\Models\WhyChooseDetails;
 
 
@@ -42,6 +43,7 @@ class HomeController extends Controller
     $businessPerformance = BusinessPerformanceDetails::whereNull('deleted_at')->latest('id')->first();
     $landmark            = LandmarkDetails::whereNull('deleted_at')->latest('id')->first();
     $proofs              = ProofsDetails::whereNull('deleted_at')->latest('id')->first();
+    $testimonial         = TestimonialDetails::whereNull('deleted_at')->latest('id')->first();
     $cta                 = CtaDetails::whereNull('deleted_at')->latest('id')->first();
     $footer              = FooterDetails::whereNull('deleted_at')->latest('id')->first();
 
@@ -57,6 +59,7 @@ class HomeController extends Controller
         'businessPerformance',
         'landmark',
         'proofs',
+        'testimonial',
         'cta',
         'footer'
     ));

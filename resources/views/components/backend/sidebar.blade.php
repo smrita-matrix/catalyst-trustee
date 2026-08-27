@@ -59,6 +59,43 @@
     display: block !important;
     visibility: visible !important;
   }
+  /* Sub-menu readability.
+     The theme indents each level so far that long names wrapped onto two lines,
+     which read as clutter. Tighten the indent and size so every name sits on a
+     single line, and drop the decorative bullets that were eating the width. */
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-submenu > li > a {
+    padding: 8px 24px 8px 16px !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-submenu {
+    padding-left: 12px !important;
+  }
+  /* Third level sits just inside its parent, a shade smaller. */
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .nav-sub-childmenu {
+    padding-left: 10px !important;
+  }
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .nav-sub-childmenu > li > a {
+    padding: 7px 18px 7px 14px !important;
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  /* The theme's bullet markers add width without adding meaning. */
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .sidebar-submenu > li > a::before,
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .nav-sub-childmenu > li > a::before {
+    display: none !important;
+  }
+  /* Keep the open/close arrow tight against the right edge. */
+  .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .according-menu {
+    top: 7px !important;
+    right: 6px !important;
+  }
 </style>
  <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
@@ -92,7 +129,7 @@
                   </a>
                 </li>
 
-                <li class="sidebar-list {{ request()->routeIs('banner-details.*') || request()->routeIs('marquee-inner.*') || request()->routeIs('about-catalyst-details.*') || request()->routeIs('why-choose-details.*') || request()->routeIs('sebi-service-details.*') || request()->routeIs('non-sebi-service-details.*') || request()->routeIs('gift-city-details.*') || request()->routeIs('leadership-details.*') || request()->routeIs('business-performance-details.*') || request()->routeIs('landmark-details.*') || request()->routeIs('proofs-details.*') || request()->routeIs('cta-details.*') || request()->routeIs('footer-details.*') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('banner-details.*') || request()->routeIs('marquee-inner.*') || request()->routeIs('about-catalyst-details.*') || request()->routeIs('why-choose-details.*') || request()->routeIs('sebi-service-details.*') || request()->routeIs('non-sebi-service-details.*') || request()->routeIs('gift-city-details.*') || request()->routeIs('leadership-details.*') || request()->routeIs('business-performance-details.*') || request()->routeIs('landmark-details.*') || request()->routeIs('proofs-details.*') || request()->routeIs('testimonial-details.*') || request()->routeIs('cta-details.*') || request()->routeIs('footer-details.*') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon">
@@ -104,7 +141,7 @@
                     <span>Home page</span>
                   </a>
                   <ul class="sidebar-submenu">
-                    <li><a href="{{ route('banner-details.index') }}" class="{{ request()->routeIs('banner-details.*') ? 'active' : '' }}">Banner Details</a></li>
+                    <li><a href="{{ route('banner-details.index') }}" class="{{ request()->routeIs('banner-details.*') ? 'active' : '' }}">Banner</a></li>
                     <li><a href="{{ route('marquee-inner.index') }}" class="{{ request()->routeIs('marquee-inner.*') ? 'active' : '' }}">Marquee Items</a></li>
                     <li><a href="{{ route('about-catalyst-details.index') }}" class="{{ request()->routeIs('about-catalyst-details.*') ? 'active' : '' }}">About Catalyst</a></li>
                     <li><a href="{{ route('why-choose-details.index') }}" class="{{ request()->routeIs('why-choose-details.*') ? 'active' : '' }}">Why Choose Catalyst</a></li>
@@ -115,6 +152,7 @@
                     <li><a href="{{ route('business-performance-details.index') }}" class="{{ request()->routeIs('business-performance-details.*') ? 'active' : '' }}">Business Performance</a></li>
                     <li><a href="{{ route('landmark-details.index') }}" class="{{ request()->routeIs('landmark-details.*') ? 'active' : '' }}">Landmark Transactions</a></li>
                     <li><a href="{{ route('proofs-details.index') }}" class="{{ request()->routeIs('proofs-details.*') ? 'active' : '' }}">Proofs / Recognition</a></li>
+                    <li><a href="{{ route('testimonial-details.index') }}" class="{{ request()->routeIs('testimonial-details.*') ? 'active' : '' }}">Testimonials</a></li>
                     <li><a href="{{ route('cta-details.index') }}" class="{{ request()->routeIs('cta-details.*') ? 'active' : '' }}">CTA Section</a></li>
                     <li><a href="{{ route('footer-details.index') }}" class="{{ request()->routeIs('footer-details.*') ? 'active' : '' }}">Footer</a></li>
 
@@ -145,7 +183,7 @@
                         <div class="according-menu"><i class="fa fa-angle-{{ $companyOverviewActive ? 'down' : 'right' }}"></i></div>
                       </a>
                       <ul class="nav-sub-childmenu submenu-content" @if ($companyOverviewActive) style="display: block;" @endif>
-                        <li><a href="{{ route('company-overview-banner-details.index') }}" class="{{ request()->routeIs('company-overview-banner-details.*') ? 'active' : '' }}">Banner Details</a></li>
+                        <li><a href="{{ route('company-overview-banner-details.index') }}" class="{{ request()->routeIs('company-overview-banner-details.*') ? 'active' : '' }}">Banner</a></li>
                         <li><a href="{{ route('company-overview-introduction-details.index') }}" class="{{ request()->routeIs('company-overview-introduction-details.*') ? 'active' : '' }}">Introduction</a></li>
                         <li><a href="{{ route('company-overview-vision-mission-details.index') }}" class="{{ request()->routeIs('company-overview-vision-mission-details.*') ? 'active' : '' }}">Vision &amp; Mission</a></li>
                       </ul>
@@ -155,8 +193,8 @@
                         <div class="according-menu"><i class="fa fa-angle-{{ $leadershipPageActive ? 'down' : 'right' }}"></i></div>
                       </a>
                       <ul class="nav-sub-childmenu submenu-content" @if ($leadershipPageActive) style="display: block;" @endif>
-                        <li><a href="{{ route('leadership-banner-details.index') }}" class="{{ request()->routeIs('leadership-banner-details.*') ? 'active' : '' }}">Banner Details</a></li>
-                        <li><a href="{{ route('leadership-content-details.index') }}" class="{{ request()->routeIs('leadership-content-details.*') ? 'active' : '' }}">Content (Board &amp; Team)</a></li>
+                        <li><a href="{{ route('leadership-banner-details.index') }}" class="{{ request()->routeIs('leadership-banner-details.*') ? 'active' : '' }}">Banner</a></li>
+                        <li><a href="{{ route('leadership-content-details.index') }}" class="{{ request()->routeIs('leadership-content-details.*') ? 'active' : '' }}">Board &amp; Team</a></li>
                       </ul>
                     </li>
                     <li>
@@ -165,8 +203,8 @@
                         <div class="according-menu"><i class="fa fa-angle-{{ $groupCompaniesActive ? 'down' : 'right' }}"></i></div>
                       </a>
                       <ul class="nav-sub-childmenu submenu-content" @if ($groupCompaniesActive) style="display: block;" @endif>
-                        <li><a href="{{ route('group-companies-banner-details.index') }}" class="{{ request()->routeIs('group-companies-banner-details.*') ? 'active' : '' }}">Banner Details</a></li>
-                        <li><a href="{{ route('group-companies-overview-details.index') }}" class="{{ request()->routeIs('group-companies-overview-details.*') ? 'active' : '' }}">Group Overview</a></li>
+                        <li><a href="{{ route('group-companies-banner-details.index') }}" class="{{ request()->routeIs('group-companies-banner-details.*') ? 'active' : '' }}">Banner</a></li>
+                        <li><a href="{{ route('group-companies-overview-details.index') }}" class="{{ request()->routeIs('group-companies-overview-details.*') ? 'active' : '' }}">Overview</a></li>
                         <li><a href="{{ route('group-companies-difc-details.index') }}" class="{{ request()->routeIs('group-companies-difc-details.*') ? 'active' : '' }}">DIFC Services</a></li>
                       </ul>
                     </li>
@@ -175,8 +213,8 @@
                         <div class="according-menu"><i class="fa fa-angle-{{ $ourJourneyActive ? 'down' : 'right' }}"></i></div>
                       </a>
                       <ul class="nav-sub-childmenu submenu-content" @if ($ourJourneyActive) style="display: block;" @endif>
-                        <li><a href="{{ route('our-journey-banner-details.index') }}" class="{{ request()->routeIs('our-journey-banner-details.*') ? 'active' : '' }}">Banner Details</a></li>
-                        <li><a href="{{ route('our-journey-milestone-details.index') }}" class="{{ request()->routeIs('our-journey-milestone-details.*') ? 'active' : '' }}">Milestones in Progress</a></li>
+                        <li><a href="{{ route('our-journey-banner-details.index') }}" class="{{ request()->routeIs('our-journey-banner-details.*') ? 'active' : '' }}">Banner</a></li>
+                        <li><a href="{{ route('our-journey-milestone-details.index') }}" class="{{ request()->routeIs('our-journey-milestone-details.*') ? 'active' : '' }}">Milestones</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -212,7 +250,11 @@
                   </ul>
                 </li>
 
-                @php $publicNoticeActive = request()->routeIs('notices.*'); @endphp
+                @php
+                  $publicNoticeActive = request()->routeIs('notice-category.*');
+                  // Which of the three steps is open, so the right link is highlighted.
+                  $publicNoticeTab = request()->query('tab', 'categories');
+                @endphp
                 <li class="sidebar-list {{ $publicNoticeActive ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title {{ $publicNoticeActive ? 'active' : '' }}" href="#">
@@ -225,11 +267,51 @@
                     <span>Public Notice</span>
                   </a>
                   <ul class="sidebar-submenu" @if ($publicNoticeActive) style="display: block;" @endif>
-                    <li><a href="{{ route('notices.index') }}" class="{{ $publicNoticeActive ? 'active' : '' }}">Notices &amp; Announcements</a></li>
+                    <li><a href="{{ route('notice-category.index', ['tab' => 'categories']) }}" class="{{ $publicNoticeActive && $publicNoticeTab === 'categories' ? 'active' : '' }}">Categories</a></li>
+                    <li><a href="{{ route('notice-category.index', ['tab' => 'subcategories']) }}" class="{{ $publicNoticeActive && $publicNoticeTab === 'subcategories' ? 'active' : '' }}">Sub Categories</a></li>
+                    <li><a href="{{ route('notice-category.index', ['tab' => 'pages']) }}" class="{{ $publicNoticeActive && $publicNoticeTab === 'pages' ? 'active' : '' }}">Pages</a></li>
                   </ul>
                 </li>
 
-                @php $newsletterActive = request()->routeIs('articles.*'); @endphp
+                @php $careerActive = request()->routeIs('career-page.*') || request()->routeIs('career-opening.*') || request()->routeIs('career-application.*'); @endphp
+                <li class="sidebar-list {{ $careerActive ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title {{ $careerActive ? 'active' : '' }}" href="#">
+                    <svg class="stroke-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                    </svg>
+                    <span>Careers</span>
+                  </a>
+                  <ul class="sidebar-submenu" @if ($careerActive) style="display: block;" @endif>
+                    <li><a href="{{ route('career-page.index') }}" class="{{ request()->routeIs('career-page.*') ? 'active' : '' }}">Page Content</a></li>
+                    <li><a href="{{ route('career-opening.index') }}" class="{{ request()->routeIs('career-opening.*') ? 'active' : '' }}">Current Openings</a></li>
+                    <li><a href="{{ route('career-application.index') }}" class="{{ request()->routeIs('career-application.*') ? 'active' : '' }}">Applications</a></li>
+                  </ul>
+                </li>
+
+                @php $grievanceActive = request()->routeIs('grievance-page.*') || request()->routeIs('grievance-support.*') || request()->routeIs('grievance-submission.*'); @endphp
+                <li class="sidebar-list {{ $grievanceActive ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title {{ $grievanceActive ? 'active' : '' }}" href="#">
+                    <svg class="stroke-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-support-tickets') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-support-tickets') }}"></use>
+                    </svg>
+                    <span>Grievance</span>
+                  </a>
+                  <ul class="sidebar-submenu" @if ($grievanceActive) style="display: block;" @endif>
+                    <li><a href="{{ route('grievance-page.index') }}" class="{{ request()->routeIs('grievance-page.*') ? 'active' : '' }}">Investor Grievance</a></li>
+                    <li><a href="{{ route('grievance-support.index') }}" class="{{ request()->routeIs('grievance-support.*') ? 'active' : '' }}">Contact for Support</a></li>
+                    <li><a href="{{ route('grievance-submission.index') }}" class="{{ request()->routeIs('grievance-submission.*') ? 'active' : '' }}">Submissions</a></li>
+                  </ul>
+                </li>
+
+                @php $newsletterActive = request()->routeIs('articles.*') || request()->routeIs('news-media.*'); @endphp
                 <li class="sidebar-list {{ $newsletterActive ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title {{ $newsletterActive ? 'active' : '' }}" href="#">
@@ -242,11 +324,12 @@
                     <span>Newsletter</span>
                   </a>
                   <ul class="sidebar-submenu" @if ($newsletterActive) style="display: block;" @endif>
-                    <li><a href="{{ route('articles.index') }}" class="{{ $newsletterActive ? 'active' : '' }}">Articles</a></li>
+                    <li><a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active' : '' }}">Articles</a></li>
+                    <li><a href="{{ route('news-media.index') }}" class="{{ request()->routeIs('news-media.*') ? 'active' : '' }}">News &amp; Media</a></li>
                   </ul>
                 </li>
 
-                @php $contactActive = request()->routeIs('contact.*'); @endphp
+                @php $contactActive = request()->routeIs('contact.*') || request()->routeIs('contact-enquiry.*'); @endphp
                 <li class="sidebar-list {{ $contactActive ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title {{ $contactActive ? 'active' : '' }}" href="#">
@@ -259,8 +342,23 @@
                     <span>Contact Us</span>
                   </a>
                   <ul class="sidebar-submenu" @if ($contactActive) style="display: block;" @endif>
-                    <li><a href="{{ route('contact.index') }}" class="{{ $contactActive ? 'active' : '' }}">Contact Page</a></li>
+                    <li><a href="{{ route('contact.index') }}" class="{{ request()->routeIs('contact.*') ? 'active' : '' }}">Contact Page</a></li>
+                    <li><a href="{{ route('contact-enquiry.index') }}" class="{{ request()->routeIs('contact-enquiry.*') ? 'active' : '' }}">Enquiries</a></li>
                   </ul>
+                </li>
+
+                @php $policyActive = request()->routeIs('policy-pages.*'); @endphp
+                <li class="sidebar-list {{ $policyActive ? 'active' : '' }}">
+                  <i class="fa fa-thumb-tack"> </i>
+                  <a class="sidebar-link sidebar-title link-nav {{ $policyActive ? 'active' : '' }}" href="{{ route('policy-pages.index') }}">
+                    <svg class="stroke-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                    </svg>
+                    <svg class="fill-icon">
+                      <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                    </svg>
+                    <span>Policy Pages</span>
+                  </a>
                 </li>
               </ul>
               <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

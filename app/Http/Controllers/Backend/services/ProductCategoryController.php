@@ -52,33 +52,79 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * Visual guide showing what each layout looks like (sections + sample design).
+     * Visual guide showing what each layout looks like, previewed with a real page.
      */
+    /**
+     * What each service layout looks like, previewed with a real page from this
+     * website rather than the static design files.
+     */
+    public const LAYOUT_GUIDE = [
+        'debenture' => [
+            'for' => 'SEBI style',
+            'sections' => [
+                'Banner',
+                'Intro (image + heading + description + "Our Expertise" points)',
+                'Our Services Include (image + points)',
+                'Why Catalyst (icon cards)',
+                'Services Offered (Advisory / Documentation / Operational tabs)',
+                'Recognition & Registration (certificates + note)',
+            ],
+        ],
+        'services2' => [
+            'for' => 'SEBI style',
+            'sections' => [
+                'Banner',
+                'Nature Of Work (image + heading + description)',
+                'Process & Execution (image + points)',
+                'Key Facts (image + points)',
+            ],
+        ],
+        'services3' => [
+            'for' => 'Non-SEBI style',
+            'sections' => [
+                'Banner',
+                'Intro (image + heading + description)',
+                'Services (side tabs: Fund Registration, Documentation…)',
+                'Key Benefits (image + points + note)',
+            ],
+        ],
+        'fif' => [
+            'for' => 'GIFT City style',
+            'sections' => [
+                'Banner',
+                'Intro (image + sub-heading + description)',
+                'Definition / Concept blocks',
+                'Process (side tabs: Corpus, Threshold…)',
+                'Tax comparison table',
+                'Family Office Solution (image + text)',
+                'Capabilities (image + points)',
+            ],
+        ],
+    ];
+
     public function layoutGuide()
     {
-        $base = 'https://mbihosting.in/catalyst-trustee/html/';
-        $guide = [
-            [
-                'name' => 'Layout 1', 'for' => 'SEBI style',
-                'sample' => $base . 'debenture-trustee-listed.html',
-                'sections' => ['Banner', 'Intro (image + heading + description + "Our Expertise" points)', 'Our Services Include (image + points)', 'Why Catalyst (icon cards)', 'Services Offered (Advisory / Documentation / Operational tabs)', 'Recognition & Registration (certificates + note)'],
-            ],
-            [
-                'name' => 'Layout 2', 'for' => 'SEBI style',
-                'sample' => $base . 'services-2.html',
-                'sections' => ['Banner', 'Nature Of Work (image + heading + description)', 'Process & Execution (image + points)', 'Key Facts (image + points)'],
-            ],
-            [
-                'name' => 'Layout 3', 'for' => 'Non-SEBI style',
-                'sample' => $base . 'services-3.html',
-                'sections' => ['Banner', 'Intro (image + heading + description)', 'Services (side tabs: Fund Registration, Documentation…)', 'Key Benefits (image + points + note)'],
-            ],
-            [
-                'name' => 'Layout 4', 'for' => 'GIFT City style',
-                'sample' => $base . 'family-investment-funds.html',
-                'sections' => ['Banner', 'Intro (image + sub-heading + description)', 'Definition / Concept blocks', 'Process (side tabs: Corpus, Threshold…)', 'Tax comparison table', 'Family Office Solution (image + text)', 'Capabilities (image + points)'],
-            ],
-        ];
+        $guide = [];
+
+        foreach (ProductCategory::LAYOUTS as $key => $label) {
+            $products = ProductCategory::whereNull('deleted_at')
+                ->where('status', 1)
+                ->where('layout', $key)
+                ->orderBy('sort_order', 'asc')
+                ->orderBy('id', 'asc')
+                ->get();
+
+            $example = $products->first(fn ($p) => (string) $p->slug !== '');
+
+            $guide[] = [
+                'name'     => $label,
+                'for'      => self::LAYOUT_GUIDE[$key]['for'] ?? '',
+                'sections' => self::LAYOUT_GUIDE[$key]['sections'] ?? [],
+                'sample'   => $example ? route('frontend.product_page', $example->slug) : null,
+                'example'  => $example->name ?? null,
+                'used_by'  => $products->count(),
+            ];
+        }
 
         return view('backend.services.layout-guide', compact('guide'));
     }

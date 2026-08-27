@@ -89,10 +89,69 @@
                             <label class="form-label">Form Heading</label>
                             <input class="form-control" type="text" name="form_heading" value="{{ old('form_heading', $content->form_heading ?? 'Get in Touch') }}">
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-12">
                             <label class="form-label">Form Image</label>
                             <input class="form-control single-image-input" type="file" name="form_image" accept=".jpg,.jpeg,.png,.webp">
                             <div class="img-preview mt-2">@if($content && $content->form_image)<img src="{{ asset('contact-media/form/'.$content->form_image) }}" style="max-height:80px;">@endif</div>
+                        </div>
+
+                        {{-- The two dropdowns on the enquiry form, kept side by side
+                             in their own row so they always line up. One option per line. --}}
+                        <div class="col-12">
+                          <div class="row g-4">
+                        <div class="col-lg-6">
+                            <label class="form-label">"Services" Dropdown Options</label>
+                            <textarea class="form-control" name="services_options" rows="6"
+                                      placeholder="Debenture Trustee Services&#10;Security Trustee&#10;Escrow Services">{{ old('services_options', $content->services_options ?? '') }}</textarea>
+                            <small class="text-secondary d-block mt-1">
+                                <i class="fa fa-info-circle"></i>
+                                One option per line. These fill the <b>Select Services</b> dropdown on the contact form.
+                                @if($content && count($content->optionList('services_options')))
+                                    <span class="badge badge-light-success ms-1">{{ count($content->optionList('services_options')) }} option(s) live</span>
+                                @else
+                                    <span class="badge badge-light-danger ms-1">Empty - the dropdown has no choices</span>
+                                @endif
+                            </small>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label class="form-label">"Location" Dropdown Options</label>
+                            <textarea class="form-control" name="location_options" rows="6"
+                                      placeholder="Mumbai&#10;Delhi&#10;Pune&#10;Bengaluru">{{ old('location_options', $content->location_options ?? '') }}</textarea>
+                            <small class="text-secondary d-block mt-1">
+                                <i class="fa fa-info-circle"></i>
+                                One option per line. These fill the <b>Select Location</b> dropdown on the contact form.
+                                @if($content && count($content->optionList('location_options')))
+                                    <span class="badge badge-light-success ms-1">{{ count($content->optionList('location_options')) }} option(s) live</span>
+                                @else
+                                    <span class="badge badge-light-danger ms-1">Empty - the dropdown has no choices</span>
+                                @endif
+                            </small>
+                        </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="row g-4">
+                            <div class="col-lg-6">
+                              <label class="form-label">Send New Enquiries To</label>
+                              <input class="form-control" type="email" name="notify_email" value="{{ old('notify_email', $content->notify_email ?? '') }}" placeholder="e.g. dt.mumbai@ctltrustee.com">
+                              <small class="text-secondary d-block mt-1">
+                                <i class="fa fa-info-circle"></i>
+                                Every enquiry is emailed here. The enquirer always gets an acknowledgement
+                                at their own address. Leave blank to stop the team notification.
+                              </small>
+                            </div>
+                            <div class="col-lg-6">
+                              <label class="form-label">Copy To (CC)</label>
+                              <input class="form-control" type="text" name="notify_cc" value="{{ old('notify_cc', $content->notify_cc ?? '') }}" placeholder="e.g. smrita@matrixbricks.com">
+                              <small class="text-secondary d-block mt-1">
+                                <i class="fa fa-info-circle"></i>
+                                Anyone here is copied on the team notification. Separate several addresses
+                                with commas. The enquirer never sees these addresses.
+                              </small>
+                            </div>
+                          </div>
                         </div>
                     </div>
                 </div>

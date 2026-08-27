@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\NewsletterBannerDetails;
 use App\Models\FooterDetails;
+use App\Models\NewsMedia;
+use App\Models\NewsMediaBannerDetails;
 
 class NewsletterController extends Controller
 {
@@ -32,5 +34,21 @@ class NewsletterController extends Controller
         $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
 
         return view('frontend.newsletter.articles', compact('banner', 'blocks', 'footer'));
+    }
+
+    /** Newsletter > News & Media listing. */
+    public function newsMedia()
+    {
+        $banner = NewsMediaBannerDetails::whereNull('deleted_at')->latest('id')->first();
+
+        $items = NewsMedia::whereNull('deleted_at')
+            ->where('status', 1)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
+
+        return view('frontend.newsletter.news-media', compact('banner', 'items', 'footer'));
     }
 }

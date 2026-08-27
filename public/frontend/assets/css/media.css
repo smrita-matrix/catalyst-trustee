@@ -150,6 +150,29 @@ font-size: 13px;
 padding-bottom: 10px;
 border-bottom: 1px solid #cfcfcf;
 }
+
+.public-notices-mt-custom-sec {
+  margin-top: 0;
+}
+
+.sebi-compliance-subsub-menu-custom-sec ul li a {
+    border: none;
+}
+
+.public-notices-mt-custom-sec {
+  margin-top: 0;
+  margin-bottom: 2px;
+  border-bottom: none;
+}
+
+.main_menu .mega-menu-column-4 .list-item .sebi-compliance-subsub-menu-custom-sec ul {
+    margin-bottom: 0;
+}
+
+.main_menu .mega-menu-column-4 .list-item .sebi-compliance-main-menu-custom-sec {
+    margin-bottom: 0;
+}
+
 .main_menu .mobile-menu-trigger {
 display: flex !important;
 }
@@ -315,6 +338,9 @@ padding: 0 30px;
 
 
 @media (max-width:640px){
+.opening-position-wrap .opening-header {
+    flex-direction: column;
+}
 .casestudy-section .col-md-2 {
     width: 100%;
 }

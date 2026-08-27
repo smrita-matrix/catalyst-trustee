@@ -90,6 +90,37 @@
                             <input class="form-control single-image-input" type="file" name="form_image" accept=".jpg,.jpeg,.png,.webp">
                             <div class="img-preview mt-2">@if($content && $content->form_image)<img src="{{ asset('contact-media/form/'.$content->form_image) }}" style="max-height:80px;">@endif</div>
                         </div>
+
+                        {{-- The two dropdowns on the enquiry form. One option per line. --}}
+                        <div class="col-lg-6">
+                            <label class="form-label">"Services" Dropdown Options</label>
+                            <textarea class="form-control" name="services_options" rows="7"
+                                      placeholder="Debenture Trustee Services&#10;Security Trustee&#10;Escrow Services">{{ old('services_options', $content->services_options ?? '') }}</textarea>
+                            <small class="text-secondary d-block mt-1">
+                                <i class="fa fa-info-circle"></i>
+                                One option per line. These fill the <b>Select Services</b> dropdown on the contact form.
+                                @if($content && count($content->optionList('services_options')))
+                                    <span class="badge badge-light-success ms-1">{{ count($content->optionList('services_options')) }} option(s) live</span>
+                                @else
+                                    <span class="badge badge-light-danger ms-1">Empty - the dropdown has no choices</span>
+                                @endif
+                            </small>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label class="form-label">"Location" Dropdown Options</label>
+                            <textarea class="form-control" name="location_options" rows="7"
+                                      placeholder="Mumbai&#10;Delhi&#10;Pune&#10;Bengaluru">{{ old('location_options', $content->location_options ?? '') }}</textarea>
+                            <small class="text-secondary d-block mt-1">
+                                <i class="fa fa-info-circle"></i>
+                                One option per line. These fill the <b>Select Location</b> dropdown on the contact form.
+                                @if($content && count($content->optionList('location_options')))
+                                    <span class="badge badge-light-success ms-1">{{ count($content->optionList('location_options')) }} option(s) live</span>
+                                @else
+                                    <span class="badge badge-light-danger ms-1">Empty - the dropdown has no choices</span>
+                                @endif
+                            </small>
+                        </div>
                     </div>
                 </div>
 

@@ -4,11 +4,38 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notice;
+use App\Models\NoticeCategory;
 use App\Models\NoticeBannerDetails;
 use App\Models\FooterDetails;
 
 class PublicNoticeController extends Controller
 {
+    /**
+     * Any Public Notice page, rendered from its category's chosen layout.
+     * Adding a page is an admin action now — no route or view change needed.
+     */
+    public function show($slug)
+    {
+        $category = NoticeCategory::live()
+            ->where('slug', $slug)
+            ->where('link_type', 'page')
+            ->firstOrFail();
+
+        $notices = $category->notices()
+            ->where('status', 1)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        // Layouts that show collapsible / pill groups read this instead of $notices.
+        $grouped = $notices->groupBy(fn ($n) => trim((string) $n->period));
+
+        $banner = NoticeBannerDetails::whereNull('deleted_at')->latest('id')->first();
+        $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
+
+        return view('frontend.public-notice.page', compact('category', 'notices', 'grouped', 'banner', 'footer'));
+    }
+
     public function notices()
     {
         $all = Notice::whereNull('deleted_at')
