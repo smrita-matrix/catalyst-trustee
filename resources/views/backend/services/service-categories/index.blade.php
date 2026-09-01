@@ -62,11 +62,10 @@
                                     <td>{{ $item->sort_order }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>
-                                        @if ($item->status)
-                                            <span class="badge bg-success">Shown</span>
-                                        @else
-                                            <span class="badge bg-secondary">Hidden</span>
-                                        @endif
+                                        @include('components.backend.status-toggle', [
+                                            'item' => $item,
+                                            'url'  => route('service-category.toggle', $item->id),
+                                        ])
                                     </td>
                                     <td>
                                         <a href="{{ route('service-category.edit', $item->id) }}" class="btn btn-sm btn-primary" title="Edit">

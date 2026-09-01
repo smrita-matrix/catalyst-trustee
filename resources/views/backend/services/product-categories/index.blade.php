@@ -76,11 +76,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($item->status)
-                                            <span class="badge bg-success">Shown</span>
-                                        @else
-                                            <span class="badge bg-secondary">Hidden</span>
-                                        @endif
+                                        @include('components.backend.status-toggle', [
+                                            'item' => $item,
+                                            'url'  => route('product-category.toggle', $item->id),
+                                        ])
                                     </td>
                                     <td>
                                         <a href="{{ route('product-category.edit', $item->id) }}" class="btn btn-sm btn-primary" title="Edit">

@@ -227,6 +227,30 @@ class NoticeCategoryController extends Controller
             ->with('message', 'Updated successfully!');
     }
 
+    /**
+     * Show or hide one Public Notice menu item, straight from the list.
+     *
+     * Hiding a parent takes everything under it off the menu as well, since the
+     * menu only walks through items that are showing.
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $category = NoticeCategory::findOrFail($id);
+
+            $category->update([
+                'status'      => $category->status ? 0 : 1,
+                'modified_at' => Carbon::now(),
+                'modified_by' => Auth::id(),
+            ]);
+
+            return redirect()->back()->with('message', '"' . $category->name . '" is now '
+                . ($category->status ? 'showing in' : 'hidden from') . ' the website menu.');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
+        }
+    }
+
     public function destroy($id)
     {
         try {

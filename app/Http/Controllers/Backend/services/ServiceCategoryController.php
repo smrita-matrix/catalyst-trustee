@@ -84,6 +84,30 @@ class ServiceCategoryController extends Controller
         return redirect()->route('service-category.index')->with('message', 'Category has been successfully updated!');
     }
 
+    /**
+     * Show or hide a whole group in the website menu, straight from the list.
+     *
+     * Hiding the group takes every service under it off the menu too, so this
+     * is the quick way to remove a full heading such as "GIFT City Services".
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $category = ServiceCategory::findOrFail($id);
+
+            $category->update([
+                'status'      => $category->status ? 0 : 1,
+                'modified_at' => Carbon::now(),
+                'modified_by' => Auth::id(),
+            ]);
+
+            return redirect()->back()->with('message', '"' . $category->name . '" is now '
+                . ($category->status ? 'showing in' : 'hidden from') . ' the website menu.');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
+        }
+    }
+
     public function destroy($id)
     {
         try {

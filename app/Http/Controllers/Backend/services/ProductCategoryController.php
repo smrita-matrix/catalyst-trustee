@@ -193,6 +193,31 @@ class ProductCategoryController extends Controller
         }
     }
 
+    /**
+     * Show or hide one service in the website menu, straight from the list.
+     *
+     * Same effect as the "Show on website" switch inside the edit form — this
+     * just saves opening the form when all the admin wants is to take an item
+     * off the menu.
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $product = ProductCategory::findOrFail($id);
+
+            $product->update([
+                'status'      => $product->status ? 0 : 1,
+                'modified_at' => Carbon::now(),
+                'modified_by' => Auth::id(),
+            ]);
+
+            return redirect()->back()->with('message', '"' . $product->name . '" is now '
+                . ($product->status ? 'showing in' : 'hidden from') . ' the website menu.');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error', 'Something Went Wrong - ' . $ex->getMessage());
+        }
+    }
+
     public function destroy($id)
     {
         try {

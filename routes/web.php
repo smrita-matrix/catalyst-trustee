@@ -130,8 +130,10 @@ Route::resource('our-journey-milestone-details', OurJourneyMilestoneDetailsContr
 
 
 //Services
+Route::post('service-category/{category}/toggle', [ServiceCategoryController::class, 'toggleStatus'])->name('service-category.toggle');
 Route::resource('service-category', ServiceCategoryController::class)
     ->parameters(['service-category' => 'category']);
+Route::post('product-category/{product}/toggle', [ProductCategoryController::class, 'toggleStatus'])->name('product-category.toggle');
 Route::resource('product-category', ProductCategoryController::class)
     ->parameters(['product-category' => 'product']);
 Route::get('product-page/{product}/open', [ProductCategoryController::class, 'editPage'])->name('product-page.open');
@@ -150,6 +152,7 @@ Route::match(['put', 'post'], 'service-fif/{product}', [ServiceFifController::cl
 //Public Notice
 Route::get('notice-layout-guide', [NoticeCategoryController::class, 'layoutGuide'])->name('notice-layout-guide');
 Route::post('notice-category-banner', [NoticeCategoryController::class, 'updateBanner'])->name('notice-category.banner.update');
+Route::post('notice-category/{category}/toggle', [NoticeCategoryController::class, 'toggleStatus'])->name('notice-category.toggle');
 Route::resource('notice-category', NoticeCategoryController::class)
     ->parameters(['notice-category' => 'category']);
 

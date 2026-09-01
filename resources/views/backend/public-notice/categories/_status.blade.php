@@ -1,5 +1,4 @@
-@if ($item->status)
-    <span class="badge badge-light-success">Shown</span>
-@else
-    <span class="badge badge-light-danger">Hidden</span>
-@endif
+@include('components.backend.status-toggle', [
+    'item' => $item,
+    'url'  => route('notice-category.toggle', $item->id),
+])
