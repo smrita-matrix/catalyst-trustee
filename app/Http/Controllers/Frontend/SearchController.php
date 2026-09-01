@@ -99,7 +99,9 @@ class SearchController extends Controller
         }
 
         foreach ($this->matchServices($term) as $row) {
-            $groups['Services'][] = $row;
+            // Labelled with its own group, so two services of the same name in
+            // different groups can be told apart in the results.
+            $groups[$row['group']][] = $row;
         }
 
         foreach ($this->matchNoticePages($term) as $row) {
@@ -151,7 +153,8 @@ class SearchController extends Controller
 
     private function matchServices(string $term): array
     {
-        return ProductCategory::whereNull('deleted_at')
+        return ProductCategory::with('serviceCategory')
+            ->whereNull('deleted_at')
             ->where('status', 1)
             ->where('name', 'like', "%{$term}%")
             ->orderBy('sort_order')
@@ -159,8 +162,9 @@ class SearchController extends Controller
             ->get()
             ->map(fn ($p) => [
                 'title'   => $p->name,
+                'group'   => optional($p->serviceCategory)->name ?: 'Services',
                 'snippet' => 'Service page',
-                'url'     => $p->slug ? route('frontend.product_page', $p->slug) : null,
+                'url'     => $p->url,
             ])
             ->filter(fn ($r) => $r['url'])
             ->values()

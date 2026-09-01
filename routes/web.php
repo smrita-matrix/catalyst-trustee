@@ -198,7 +198,9 @@ Route::get('/leadership', [AboutUsController::class, 'leadership'])->name('front
 Route::get('/group-companies', [AboutUsController::class, 'group_companies'])->name('frontend.group_companies');
 Route::get('/our-journey', [AboutUsController::class, 'our_journey'])->name('frontend.our_journey');
 Route::get('/debenture-trustee-listed', [ServicesSebiController::class, 'debenture_trustee_listed'])->name('frontend.debenture_trustee_listed');
-Route::get('/services/{slug}', [ServicesSebiController::class, 'show'])->name('frontend.product_page');
+Route::get('/services/{category}/{slug}', [ServicesSebiController::class, 'show'])->name('frontend.product_page');
+// Old single-part service address - kept so existing links and bookmarks still work.
+Route::get('/services/{slug}', [ServicesSebiController::class, 'showLegacy'])->name('frontend.product_page_legacy');
 Route::get('/notices-and-announcements', [PublicNoticeController::class, 'notices'])->name('frontend.notices');
 Route::get('/public-notice/{slug}', [PublicNoticeController::class, 'show'])->name('frontend.notice_page');
 Route::get('/careers', [CareerController::class, 'careers'])->name('frontend.careers');

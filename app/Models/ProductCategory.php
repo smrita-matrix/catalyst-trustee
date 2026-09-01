@@ -42,4 +42,26 @@ class ProductCategory extends Model
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id');
     }
+
+    /**
+     * Public address of this service page.
+     *
+     * The group is part of the address — /services/gift-city-services/facility-agent —
+     * because the same service can sit under more than one group. "Facility Agent"
+     * appears under both Non SEBI and GIFT City, and without the group in the
+     * address only one of them could ever be opened. It also matches the
+     * breadcrumb shown on the page.
+     *
+     * Returns null when either slug is missing, so callers can fall back.
+     */
+    public function getUrlAttribute(): ?string
+    {
+        $categorySlug = optional($this->serviceCategory)->slug;
+
+        if (!$categorySlug || !$this->slug) {
+            return null;
+        }
+
+        return route('frontend.product_page', [$categorySlug, $this->slug]);
+    }
 }

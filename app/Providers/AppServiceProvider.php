@@ -43,9 +43,13 @@ class AppServiceProvider extends ServiceProvider
                             ->where('status', 1)
                             ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')
                             ->get()
-                            ->map(function ($p) {
-                                if (in_array($p->layout, ['debenture', 'services2', 'services3', 'fif'], true) && $p->slug) {
-                                    $link = route('frontend.product_page', $p->slug);
+                            ->map(function ($p) use ($cat) {
+                                // The group is already loaded here, so hand it to
+                                // the model rather than letting it fetch its own.
+                                $p->setRelation('serviceCategory', $cat);
+
+                                if (in_array($p->layout, ['debenture', 'services2', 'services3', 'fif'], true)) {
+                                    $link = $p->url ?: '#';
                                 } else {
                                     $link = '#';
                                 }

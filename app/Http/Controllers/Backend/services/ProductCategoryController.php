@@ -107,20 +107,21 @@ class ProductCategoryController extends Controller
         $guide = [];
 
         foreach (ProductCategory::LAYOUTS as $key => $label) {
-            $products = ProductCategory::whereNull('deleted_at')
+            $products = ProductCategory::with('serviceCategory')
+                ->whereNull('deleted_at')
                 ->where('status', 1)
                 ->where('layout', $key)
                 ->orderBy('sort_order', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();
 
-            $example = $products->first(fn ($p) => (string) $p->slug !== '');
+            $example = $products->first(fn ($p) => (string) $p->url !== '');
 
             $guide[] = [
                 'name'     => $label,
                 'for'      => self::LAYOUT_GUIDE[$key]['for'] ?? '',
                 'sections' => self::LAYOUT_GUIDE[$key]['sections'] ?? [],
-                'sample'   => $example ? route('frontend.product_page', $example->slug) : null,
+                'sample'   => $example?->url,
                 'example'  => $example->name ?? null,
                 'used_by'  => $products->count(),
             ];
@@ -131,7 +132,7 @@ class ProductCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules(), $this->messages());
+        $request->validate($this->rules($request), $this->messages());
 
         ProductCategory::create([
             'service_category_id' => $request->service_category_id,
@@ -159,7 +160,7 @@ class ProductCategoryController extends Controller
     {
         $product = ProductCategory::findOrFail($id);
 
-        $request->validate($this->rules(), $this->messages());
+        $request->validate($this->rules($request, $product->id), $this->messages());
 
         $product->update([
             'service_category_id' => $request->service_category_id,
@@ -245,13 +246,32 @@ class ProductCategoryController extends Controller
             ->get();
     }
 
-    private function rules()
+    /**
+     * @param  int|null  $ignoreId  the product being edited, so it does not clash with itself
+     */
+    private function rules(Request $request, $ignoreId = null)
     {
         return [
             'service_category_id' => 'required|integer|exists:service_categories,id',
-            'name'                => 'required|string|max:255',
-            'layout'              => 'nullable|string|in:' . implode(',', array_keys(ProductCategory::LAYOUTS)),
-            'sort_order'          => 'nullable|integer',
+            // The address is /services/{group}/{name}, so the same name may be
+            // used in two different groups but never twice inside one group —
+            // that would give two pages the same address.
+            'name' => [
+                'required', 'string', 'max:255',
+                function ($attribute, $value, $fail) use ($request, $ignoreId) {
+                    $clash = ProductCategory::whereNull('deleted_at')
+                        ->where('service_category_id', $request->service_category_id)
+                        ->where('slug', Str::slug($value))
+                        ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
+                        ->first();
+
+                    if ($clash) {
+                        $fail('This service already exists under the selected category. Please use a different name.');
+                    }
+                },
+            ],
+            'layout'     => 'nullable|string|in:' . implode(',', array_keys(ProductCategory::LAYOUTS)),
+            'sort_order' => 'nullable|integer',
         ];
     }
 
