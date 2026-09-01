@@ -58,6 +58,79 @@
     </div>
   </div>
 
+  {{-- ---------------- Life at Catalyst stories ---------------- --}}
+  @php
+    $stories = old('life_stories', $content->life_stories ?: [['title' => '', 'text' => '', 'link' => '']]);
+  @endphp
+  <div class="col-12">
+    <div class="card border">
+      <div class="card-header py-2 d-flex justify-content-between align-items-center">
+        <b>Life at Catalyst &mdash; Stories</b>
+        <button type="button" class="btn btn-outline-primary btn-sm" id="add-story"><i class="fa fa-plus"></i> Add Story</button>
+      </div>
+      <div class="card-body">
+
+        <div id="stories-list">
+          @foreach ($stories as $i => $story)
+          <div class="border rounded p-3 mb-3 story-row" style="background:#fbfbfc;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-light text-dark story-number">Story {{ $i + 1 }}</span>
+              <button type="button" class="btn btn-outline-danger btn-sm btn-remove-story"><i class="fa fa-trash"></i> Remove</button>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Title</label>
+              <input class="form-control" type="text" name="life_stories[{{ $i }}][title]"
+                     value="{{ $story['title'] ?? '' }}" placeholder="e.g. Celebrating Together, Creating Memories">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Text</label>
+              <textarea class="form-control" name="life_stories[{{ $i }}][text]" rows="5"
+                        placeholder="Leave a blank line between paragraphs.">{{ $story['text'] ?? '' }}</textarea>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Photos</label>
+              <input class="form-control story-images" type="file" name="life_stories[{{ $i }}][images][]"
+                     accept=".jpg,.jpeg,.png,.webp" multiple>
+              <small class="text-secondary d-block mt-1">
+                <i class="fa fa-info-circle"></i>
+                Choose several at once. JPG, PNG or WebP, max 4 MB each. These are shown on the page under the story.
+              </small>
+
+              @if(!empty($story['images']))
+              <div class="d-flex flex-wrap gap-2 mt-2 story-existing">
+                @foreach($story['images'] as $img)
+                <div class="border rounded p-1 text-center" style="background:#f7f8fa; width:118px;">
+                  <img src="{{ asset('career-uploads/life/'.$img) }}" alt=""
+                       style="width:100%; height:78px; object-fit:cover; border-radius:4px; display:block;">
+                  <input type="hidden" name="life_stories[{{ $i }}][existing_images][]" value="{{ $img }}">
+                  <label class="d-block mt-1" style="font-size:11px; cursor:pointer;">
+                    <input type="checkbox" name="life_stories[{{ $i }}][remove_images][]" value="{{ $img }}">
+                    Remove
+                  </label>
+                </div>
+                @endforeach
+              </div>
+              @endif
+            </div>
+
+            <div>
+              <label class="form-label">Album Link <span class="text-secondary">(optional)</span></label>
+              <input class="form-control" type="text" name="life_stories[{{ $i }}][link]"
+                     value="{{ $story['link'] ?? '' }}" placeholder="https://drive.google.com/...">
+              <small class="text-secondary">
+                Kept for your own reference only &mdash; it is no longer shown on the website, since the photos
+                above are displayed on the page itself.
+              </small>
+            </div>
+          </div>
+          @endforeach
+        </div>
+
+        <small class="text-secondary">Empty stories are ignored, so a blank row does no harm.</small>
+      </div>
+    </div>
+  </div>
+
   {{-- ---------------- Form headings ---------------- --}}
   <div class="col-12">
     <div class="card border">
@@ -109,3 +182,48 @@
   </div>
 
 </div>
+
+<script>
+  // Stories repeater. Rows are numbered so PHP receives each story's title,
+  // text and link together, so every add or remove renumbers the list.
+  document.addEventListener('DOMContentLoaded', function () {
+    var list = document.getElementById('stories-list');
+    if (!list) { return; }
+
+    function renumber() {
+      list.querySelectorAll('.story-row').forEach(function (row, i) {
+        row.querySelector('.story-number').textContent = 'Story ' + (i + 1);
+        row.querySelectorAll('[name]').forEach(function (el) {
+          el.name = el.name.replace(/life_stories\[\d*\]/, 'life_stories[' + i + ']');
+        });
+      });
+    }
+
+    var addBtn = document.getElementById('add-story');
+    if (addBtn) {
+      addBtn.addEventListener('click', function () {
+        var row = list.querySelector('.story-row').cloneNode(true);
+        row.querySelectorAll('input, textarea').forEach(function (el) { el.value = ''; });
+
+        // A new story must not inherit the photos of the one it was copied from.
+        row.querySelectorAll('.story-existing').forEach(function (el) { el.remove(); });
+
+        list.appendChild(row);
+        renumber();
+        row.querySelector('input').focus();
+      });
+    }
+
+    list.addEventListener('click', function (e) {
+      var btn = e.target.closest('.btn-remove-story');
+      if (!btn) { return; }
+
+      if (list.querySelectorAll('.story-row').length > 1) {
+        btn.closest('.story-row').remove();
+      } else {
+        btn.closest('.story-row').querySelectorAll('input, textarea').forEach(function (el) { el.value = ''; });
+      }
+      renumber();
+    });
+  });
+</script>

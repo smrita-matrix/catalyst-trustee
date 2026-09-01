@@ -86,6 +86,80 @@ class CareerPageController extends Controller
 
     /* ------------------------------------------------------------------ */
 
+    /**
+     * Build the Life at Catalyst stories from the form.
+     *
+     * Each story keeps its own set of photos. Pictures already saved arrive as
+     * hidden values and newly chosen files arrive as uploads, so the two are
+     * joined; anything the admin ticked for removal is dropped and its file
+     * deleted. Blank rows are ignored.
+     */
+    private function cleanStories(Request $request): array
+    {
+        $rows   = (array) $request->input('life_stories', []);
+        $clean  = [];
+
+        foreach ($rows as $i => $row) {
+            $story = [
+                'title' => trim((string) ($row['title'] ?? '')),
+                'text'  => trim((string) ($row['text'] ?? '')),
+                'link'  => trim((string) ($row['link'] ?? '')),
+            ];
+
+            // Photos already on the page, minus any marked for removal.
+            $keep    = array_filter((array) ($row['existing_images'] ?? []));
+            $remove  = array_filter((array) ($row['remove_images'] ?? []));
+
+            foreach ($remove as $file) {
+                $this->deleteStoryImage($file);
+            }
+
+            $images = array_values(array_diff($keep, $remove));
+
+            // Newly chosen files for this story.
+            foreach ((array) $request->file("life_stories.$i.images", []) as $file) {
+                if ($file && $file->isValid()) {
+                    $images[] = $this->uploadStoryImage($file);
+                }
+            }
+
+            $story['images'] = array_values($images);
+
+            if ($story['title'] === '' && $story['text'] === '' && !$story['images']) {
+                continue;
+            }
+
+            $clean[] = $story;
+        }
+
+        return $clean;
+    }
+
+    private function uploadStoryImage($file): string
+    {
+        $destination = public_path('career-uploads/life');
+        if (!is_dir($destination)) {
+            mkdir($destination, 0775, true);
+        }
+
+        $fileName = 'life_' . time() . '_' . Str::random(8) . '.' . strtolower($file->getClientOriginalExtension());
+        $file->move($destination, $fileName);
+
+        return $fileName;
+    }
+
+    private function deleteStoryImage($fileName): void
+    {
+        if (!$fileName) {
+            return;
+        }
+
+        $path = public_path('career-uploads/life/' . $fileName);
+        if (is_file($path)) {
+            @unlink($path);
+        }
+    }
+
     private function payload(Request $request)
     {
         return [
@@ -93,6 +167,7 @@ class CareerPageController extends Controller
             'breadcrumb_child' => $request->breadcrumb_child,
             'intro_heading'    => $request->intro_heading,
             'intro_text'       => $request->intro_text,
+            'life_stories'     => $this->cleanStories($request),
             'form_sub_heading' => $request->form_sub_heading,
             'form_heading'     => $request->form_heading,
             'notify_email'     => $request->notify_email,
@@ -108,6 +183,11 @@ class CareerPageController extends Controller
             'banner_image'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'intro_heading'    => 'nullable|string',
             'intro_text'       => 'nullable|string',
+            'life_stories'          => 'nullable|array',
+            'life_stories.*.title'  => 'nullable|string|max:255',
+            'life_stories.*.text'   => 'nullable|string',
+            'life_stories.*.link'   => 'nullable|string|max:1000',
+            'life_stories.*.images.*' => ['nullable', 'file', 'max:4096', 'mimes:jpg,jpeg,png,webp'],
             'form_sub_heading' => 'nullable|string|max:255',
             'form_heading'     => 'nullable|string|max:255',
             'notify_email'     => 'nullable|email|max:255',

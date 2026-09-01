@@ -31,7 +31,7 @@ class LandmarkDetailsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules(), $this->messages());
+        $request->validate($this->rules(), $this->messages(), $this->attributeNames($request));
 
         $items = $this->buildItems($request, []);
 
@@ -56,7 +56,7 @@ class LandmarkDetailsController extends Controller
     {
         $landmark = LandmarkDetails::findOrFail($id);
 
-        $request->validate($this->rules(), $this->messages());
+        $request->validate($this->rules(), $this->messages(), $this->attributeNames($request));
 
         $existingItems = $landmark->items ?? [];
         $items = $this->buildItems($request, $existingItems);
@@ -183,6 +183,24 @@ class LandmarkDetailsController extends Controller
         if (is_file($path)) {
             @unlink($path);
         }
+    }
+
+    /**
+     * Friendly field names for the repeater rows.
+     *
+     * Without this, a problem with an upload reads "The item_image.3 failed to
+     * upload", which tells whoever is filling in the form nothing useful.
+     * Naming the row makes it obvious which one to fix.
+     */
+    private function attributeNames(Request $request): array
+    {
+        $names = [];
+
+        foreach (array_keys((array) $request->file('item_image', [])) as $i) {
+            $names["item_image.$i"] = 'image in row ' . ($i + 1);
+        }
+
+        return $names;
     }
 
     private function imageExtensionRule()

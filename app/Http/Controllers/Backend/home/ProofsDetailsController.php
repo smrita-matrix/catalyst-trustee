@@ -31,7 +31,7 @@ class ProofsDetailsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate($this->rules(), $this->messages());
+        $request->validate($this->rules(), $this->messages(), $this->attributeNames($request));
 
         $items = $this->buildItems($request, []);
 
@@ -56,7 +56,7 @@ class ProofsDetailsController extends Controller
     {
         $proofs = ProofsDetails::findOrFail($id);
 
-        $request->validate($this->rules(), $this->messages());
+        $request->validate($this->rules(), $this->messages(), $this->attributeNames($request));
 
         $existingItems = $proofs->items ?? [];
         $items = $this->buildItems($request, $existingItems);
@@ -197,6 +197,26 @@ class ProofsDetailsController extends Controller
         if (is_file($path)) {
             @unlink($path);
         }
+    }
+
+    /**
+     * Friendly field names for the repeater rows.
+     *
+     * Without this, a problem with an upload reads "The item_image.3 failed to
+     * upload", which tells whoever is filling in the form nothing useful.
+     * Naming the row makes it obvious which one to fix.
+     */
+    private function attributeNames(Request $request): array
+    {
+        $names = [];
+
+        foreach (['item_image' => 'background image', 'item_icon' => 'icon'] as $field => $label) {
+            foreach (array_keys((array) $request->file($field, [])) as $i) {
+                $names["$field.$i"] = $label . ' in row ' . ($i + 1);
+            }
+        }
+
+        return $names;
     }
 
     private function imageExtensionRule()

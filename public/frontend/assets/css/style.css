@@ -2733,7 +2733,7 @@ content: "";
 }
 
 .metrics-card-large-one {
-  background-image: url(../images/bg/rectangle-1.webp) !important;
+  background-image: url(../images/bg/rectangle-1.webp);
   background-size: cover !important;
   position: relative;
 }
@@ -2746,7 +2746,7 @@ content: "";
 }
 
 .metrics-card-large-two {
-  background-image: url(../images/bg/rectangle-2.webp) !important;
+  background-image: url(../images/bg/rectangle-2.webp);
   background-size: cover !important;
   position: relative;
 }
@@ -2759,7 +2759,7 @@ content: "";
 }
 
 .metrics-card-large-three {
-  background-image: url(../images/bg/rectangle-3.webp) !important;
+  background-image: url(../images/bg/rectangle-3.webp);
   background-size: cover !important;
   position: relative;
 }
@@ -2772,7 +2772,7 @@ content: "";
 }
 
 .metrics-card-large-four {
-  background-image: url(../images/bg/rectangle-4.webp) !important;
+  background-image: url(../images/bg/rectangle-4.webp);
   background-size: cover !important;
   position: relative;
 }
@@ -6207,7 +6207,7 @@ strong {
 
 .rs-admission .admission-img img {
   width: 100%;
-  height: 420px;
+  height: auto;
   object-fit: cover;
   display: block;
 }
@@ -7667,7 +7667,7 @@ strong {
 
 .securatization-listed-ptc-process-admission-sec .admission-img img {
   width: 100%;
-  height: 850px;
+  height: auto;
   object-fit: cover;
   display: block;
 }
@@ -10832,4 +10832,331 @@ strong {
 .copyright-item .policy-links a:hover {
   opacity: 1;
   text-decoration: underline;
+}
+
+/* ===== Photo columns match the text panel beside them =====
+   These sections place a photo next to a coloured text panel. The photo was
+   given a fixed height - 850px in one case, 420px in another, auto in a third -
+   so as soon as the text was taller than that number the photo stopped short
+   and left a blank gap beside it. Filling the column instead keeps both sides
+   level whatever the length of the text.
+
+   Desktop only: below 768px the two columns stack, and their own heights there
+   are deliberate. */
+@media (min-width: 768px) {
+
+  .securatization-listed-ptc-process-admission-sec .admission-img,
+  .rs-admission .admission-img,
+  .fam-inv-fu-ad-sec .fam-inv-fu-ad-img {
+    align-self: stretch;
+  }
+
+  .securatization-listed-ptc-process-admission-sec .admission-img img,
+  .rs-admission .admission-img img,
+  .fam-inv-fu-ad-sec .fam-inv-fu-ad-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/* ===== Text inside the coloured panels =====
+   The panel content is written in the dashboard and can contain paragraphs,
+   bold text and sub-headings as well as bullet points. Only the bullets were
+   painted white, so every paragraph fell back to the default dark text and came
+   out almost black against the orange. Colouring the panel itself means
+   everything inside inherits white unless a rule deliberately says otherwise. */
+.securatization-listed-ptc-process-admission-sec .admission-content,
+.rs-admission .admission-content,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content {
+  color: #ffffff;
+}
+
+.securatization-listed-ptc-process-admission-sec .admission-content p,
+.securatization-listed-ptc-process-admission-sec .admission-content strong,
+.securatization-listed-ptc-process-admission-sec .admission-content em,
+.securatization-listed-ptc-process-admission-sec .admission-content span,
+.securatization-listed-ptc-process-admission-sec .admission-content h3,
+.securatization-listed-ptc-process-admission-sec .admission-content h4,
+.securatization-listed-ptc-process-admission-sec .admission-content h5,
+.rs-admission .admission-content p,
+.rs-admission .admission-content strong,
+.rs-admission .admission-content em,
+.rs-admission .admission-content span,
+.rs-admission .admission-content h3,
+.rs-admission .admission-content h4,
+.rs-admission .admission-content h5,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content p,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content strong,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content em,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content span,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content h3,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content h4,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content h5 {
+  color: inherit;
+}
+
+/* A link on the orange still has to be visible and obviously a link. */
+.securatization-listed-ptc-process-admission-sec .admission-content a,
+.rs-admission .admission-content a,
+.fam-inv-fu-ad-sec .fam-inv-fu-ad-content a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Breathing room so long content never touches the top and bottom edges.
+   Desktop only - the stacked mobile view has its own spacing. */
+@media (min-width: 768px) {
+
+  .securatization-listed-ptc-process-admission-sec .admission-content .inner,
+  .rs-admission .admission-content .inner,
+  .fam-inv-fu-ad-sec .fam-inv-fu-ad-content .fam-inv-fu-ad-inner {
+    padding: 60px 45px;
+  }
+}
+
+/* ===== Space above the footer =====
+   The full-bleed coloured sections run edge to edge and carry no padding of
+   their own, so when one of them ends the page it sits flush against the
+   footer with no separation at all.
+
+   The gap is put on the footer only when it directly follows one of those
+   sections, so the same section keeps its edge-to-edge look when it appears in
+   the middle of a page. Every other section that can end a page already has
+   70-90px of its own padding and needs nothing added. */
+.securatization-listed-ptc-process-admission-sec + footer,
+.rs-admission + footer,
+.fam-inv-fu-ad-sec + footer {
+  margin-top: 70px;
+}
+
+@media (max-width: 767px) {
+
+  .securatization-listed-ptc-process-admission-sec + footer,
+  .rs-admission + footer,
+  .fam-inv-fu-ad-sec + footer {
+    margin-top: 45px;
+  }
+}
+
+/* ===== "Build On Trust" award cards =====
+   The four cards were a fixed 370px wide and sized themselves to their text, so
+   on a wide screen they sat in the corners with a large empty middle - made
+   wider still by the scroll animation, which pushes each card 180px outwards.
+
+   Sizing them against the screen width means they grow with the monitor, which
+   is exactly where the gap was worst, and a shared width stops the four cards
+   looking ragged. The bottom pair moves up slightly because the taller card
+   plus the animation's 100px downward move would otherwise run past the bottom
+   of the section, which is clipped.
+
+   Large screens only - the stacked layout below 992px is untouched, and the
+   animation itself only runs at 992px and up. */
+@media (min-width: 992px) {
+
+  .proofs-section .proof-card {
+    width: 34vw;
+    min-width: 370px;
+    max-width: 720px;
+  }
+
+  .proofs-section .metrics-card {
+    width: 100%;
+    min-height: 260px;
+  }
+
+  .proofs-section .card-3,
+  .proofs-section .card-4 {
+    top: 50%;
+  }
+}
+
+@media (min-width: 1600px) {
+
+  .proofs-section .metrics-card {
+    min-height: 320px;
+  }
+
+  .proofs-section .card-3,
+  .proofs-section .card-4 {
+    top: 48%;
+  }
+}
+
+/* ===== "Build On Trust" card photos =====
+   Each card's photo is set from the dashboard as an inline background image.
+   The four design photos were declared here with !important, and !important in
+   a stylesheet outranks an inline style - so whatever was uploaded was stored
+   correctly but never appeared, and the original four always showed instead.
+   The !important is gone, so an uploaded photo now wins and the design photo
+   stays as the fallback for a card with no image of its own.
+
+   Centring matters too: the default puts the top-left corner of the photo in
+   the corner of the card, which cut people's heads off in group shots. */
+.proofs-section .metrics-card {
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* ===== Intro photos match the text beside them =====
+   Every service layout opens with a photo on one side and the introduction
+   plus a bullet list on the other. The photo was set to full width with its
+   height left to the picture itself, so as soon as the text ran longer than
+   the picture - which it does on any page with more than a few bullets - the
+   photo stopped short and left a tall blank column beside the text.
+
+   These rows are the old float-based grid, where columns are only as tall as
+   their own contents, so the row is switched to a stretching one first and the
+   photo then fills whatever height the text needs.
+
+   Desktop only: below 992px the columns stack and the photo keeps its natural
+   height, which is what it should do there. */
+@media (min-width: 992px) {
+
+  .debenture-trustee-one-custom-sec .row,
+  .securatization-listed-ptc-one-custom-sec .row,
+  .services-three-page-one-custom-sec .row,
+  .family-investment-funds-one-custom-sec .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  /* Columns become vertical boxes with their contents centred, so a short
+     introduction sits level with the middle of the photo instead of hugging
+     the top and leaving a gap underneath it. */
+  .debenture-trustee-one-custom-sec .row > [class*="col-"],
+  .securatization-listed-ptc-one-custom-sec .row > [class*="col-"],
+  .services-three-page-one-custom-sec .row > [class*="col-"],
+  .family-investment-funds-one-custom-sec .row > [class*="col-"] {
+    float: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* The floor is what a photo drops to when the text beside it is short. Set
+     too high, a two-paragraph introduction ends up dwarfed by its picture. */
+  .debenture-trustee-one-img-cust-sec,
+  .securatization-listed-ptc-one-img-cust-sec,
+  .services-three-page-one-img-cust-sec,
+  .family-investment-funds-one-img-cust-sec {
+    position: relative;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 340px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .debenture-trustee-one-img-cust-sec img,
+  .securatization-listed-ptc-one-img-cust-sec img,
+  .services-three-page-one-img-cust-sec img,
+  .family-investment-funds-one-img-cust-sec img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ===== Life at Catalyst stories ===== */
+.life-stories {
+  max-width: 900px;
+  margin: 10px auto 0;
+}
+
+.life-story {
+  padding: 28px 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.life-story:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.life-story h3 {
+  margin: 0 0 14px;
+  font-family: 'Poppins-SemiBold';
+  font-size: 22px;
+  line-height: 1.35;
+  color: #c9624c;
+}
+
+.life-story p {
+  margin-bottom: 12px;
+  color: #444343;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+
+
+/* Write-up under a News & Media headline. */
+.blog-summary p {
+  margin-bottom: 10px;
+  color: #5b5a58;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+@media (max-width: 767px) {
+
+  .life-story h3 {
+    font-size: 19px;
+  }
+
+  .life-story p {
+    font-size: 15px;
+  }
+}
+
+/* ===== Life at Catalyst photo galleries =====
+   The photos from each occasion sit under the story that describes them, so
+   nobody has to leave the site to see them. A flexible grid keeps the rows
+   even whatever the number of pictures, and every thumbnail is the same shape
+   so mixed portrait and landscape shots still line up. */
+.life-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.life-photo {
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f2f1ed;
+}
+
+.life-photo img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.life-photo:hover img {
+  transform: scale(1.06);
+}
+
+@media (max-width: 767px) {
+
+  .life-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .life-photo img {
+    height: 118px;
+  }
 }

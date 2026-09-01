@@ -18,6 +18,7 @@ class CareerPageDetails extends Model
         'banner_image',
         'intro_heading',
         'intro_text',
+        'life_stories',
         'form_sub_heading',
         'form_heading',
         'notify_email',
@@ -28,5 +29,10 @@ class CareerPageDetails extends Model
         'modified_by',
         'deleted_at',
         'deleted_by',
+    ];
+
+    /** "Life at Catalyst" is a list of {title, text, link} entries. */
+    protected $casts = [
+        'life_stories' => 'array',
     ];
 }

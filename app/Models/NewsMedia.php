@@ -15,6 +15,7 @@ class NewsMedia extends Model
 
     protected $fillable = [
         'title',
+        'description',
         'category',
         'image',
         'link',
@@ -37,14 +38,14 @@ class NewsMedia extends Model
         if (Str::startsWith($this->image, ['http://', 'https://'])) {
             return $this->image;
         }
-        return asset('news-media/image/' . $this->image);
+        return asset('news-media-uploads/image/' . $this->image);
     }
 
     /** Where "Read More" points — an uploaded PDF wins over an external link. */
     public function getReadMoreUrlAttribute()
     {
         if ($this->pdf_file) {
-            return asset('news-media/pdf/' . $this->pdf_file);
+            return asset('news-media-uploads/pdf/' . $this->pdf_file);
         }
         return $this->link ?: null;
     }

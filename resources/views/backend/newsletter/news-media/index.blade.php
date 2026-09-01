@@ -75,7 +75,7 @@
                         </small>
                         @if(optional($banner)->background_image)
                           <div class="mt-2 p-2 border rounded" style="display:inline-block; background:#f7f8fa;">
-                            <img src="{{ asset('news-media/banner/'.$banner->background_image) }}" alt="banner" style="max-height:100px; border-radius:6px; display:block;">
+                            <img src="{{ asset('news-media-uploads/banner/'.$banner->background_image) }}" alt="banner" style="max-height:100px; border-radius:6px; display:block;">
                           </div>
                         @endif
                       </div>

@@ -76,6 +76,23 @@
                         preg_match_all('/<p\b[^>]*>.*?<\/p>/is', $descHtml, $m);
                         $paras = $m[0] ?? [];
                     }
+                    // The same opening line is easy to type into the tagline box
+                    // and again at the top of the description, which prints it
+                    // twice. Keep the tagline and drop the repeat.
+                    $plain = fn ($html) => mb_strtolower(trim(preg_replace('/\s+/', ' ',
+                        html_entity_decode(strip_tags((string) $html), ENT_QUOTES | ENT_HTML5, 'UTF-8'))));
+
+                    $taglineText = $plain(optional($introduction)->tagline);
+
+                    if ($taglineText !== '' && $paras) {
+                        $kept = array_values(array_filter($paras, fn ($p) => $plain($p) !== $taglineText));
+
+                        if (count($kept) !== count($paras)) {
+                            $paras    = $kept;
+                            $descHtml = implode('', $paras);
+                        }
+                    }
+
                     $useSplit    = count($paras) > $visibleN;
                     $visibleHtml = $useSplit ? implode('', array_slice($paras, 0, $visibleN)) : $descHtml;
                     $hiddenHtml  = $useSplit ? implode('', array_slice($paras, $visibleN)) : '';

@@ -17,7 +17,7 @@
       @php $bTitle = optional($banner)->title ?: 'News & Media'; @endphp
 
       <section class="breadcrumb-bg-sec">
-        <div class="breadcrumb-header-bg" @if(optional($banner)->background_image) style="background-image: url('{{ asset('news-media/banner/'.$banner->background_image) }}');" @endif></div>
+        <div class="breadcrumb-header-bg" @if(optional($banner)->background_image) style="background-image: url('{{ asset('news-media-uploads/banner/'.$banner->background_image) }}');" @endif></div>
         <div class="container">
           <div class="breadcrumb-header-inner">
             <h1>{{ $bTitle }}</h1>
@@ -64,6 +64,14 @@
                   <h3>
                     <a href="{{ $url ?: '#' }}" @if($url) target="_blank" rel="noopener noreferrer" @endif>{{ $item->title }}</a>
                   </h3>
+                  @if(trim($item->description ?? '') !== '')
+                  <div class="blog-summary">
+                    @foreach(preg_split('/\R\s*\R/', trim($item->description)) as $para)
+                      @php $para = trim($para); @endphp
+                      @if($para !== '')<p>{{ $para }}</p>@endif
+                    @endforeach
+                  </div>
+                  @endif
                   @if($url)
                   <a href="{{ $url }}" class="blog-read-more" target="_blank" rel="noopener noreferrer">
                     Read More <i class="fa fa-long-arrow-right"></i>

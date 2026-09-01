@@ -20,7 +20,7 @@
                 <h1>{!! preg_replace('#</?p[^>]*>#', '', $banner->banner_heading) !!}</h1>
                 <h2>{!! preg_replace('#</?p[^>]*>#', '', $banner->banner_description) !!}</h2>
                 @if ($banner->button_text)
-                <a class="btn-default" href="{{ $banner->button_link ?: '#' }}">{{ $banner->button_text }}</a>
+                <a class="btn-default" href="{{ site_link($banner->button_link) }}">{{ $banner->button_text }}</a>
                 @endif
               </div>
             </div>
@@ -77,7 +77,7 @@
                   </div>
                   {!! $about?->description !!}
                   @if ($about?->button_text)
-                  <a class="btn-default" href="{{ $about?->button_link ?: '#' }}">{{ $about->button_text }}</a>
+                  <a class="btn-default" href="{{ site_link($about?->button_link) }}">{{ $about->button_text }}</a>
                   @endif
                 </div>
               </div>
@@ -136,11 +136,11 @@
                                 <img src="{{ asset('home/sebi-services/' . $item['icon']) }}">
                                 @endif
                               </div>
-                              <h3><a href="{{ ($item['title_link'] ?? '') ?: '#' }}">{{ $item['title'] ?? '' }}</a></h3>
+                              <h3><a href="{{ site_link($item['title_link'] ?? '') }}">{{ $item['title'] ?? '' }}</a></h3>
                             </div>
                             <div class="description-and-btn-area">
                               <p>{{ $item['description'] ?? '' }}</p>
-                              <a href="{{ ($item['read_more_link'] ?? '') ?: '#' }}" class="read-more-btn">
+                              <a href="{{ site_link($item['read_more_link'] ?? '') }}" class="read-more-btn">
                                 <span>Read more</span>
                                 <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}">
                               </a>
@@ -180,9 +180,9 @@
                         @endif
                       </div>
                       <div class="service-content">
-                        <h4 class="title"><a href="{{ ($item['title_link'] ?? '') ?: '#' }}">{{ $item['title'] ?? '' }}</a></h4>
+                        <h4 class="title"><a href="{{ site_link($item['title_link'] ?? '') }}">{{ $item['title'] ?? '' }}</a></h4>
                         <p class="desc">{{ $item['description'] ?? '' }}</p>
-                        <a class="text-btn" href="{{ ($item['read_more_link'] ?? '') ?: '#' }}"><span class="btn-text"><span>Learn More <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold-white.svg') }}"></span></span></a>
+                        <a class="text-btn" href="{{ site_link($item['read_more_link'] ?? '') }}"><span class="btn-text"><span>Learn More <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold-white.svg') }}"></span></span></a>
                       </div>
                     </div>
                     @endforeach
@@ -212,13 +212,13 @@
                   <div class="project-content">
                     <div class="project-text">
                       <h3 class="title">
-                        <a href="{{ ($item['title_link'] ?? '') ?: '#' }}">{{ $item['title'] ?? '' }}</a>
+                        <a href="{{ site_link($item['title_link'] ?? '') }}">{{ $item['title'] ?? '' }}</a>
                       </h3>
                       <p>
                         {{ $item['description'] ?? '' }}
                       </p>
                     </div>
-                    <a class="project-btn" href="{{ ($item['title_link'] ?? '') ?: '#' }}">
+                    <a class="project-btn" href="{{ site_link($item['title_link'] ?? '') }}">
                       <img src="{{ asset('frontend/assets/images/icons/right-arrow.png')}}">
                     </a>
                   </div>
@@ -327,7 +327,7 @@
                       @endif
                       <h3>{{ $item['title'] ?? '' }}</h3>
                       <p>{{ $item['description'] ?? '' }}</p>
-                      <a href="{{ ($item['link'] ?? '') ?: '#' }}" class="read-more-btn">
+                      <a href="{{ site_link($item['link'] ?? '') }}" class="read-more-btn">
                       <span>Read more</span>
                       <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}" alt="">
                       </a>
@@ -420,7 +420,7 @@
                     {!! $cta?->description !!}
                   </div>
                   @if ($cta?->button_text)
-                  <a class="btn-default btn-black" href="{{ $cta?->button_link ?: '#' }}">{{ $cta->button_text }}</a>
+                  <a class="btn-default btn-black" href="{{ site_link($cta?->button_link) }}">{{ $cta->button_text }}</a>
                   @endif              
                 
                 </div>

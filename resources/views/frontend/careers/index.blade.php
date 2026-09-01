@@ -54,6 +54,46 @@
               </div>
             </div>
           </div>
+
+          {{-- The stories the team adds from the dashboard: a title, the write-up,
+               and an optional link to the photos from that occasion. --}}
+          @php $stories = optional($content)->life_stories ?: []; @endphp
+          @if(count($stories))
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="life-stories">
+                @foreach($stories as $i => $story)
+                  @php
+                    $title  = trim($story['title'] ?? '');
+                    $text   = trim($story['text'] ?? '');
+                    $photos = array_values(array_filter($story['images'] ?? []));
+                  @endphp
+                  @continue($title === '' && $text === '' && !$photos)
+                  <div class="life-story" data-aos="fade-up" data-aos-duration="900" data-aos-delay="{{ ($i % 2) * 120 }}">
+                    @if($title !== '')<h3>{{ $title }}</h3>@endif
+                    @foreach(preg_split('/\R\s*\R/', $text) as $para)
+                      @php $para = trim($para); @endphp
+                      @if($para !== '')<p>{{ $para }}</p>@endif
+                    @endforeach
+
+                    {{-- The photos from that occasion, shown here rather than
+                         sending people off to a shared album. --}}
+                    @if($photos)
+                    <div class="life-gallery">
+                      @foreach($photos as $photo)
+                      <figure class="life-photo">
+                        <img src="{{ asset('career-uploads/life/'.$photo) }}"
+                             alt="{{ $title }}" loading="lazy">
+                      </figure>
+                      @endforeach
+                    </div>
+                    @endif
+                  </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+          @endif
         </div>
       </section>
 

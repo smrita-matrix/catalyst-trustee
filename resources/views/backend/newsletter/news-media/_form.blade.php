@@ -19,6 +19,16 @@
     <small class="text-secondary">The small badge on the image. Leave blank to hide it.</small>
   </div>
 
+  <div class="col-12">
+    <label class="form-label">Write-up</label>
+    <textarea class="form-control" name="description" rows="6"
+              placeholder="The text shown under the headline on the card.">{{ old('description', $item->description) }}</textarea>
+    <small class="text-secondary">
+      <i class="fa fa-info-circle"></i>
+      Optional. Leave a blank line between paragraphs. Leave empty to show only the headline.
+    </small>
+  </div>
+
   <div class="col-lg-6">
     <label class="form-label">Card Image</label>
     <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
@@ -38,7 +48,7 @@
     <small class="text-secondary d-block mt-1"><i class="fa fa-info-circle"></i> PDF only, max 20 MB.</small>
     @if($item->pdf_file)
       <div class="mt-2">
-        <a href="{{ asset('news-media/pdf/'.$item->pdf_file) }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-light">
+        <a href="{{ asset('news-media-uploads/pdf/'.$item->pdf_file) }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-light">
           <i class="fa fa-file-pdf-o"></i> Current PDF
         </a>
         <small class="text-muted">- upload a new one to replace</small>

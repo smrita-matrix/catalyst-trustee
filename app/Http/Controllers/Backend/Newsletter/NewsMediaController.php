@@ -53,9 +53,9 @@ class NewsMediaController extends Controller
 
         if ($request->hasFile('background_image')) {
             if ($banner && $banner->background_image) {
-                $this->deleteFile('news-media/banner', $banner->background_image);
+                $this->deleteFile('news-media-uploads/banner', $banner->background_image);
             }
-            $data['background_image'] = $this->uploadFile($request->file('background_image'), 'news-media/banner', 'nm_banner');
+            $data['background_image'] = $this->uploadFile($request->file('background_image'), 'news-media-uploads/banner', 'nm_banner');
         }
 
         if ($banner) {
@@ -89,10 +89,10 @@ class NewsMediaController extends Controller
         $data['created_by'] = Auth::id();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $this->uploadFile($request->file('image'), 'news-media/image', 'news');
+            $data['image'] = $this->uploadFile($request->file('image'), 'news-media-uploads/image', 'news');
         }
         if ($request->hasFile('pdf_file')) {
-            $data['pdf_file'] = $this->uploadFile($request->file('pdf_file'), 'news-media/pdf', 'news');
+            $data['pdf_file'] = $this->uploadFile($request->file('pdf_file'), 'news-media-uploads/pdf', 'news');
         }
 
         NewsMedia::create($data);
@@ -118,12 +118,12 @@ class NewsMediaController extends Controller
         $data['modified_by'] = Auth::id();
 
         if ($request->hasFile('image')) {
-            $this->deleteFile('news-media/image', $item->image);
-            $data['image'] = $this->uploadFile($request->file('image'), 'news-media/image', 'news');
+            $this->deleteFile('news-media-uploads/image', $item->image);
+            $data['image'] = $this->uploadFile($request->file('image'), 'news-media-uploads/image', 'news');
         }
         if ($request->hasFile('pdf_file')) {
-            $this->deleteFile('news-media/pdf', $item->pdf_file);
-            $data['pdf_file'] = $this->uploadFile($request->file('pdf_file'), 'news-media/pdf', 'news');
+            $this->deleteFile('news-media-uploads/pdf', $item->pdf_file);
+            $data['pdf_file'] = $this->uploadFile($request->file('pdf_file'), 'news-media-uploads/pdf', 'news');
         }
 
         $item->update($data);
@@ -152,8 +152,9 @@ class NewsMediaController extends Controller
     private function payload(Request $request)
     {
         return [
-            'title'      => $request->title,
-            'category'   => $request->category,
+            'title'       => $request->title,
+            'description' => $request->description,
+            'category'    => $request->category,
             'link'       => $request->link,
             'sort_order' => $request->sort_order ?? 0,
             'status'     => $request->has('status') ? 1 : 0,
@@ -163,8 +164,9 @@ class NewsMediaController extends Controller
     private function rules()
     {
         return [
-            'title'      => 'required|string|max:255',
-            'category'   => 'nullable|string|max:100',
+            'title'       => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category'    => 'nullable|string|max:100',
             'link'       => 'nullable|url|max:500',
             'sort_order' => 'nullable|integer',
             'image'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
