@@ -11123,40 +11123,255 @@ strong {
    nobody has to leave the site to see them. A flexible grid keeps the rows
    even whatever the number of pictures, and every thumbnail is the same shape
    so mixed portrait and landscape shots still line up. */
-.life-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 14px;
-  margin-top: 20px;
+
+@media (max-width: 767px) {
 }
 
-.life-photo {
-  margin: 0;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #f2f1ed;
+/* ===== Life at Catalyst - story sliders =====
+   Taken from the approved careers design. That design file repeats these rules
+   four times, once per story, tied to numbered section names. Stories here are
+   added from the dashboard and there can be any number of them, so the rules
+   are written once and two modifiers handle the alternating: is-tinted for the
+   pink background, is-reversed for the bands that put the text first. */
+.jour-built-trust-sin-sec {
+  padding: 70px 0;
 }
 
-.life-photo img {
-  display: block;
+.jour-built-trust-sin-sec.is-tinted {
+  background: #fff3f0;
+}
+
+.jour-built-trust-sin-sec .row {
+  display: flex;
+  align-items: center;
+}
+
+.jour-built-trust-sin-sec.is-reversed .row {
+  flex-direction: row-reverse;
+}
+
+.inc-day-slider-sec {
+  position: relative;
   width: 100%;
-  height: 150px;
-  object-fit: cover;
-  transition: transform 0.45s ease;
+  background: #1b1310;
 }
 
-.life-photo:hover img {
-  transform: scale(1.06);
+.inc-day-slider-sec .item {
+  border-radius: 20px;
+}
+
+.inc-day-slide {
+  position: relative;
+  height: 350px;
+  overflow: hidden;
+}
+
+.inc-day-slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 7s ease;
+}
+
+.inc-day-slider .owl-item.active .inc-day-slide img {
+  transform: scale(1);
+}
+
+.inc-day-slider .owl-nav {
+  position: absolute;
+  right: 4%;
+  bottom: 20px;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+}
+
+.inc-day-slider .owl-nav button.owl-prev,
+.inc-day-slider .owl-nav button.owl-next {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border: 1px solid rgba(248, 241, 230, .35) !important;
+  border-radius: 5px;
+  background: rgba(27, 19, 16, .35) !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: background .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.inc-day-slider .owl-nav button:hover,
+.inc-day-slider .owl-nav button:focus {
+  background: #d57966 !important;
+  border-color: #d57966 !important;
+  color: #fff !important;
+  outline: none;
+}
+
+.inc-day-slider__foot {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 30px;
+}
+
+.inc-day-slider__count {
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.inc-day-slider__count [data-current] {
+  font-size: 18px;
+  color: #c9624c;
+  margin-right: 2px;
+}
+
+.inc-day-slider__count i {
+  font-style: normal;
+  color: #fff;
+  margin: 0 4px;
+}
+
+.inc-day-slider__progress {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: rgba(248, 241, 230, .16);
+}
+
+.inc-day-slider__progress span {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: #c9624c;
+}
+
+.inc-day-slider__progress span.is-running {
+  animation: inc-day-progress linear forwards;
+}
+
+@keyframes inc-day-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* A story with no photos yet still reads properly - the text takes the full
+   width instead of leaving an empty black panel beside it. */
+.jour-built-trust-sin-sec .life-story {
+  padding: 0;
+  border-bottom: 0;
 }
 
 @media (max-width: 767px) {
 
-  .life-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
+  .jour-built-trust-sin-sec {
+    padding: 45px 0;
   }
 
-  .life-photo img {
-    height: 118px;
+  .jour-built-trust-sin-sec .row,
+  .jour-built-trust-sin-sec.is-reversed .row {
+    flex-direction: column;
   }
+
+  .jour-built-trust-sin-sec .col-md-6 {
+    width: 100%;
+  }
+
+  .inc-day-slide {
+    height: 250px;
+  }
+
+  .inc-day-slider__foot {
+    padding: 14px 18px;
+  }
+
+  .jour-built-trust-sin-sec .life-story {
+    margin-top: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .inc-day-slide img {
+    transition: none;
+  }
+
+  .inc-day-slider__progress span.is-running {
+    animation: none;
+    width: 100%;
+  }
+}
+
+/* ===== Menu entries that do not go anywhere =====
+   A drop-down opener only opens its menu, and some entries have no page behind
+   them yet. Both used to be links pointing at "#", which put a stray "#" in the
+   address bar on every click. They are no longer links, so these rules keep
+   them looking and behaving exactly as before.
+
+   The openers keep the pointer cursor because they are still clickable - that
+   is how the menu opens on a phone. The entries with no page behind them show
+   the normal arrow, which is the honest signal that there is nothing to click. */
+.main_menu .menu-opener {
+  cursor: pointer;
+}
+
+.main_menu .no-link {
+  cursor: default;
+}
+
+/* The old markup was an <a>, so anything styling those needs to reach these
+   too - otherwise the drop-down headings and entries lose their appearance. */
+.main_menu .menu .menu-main > li > .menu-opener,
+.main_menu .menu .menu-main .sub-menu .no-link,
+.main_menu .menu .menu-main .mega-main-heading h3 .no-link {
+  display: inline-block;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+/* ===== A menu entry that opens its own list =====
+   "SEBI Compliance by Debenture Trustee" carries thirteen pages. They now open
+   on click instead of all showing at once, which kept that column readable.
+
+   The arrow is a real element rather than an ::after, because the design
+   already uses ::after on these links for the underline that slides in on
+   hover - taking it over would have made this one row behave differently from
+   every other row in the menu. */
+.sebi-compliance-main-menu-custom-sec .subsub-toggle {
+  cursor: pointer;
+  padding-right: 20px;
+}
+
+.subsub-caret {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #c9624c;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+
+.has-subsub.is-open > .subsub-toggle .subsub-caret {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.sebi-compliance-main-menu-custom-sec li.has-subsub > .sebi-compliance-subsub-menu-custom-sec {
+  display: none;
+}
+
+.sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
+  display: block;
+  padding-left: 6px;
 }

@@ -19,7 +19,7 @@
                 <ul class="menu-main">
                   <li><a href="{{ route('frontend.index') }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                   <li class="menu-item-has-children">
-                    <a href="#">About <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">About <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
                         <li><a href="{{ route('frontend.company_overview') }}">Company Overview</a></li>
@@ -32,7 +32,7 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="#">Services <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">Services <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar" id="style-3">
                       <div class="row">
                         <div class="col-md-12">
@@ -43,11 +43,19 @@
                                 @if(!empty($cat['icon']))
                                 <div class="icon"><img src="{{ asset('services/categories/'.$cat['icon']) }}" alt="icon"></div>
                                 @endif
-                                <h3><a href="#">{{ $cat['name'] }}</a></h3>
+                                <h3><a class="no-link">{{ $cat['name'] }}</a></h3>
                               </div>
                               <ul>
                                 @foreach(($cat['items'] ?? []) as $item)
-                                <li><a href="{{ $item['link'] ?? '#' }}">{{ $item['title'] ?? '' }}</a></li>
+                                @php $link = trim($item['link'] ?? ''); @endphp
+                                <li>
+                                  @if($link !== '' && $link !== '#')
+                                    <a href="{{ $link }}">{{ $item['title'] ?? '' }}</a>
+                                  @else
+                                    {{-- No page behind it yet, so it is shown but not clickable. --}}
+                                    <a class="no-link">{{ $item['title'] ?? '' }}</a>
+                                  @endif
+                                </li>
                                 @endforeach
                               </ul>
                             </div>
@@ -58,7 +66,7 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="#">Public Notice <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">Public Notice <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar" id="style-3">
                       <div class="row">
                         <div class="col-md-12">
@@ -91,7 +99,13 @@
                                 @if($cat->icon)
                                 <div class="icon"><img src="{{ asset('public-notice/icons/'.$cat->icon) }}" alt="icon"></div>
                                 @endif
-                                <h3><a href="{{ $cat->url ?: '#' }}">{{ $cat->name }}</a></h3>
+                                <h3>
+                                  @if($cat->url)
+                                    <a href="{{ $cat->url }}">{{ $cat->name }}</a>
+                                  @else
+                                    <a class="no-link">{{ $cat->name }}</a>
+                                  @endif
+                                </h3>
                               </div>
                               @else
                               <div class="public-notices-mt-custom-sec"></div>
@@ -99,14 +113,27 @@
 
                               <ul @if($hasFlyout) class="sebi-compliance-main-menu-custom-sec" @endif>
                                 @foreach($col['items'] as $item)
-                                <li>
-                                  <a href="{{ $item->url ?: '#' }}" @if(in_array($item->link_type, ['pdf', 'url'], true)) target="_blank" rel="noopener noreferrer" @endif>{{ $item->name }}</a>
-                                  @if($item->children->count())
+                                @php $hasChildren = $item->children->count() > 0; @endphp
+                                <li @if($hasChildren) class="has-subsub" @endif>
+                                  @if($hasChildren)
+                                    {{-- Opens its own list rather than going anywhere, so it carries
+                                         no address and never puts a "#" in the address bar. --}}
+                                    <a class="subsub-toggle" role="button" aria-expanded="false">{{ $item->name }}<i class="fa fa-angle-down subsub-caret" aria-hidden="true"></i></a>
+                                  @elseif($item->url)
+                                    <a href="{{ $item->url }}" @if(in_array($item->link_type, ['pdf', 'url'], true)) target="_blank" rel="noopener noreferrer" @endif>{{ $item->name }}</a>
+                                  @else
+                                    <a class="no-link">{{ $item->name }}</a>
+                                  @endif
+                                  @if($hasChildren)
                                   <div class="sebi-compliance-subsub-menu-custom-sec">
                                     <ul>
                                       @foreach($item->children as $sub)
                                       <li>
-                                        <a href="{{ $sub->url ?: '#' }}" @if(in_array($sub->link_type, ['pdf', 'url'], true)) target="_blank" rel="noopener noreferrer" @endif><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{ $sub->name }}</a>
+                                        @if($sub->url)
+                                          <a href="{{ $sub->url }}" @if(in_array($sub->link_type, ['pdf', 'url'], true)) target="_blank" rel="noopener noreferrer" @endif><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{ $sub->name }}</a>
+                                        @else
+                                          <a class="no-link"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {{ $sub->name }}</a>
+                                        @endif
                                       </li>
                                       @endforeach
                                     </ul>
@@ -123,7 +150,7 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="#">Grievance   <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">Grievance   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
                         <li><a href="{{ route('frontend.investor_grievance') }}">Investor Grievance</a></li>
@@ -132,7 +159,7 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="#">Newsletter <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">Newsletter <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
                         <li><a href="{{ route('frontend.articles') }}">Articles</a></li>
@@ -146,17 +173,16 @@
                       <ul>
                         <li><a href="{{ route('frontend.careers') }}#life-at-catalyst">Life at Catalyst</a></li>
                         <li><a href="{{ route('frontend.careers') }}#current-openings">Current Openings </a></li>
-                        <li><a href="{{ route('frontend.careers') }}#submit-resume">Internship / Graduate Opportunities</a></li>
                       </ul>
                     </div>
                   </li>
 
                   <!-- <li class="menu-item-has-children">
-                    <a href="#">Accessibility   <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">Accessibility   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="#">Accessibility Statement</a></li>
-                        <li><a href="#">Accessibility Tools </a></li>
+                        <li><a class="no-link">Accessibility Statement</a></li>
+                        <li><a class="no-link">Accessibility Tools</a></li>
                       </ul>
                     </div>
                   </li> -->
@@ -166,14 +192,12 @@
                     <a href="{{ route('frontend.contact') }}">Contact   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="{{ route('frontend.contact') }}#office-locations">Office Locations</a></li>
-                        <li><a href="{{ route('frontend.contact') }}#enquiry-form">Enquiry Form </a></li>
                         <li><a href="{{ route('frontend.contact') }}#contact-information">Contact Information </a></li>
                       </ul>
                     </div>
                   </li>
                   <!-- <li>
-                    <a href="#">Announcements</a>
+                    <a class="no-link">Announcements</a>
                   </li> -->
                 </ul>
               </nav>

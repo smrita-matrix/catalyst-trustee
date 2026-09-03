@@ -26,8 +26,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="{{ versioned_asset('frontend/assets/js/owl.carousel.js')}}"></script>
+    <script src="{{ versioned_asset('frontend/assets/js/life-slider.js') }}"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="{{ versioned_asset('frontend/assets/js/menu.js') }}"></script>
+    <script src="{{ versioned_asset('frontend/assets/js/menu-subsub.js') }}"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
     <script src="https://ciromattia.github.io/jquery.counterup/jquery.counterup.js"></script>
