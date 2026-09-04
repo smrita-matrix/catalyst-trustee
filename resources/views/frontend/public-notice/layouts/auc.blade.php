@@ -19,7 +19,7 @@
           @if($notice->notice_date)<span class="auc-card-date">{{ $notice->notice_date }}</span>@endif
           <h4 class="auc-card-title">{{ $notice->title }}</h4>
           @if($notice->description)<p class="auc-card-desc">{{ $notice->description }}</p>@endif
-          @if($url)<span class="auc-card-foot">PDF <i class="fa fa-arrow-circle-o-right"></i></span>@endif
+          @if($url)<span class="auc-card-foot">View Document <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>@endif
         </{{ $url ? 'a' : 'div' }}>
       </div>
       @empty

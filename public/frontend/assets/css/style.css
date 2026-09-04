@@ -11618,3 +11618,95 @@ strong {
     font-size: 13px;
   }
 }
+
+/* ===== Document cards: one height per row =====
+   These grids use floated columns, so a card was only as tall as its own
+   title - a two-line name left a short box sitting beside a tall one, and
+   the row looked broken. Laying the row out as flex makes every column the
+   same height, the card fills it, and the "View Document" link sits on the
+   same line across the row. */
+.bomsc-cards-row,
+.boc-cards-row,
+.secu-cover-certi-cards-row,
+.regul-disclo-stpmt-box-row,
+.auc-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bomsc-cards-row > [class*="col-"],
+.boc-cards-row > [class*="col-"],
+.secu-cover-certi-cards-row > [class*="col-"],
+.regul-disclo-stpmt-box-row > [class*="col-"],
+.auc-cards-row > [class*="col-"] {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.bomsc-cards-row .bomsc-card,
+.boc-cards-row .boc-card,
+.secu-cover-certi-cards-row .secu-cover-certi-card,
+.regul-disclo-stpmt-box-row .regul-disclo-stpmt-box-col,
+.auc-cards-row .auc-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+
+  /* The gap now sits on the column, so the card can fill it exactly. */
+  margin-bottom: 0;
+}
+
+/* Push the link to the foot of the card, so it lines up across the row
+   however long the titles are. */
+.bomsc-cards-row .bomsc-card-cta,
+.boc-cards-row .boc-card-cta,
+.secu-cover-certi-cards-row .secu-cover-certi-card-cta,
+.regul-disclo-stpmt-box-row .regul-disclo-stpmt-box-col-cta {
+  margin-top: auto;
+}
+
+/* ===== Document cards: one look across every page design =====
+   The six page designs had drifted apart - two shades of border, a smaller
+   icon on one, three different title sizes. Everything below settles them
+   on the same card. */
+.bomsc-card,
+.boc-card,
+.secu-cover-certi-card,
+.regul-disclo-stpmt-box-col,
+.auc-card {
+  border-color: #f0dcd6;
+}
+
+.bomsc-card:hover,
+.boc-card:hover,
+.secu-cover-certi-card:hover,
+.regul-disclo-stpmt-box-col:hover,
+.auc-card:hover,
+.bomsc-card:focus,
+.boc-card:focus,
+.secu-cover-certi-card:focus,
+.regul-disclo-stpmt-box-col:focus,
+.auc-card:focus {
+  border-color: #db8472;
+}
+
+.bomsc-card-icon,
+.boc-card-icon,
+.secu-cover-certi-card-icon,
+.regul-disclo-stpmt-box-col-icon {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 20px;
+}
+
+.bomsc-card-title,
+.boc-card-title,
+.secu-cover-certi-card-title,
+.regul-disclo-stpmt-box-col-title,
+.auc-card-title {
+  font-family: 'Poppins-SemiBold';
+  font-size: 18px;
+  line-height: 1.45;
+  color: #444343;
+}

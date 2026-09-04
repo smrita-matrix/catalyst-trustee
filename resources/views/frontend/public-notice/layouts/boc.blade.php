@@ -32,7 +32,7 @@
                 <div class="boc-card-icon"><i class="fa fa-file-pdf-o"></i></div>
                 <h4 class="boc-card-title">{{ $notice->title }}</h4>
                 @if($url)
-                <span class="boc-card-cta">View <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
+                <span class="boc-card-cta">View Document <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
                 @endif
               </{{ $url ? 'a' : 'div' }}>
             </div>
