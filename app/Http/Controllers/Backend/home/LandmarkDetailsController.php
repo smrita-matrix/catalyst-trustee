@@ -100,7 +100,7 @@ class LandmarkDetailsController extends Controller
             'item_title.*'       => 'nullable|string|max:255',
             'item_description.*' => 'nullable|string',
             'item_link.*'        => 'nullable|string|max:255',
-            'item_image.*'       => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'item_image.*'       => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
@@ -108,7 +108,7 @@ class LandmarkDetailsController extends Controller
     {
         return [
             'heading.required' => 'The Heading is required.',
-            'item_image.*.max' => 'Each image must not be larger than 2MB.',
+            'item_image.*.max' => 'Each image must not be larger than 8MB.',
         ];
     }
 

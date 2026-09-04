@@ -112,19 +112,19 @@ class LeadershipContentDetailsController extends Controller
             'board_name.*'          => 'nullable|string|max:255',
             'board_designation.*'   => 'nullable|string|max:255',
             'board_description.*'    => 'nullable|string',
-            'board_image.*'         => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'board_image.*'         => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
             'team_name.*'           => 'nullable|string|max:255',
             'team_designation.*'    => 'nullable|string|max:255',
             'team_description.*'    => 'nullable|string',
-            'team_image.*'          => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'team_image.*'          => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
     private function messages()
     {
         return [
-            'board_image.*.max' => 'Each Board member image must not be larger than 2MB.',
-            'team_image.*.max'  => 'Each Team member image must not be larger than 2MB.',
+            'board_image.*.max' => 'Each Board member image must not be larger than 8MB.',
+            'team_image.*.max'  => 'Each Team member image must not be larger than 8MB.',
         ];
     }
 

@@ -87,19 +87,19 @@ class ServiceFifController extends Controller
     private function rules()
     {
         return [
-            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'intro_image'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'definition_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'family_image'            => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'capabilities_image'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'tab_image.*'             => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'intro_image'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'definition_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'family_image'            => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'capabilities_image'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'tab_image.*'             => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
         ];
     }
 
     private function messages()
     {
         return [
-            'banner_background_image.max' => 'The banner image must not be larger than 2MB.',
+            'banner_background_image.max' => 'The banner image must not be larger than 8MB.',
         ];
     }
 

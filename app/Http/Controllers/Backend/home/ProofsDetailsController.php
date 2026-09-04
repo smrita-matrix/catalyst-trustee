@@ -99,16 +99,16 @@ class ProofsDetailsController extends Controller
             'item_text'          => 'nullable|array',
             'item_text.*'        => 'nullable|string',
             'item_icon_svg.*'    => 'nullable|string',
-            'item_image.*'       => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
-            'item_icon.*'        => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'item_image.*'       => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
+            'item_icon.*'        => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
     private function messages()
     {
         return [
-            'item_image.*.max' => 'Each background image must not be larger than 2MB.',
-            'item_icon.*.max'  => 'Each icon must not be larger than 2MB.',
+            'item_image.*.max' => 'Each background image must not be larger than 8MB.',
+            'item_icon.*.max'  => 'Each icon must not be larger than 8MB.',
         ];
     }
 

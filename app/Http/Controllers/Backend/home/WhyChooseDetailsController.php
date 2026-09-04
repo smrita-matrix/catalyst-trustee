@@ -102,7 +102,7 @@ class WhyChooseDetailsController extends Controller
             'item_text'        => 'nullable|array',
             'item_text.*'      => 'nullable|string',
             'item_icon_svg.*'  => 'nullable|string',
-            'item_icon.*'      => ['nullable', 'file', 'max:2048', $this->iconExtensionRule()],
+            'item_icon.*'      => ['nullable', 'file', 'max:8192', $this->iconExtensionRule()],
         ];
     }
 
@@ -110,7 +110,7 @@ class WhyChooseDetailsController extends Controller
     {
         return [
             'heading.required'  => 'The Heading is required.',
-            'item_icon.*.max'   => 'Each icon must not be larger than 2MB.',
+            'item_icon.*.max'   => 'Each icon must not be larger than 8MB.',
         ];
     }
 

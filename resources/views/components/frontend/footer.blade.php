@@ -10,8 +10,11 @@
                     </div>
                     <ul class="social-list">
                       @foreach ($footer?->social_links ?? [] as $s)
+                      @php $socialUrl = trim($s['url'] ?? ''); @endphp
+                      {{-- An icon with no address behind it goes nowhere, so it is left out. --}}
+                      @continue($socialUrl === '' || $socialUrl === '#')
                       <li class="hvr-icon-drop">
-                        <a href="{{ ($s['url'] ?? '') ?: '#' }}" class="hvr-icon" target="_blank">
+                        <a href="{{ $socialUrl }}" class="hvr-icon" target="_blank" rel="noopener noreferrer">
                         <i class="{{ $s['icon'] ?? '' }}"></i>
                         </a>
                       </li>

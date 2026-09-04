@@ -110,21 +110,21 @@ class ServicesSebiDetailsController extends Controller
     {
         return [
             'banner_title'            => 'nullable|string|max:255',
-            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'intro_image'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'services_include_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'why_card_icon.*'         => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
-            'tab_image.*'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'certificate_image.*'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'intro_image'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'services_include_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'why_card_icon.*'         => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
+            'tab_image.*'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'certificate_image.*'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ];
     }
 
     private function messages()
     {
         return [
-            'banner_background_image.max' => 'The banner image must not be larger than 2MB.',
-            'intro_image.max'             => 'The intro image must not be larger than 2MB.',
-            'services_include_image.max'  => 'The image must not be larger than 2MB.',
+            'banner_background_image.max' => 'The banner image must not be larger than 8MB.',
+            'intro_image.max'             => 'The intro image must not be larger than 8MB.',
+            'services_include_image.max'  => 'The image must not be larger than 8MB.',
         ];
     }
 

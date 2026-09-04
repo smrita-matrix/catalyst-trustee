@@ -24,6 +24,7 @@ class NoticeCategory extends Model
         'list'    => 'Layout 4 — Card list (Revision in Credit Ratings, Policies)',
         'grouped' => 'Layout 5 — Collapsible groups (Security Cover Certificate, DSDKL Updates)',
         'status'  => 'Layout 6 — Status of Payment of Interest & Principal',
+        'table'   => 'Layout 7 — Searchable table (Revision in Credit Ratings)',
     ];
 
     /** What happens when the menu item is clicked. */
@@ -41,6 +42,9 @@ class NoticeCategory extends Model
         'icon',
         'link_type',
         'layout',
+        'col_one_label',
+        'col_two_label',
+        'col_three_label',
         'document_file',
         'external_link',
         'page_title',

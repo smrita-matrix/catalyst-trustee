@@ -153,8 +153,8 @@
                     <a class="menu-opener">Grievance   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="{{ route('frontend.investor_grievance') }}">Investor Grievance</a></li>
-                        <li><a href="{{ $supportPdf ?? '#' }}" @if(!empty($supportPdf)) target="_blank" rel="noopener noreferrer" @endif>Contact for Support </a></li>
+                        <li><a href="{{ route('frontend.grievance_sebi') }}">For Services Regulated By SEBI</a></li>
+                        <li><a href="{{ route('frontend.grievance_non_sebi') }}">For Services Not Regulated By SEBI</a></li>
                       </ul>
                     </div>
                   </li>
@@ -188,13 +188,10 @@
                   </li> -->
                   
 
-                  <li class="menu-item-has-children right-menu">
-                    <a href="{{ route('frontend.contact') }}">Contact   <i class="fa fa-angle-down"></i></a>
-                    <div class="sub-menu single-column-menu">
-                      <ul>
-                        <li><a href="{{ route('frontend.contact') }}#contact-information">Contact Information </a></li>
-                      </ul>
-                    </div>
+                  {{-- A plain link, no drop-down: it goes straight to the Contact page,
+                       which still carries all of its sections. --}}
+                  <li class="right-menu">
+                    <a href="{{ route('frontend.contact') }}">Contact</a>
                   </li>
                   <!-- <li>
                     <a class="no-link">Announcements</a>

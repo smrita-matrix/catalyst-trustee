@@ -225,12 +225,6 @@
                 <form action="{{ route('frontend.careers.store') }}" method="POST" enctype="multipart/form-data" id="career-form" novalidate>
                   @csrf
 
-                  {{-- Filled in by the client-side checks when a submit is blocked. --}}
-                  <div class="alert alert-danger" id="career-form-errors" style="display:none;">
-                    <strong>Please correct the following:</strong>
-                    <ul class="mb-0"></ul>
-                  </div>
-
                   <div class="form-group col-md-4">
                     <label>First Name <span style="color:red;">*</span></label>
                     <input type="text" name="first_name" class="form-control" value="{{ old('first_name') }}">
@@ -301,17 +295,6 @@
       var MAX_CV   = 5 * 1024 * 1024;
       var CV_TYPES = ['pdf', 'doc', 'docx'];
 
-      var LABELS = {
-        first_name: 'First Name',
-        last_name:  'Last Name',
-        email:      'Email',
-        phone:      'Phone Number',
-        city:       'City',
-        position:   'Position Applying For',
-        resume:     'Resume'
-      };
-
-      var summary = document.getElementById('career-form-errors');
 
       function problem(field) {
         var name  = field.getAttribute('name');
@@ -377,42 +360,27 @@
       });
 
       form.addEventListener('submit', function (e) {
-        var failures = [];
+        var failed = [];
 
         fields.forEach(function (field) {
           var message = problem(field);
           if (message) {
             showError(field, message);
-            failures.push({ field: field, text: LABELS[field.getAttribute('name')] + ': ' + message });
+            failed.push(field);
           } else {
             clearError(field);
           }
         });
 
-        if (failures.length) {
+        if (failed.length) {
           e.preventDefault();
 
-          // Spell out every problem at the top of the form, so a blocked
-          // submit is never mistaken for the button not working.
-          if (summary) {
-            var list = summary.querySelector('ul');
-            list.innerHTML = '';
-            failures.forEach(function (f) {
-              var li = document.createElement('li');
-              li.textContent = f.text;
-              list.appendChild(li);
-            });
-            summary.style.display = 'block';
-            summary.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          } else {
-            failures[0].field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-
-          failures[0].field.focus({ preventScroll: true });
+          // The message under each field says what is wrong, so the page
+          // only needs to move to the first one.
+          failed[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          failed[0].focus({ preventScroll: true });
           return;
         }
-
-        if (summary) { summary.style.display = 'none'; }
 
         // Give feedback while the file uploads, and block a double submit.
         var button = form.querySelector('button[type="submit"]');

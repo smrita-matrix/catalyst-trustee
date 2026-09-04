@@ -52,6 +52,7 @@
                     <tr>
                       <th>#</th>
                       <th>Received</th>
+                      <th>Form</th>
                       <th>Name</th>
                       <th>Email</th>
                       <th>Issuer</th>
@@ -65,10 +66,17 @@
                       <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('d M Y, H:i') : '-' }}</td>
+                        <td>
+                          @if($item->type === 'sebi')
+                            <span class="badge badge-light-primary">SEBI regulated</span>
+                          @else
+                            <span class="badge badge-light-secondary">Not SEBI regulated</span>
+                          @endif
+                        </td>
                         <td><b>{{ $item->full_name }}</b><br><small class="text-muted">{{ $item->pan }}</small></td>
                         <td>{{ $item->email }}</td>
                         <td>{{ \Illuminate\Support\Str::limit($item->issuer_name, 30) }}</td>
-                        <td>{{ \Illuminate\Support\Str::limit(implode(', ', (array) $item->complaint_types), 40) }}</td>
+                        <td>{{ \Illuminate\Support\Str::limit($item->type === 'sebi' ? (string) $item->nature_of_complaint : implode(', ', (array) $item->complaint_types), 40) }}</td>
                         <td>
                           @if($item->is_read)
                             <span class="badge badge-light-success">Read</span>

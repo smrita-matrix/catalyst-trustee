@@ -43,14 +43,14 @@ class BannerDetailsController extends Controller
             'banner_description' => 'required|string',
             'button_text'        => 'required|string|max:100',
             'button_link'        => 'required|string|max:255',
-            'banner_image'       => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'banner_image'       => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'banner_heading.required'     => 'The Banner Heading is required.',
             'banner_description.required' => 'The Banner Description is required.',
             'button_text.required'        => 'The Button Text is required.',
             'button_link.required'        => 'The Button Link is required.',
             'banner_image.required'       => 'Please upload a Banner Image.',
-            'banner_image.max'            => 'The Banner Image must not be larger than 2MB.',
+            'banner_image.max'            => 'The Banner Image must not be larger than 8MB.',
         ]);
 
         $data = [
@@ -89,13 +89,13 @@ class BannerDetailsController extends Controller
             'banner_description' => 'required|string',
             'button_text'        => 'required|string|max:100',
             'button_link'        => 'required|string|max:255',
-            'banner_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'banner_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'banner_heading.required'     => 'The Banner Heading is required.',
             'banner_description.required' => 'The Banner Description is required.',
             'button_text.required'        => 'The Button Text is required.',
             'button_link.required'        => 'The Button Link is required.',
-            'banner_image.max'            => 'The Banner Image must not be larger than 2MB.',
+            'banner_image.max'            => 'The Banner Image must not be larger than 8MB.',
         ]);
 
         $data = [

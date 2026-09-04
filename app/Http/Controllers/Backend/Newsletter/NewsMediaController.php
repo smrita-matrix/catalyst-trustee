@@ -39,7 +39,7 @@ class NewsMediaController extends Controller
             'breadcrumb_parent' => 'nullable|string|max:255',
             'breadcrumb_child'  => 'nullable|string|max:255',
             'section_heading'   => 'nullable|string|max:255',
-            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
         $banner = NewsMediaBannerDetails::whereNull('deleted_at')->latest('id')->first();
@@ -169,7 +169,7 @@ class NewsMediaController extends Controller
             'category'    => 'nullable|string|max:100',
             'link'       => 'nullable|url|max:500',
             'sort_order' => 'nullable|integer',
-            'image'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'image'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'pdf_file'   => 'nullable|mimes:pdf|max:20480',
         ];
     }
@@ -179,7 +179,7 @@ class NewsMediaController extends Controller
         return [
             'title.required' => 'The Title is required.',
             'link.url'       => 'The Read More link must be a full URL (https://...).',
-            'image.max'      => 'The image must not be larger than 4MB.',
+            'image.max'      => 'The image must not be larger than 8MB.',
             'pdf_file.mimes' => 'The attachment must be a PDF.',
         ];
     }

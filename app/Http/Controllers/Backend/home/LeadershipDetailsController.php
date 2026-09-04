@@ -115,22 +115,22 @@ class LeadershipDetailsController extends Controller
             'leader_name.*'       => 'nullable|string|max:255',
             'leader_designation.*'=> 'nullable|string|max:255',
             'leader_description.*'=> 'nullable|string',
-            'leader_image.*'      => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'leader_image.*'      => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
 
             // Numbers
             'number_text'         => 'nullable|array',
             'number_text.*'       => 'nullable|string|max:255',
             'number_value.*'      => 'nullable|string|max:50',
             'number_suffix.*'     => 'nullable|string|max:20',
-            'number_icon.*'       => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'number_icon.*'       => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
     private function messages()
     {
         return [
-            'leader_image.*.max' => 'Each leadership image must not be larger than 2MB.',
-            'number_icon.*.max'  => 'Each counter icon must not be larger than 2MB.',
+            'leader_image.*.max' => 'Each leadership image must not be larger than 8MB.',
+            'number_icon.*.max'  => 'Each counter icon must not be larger than 8MB.',
         ];
     }
 

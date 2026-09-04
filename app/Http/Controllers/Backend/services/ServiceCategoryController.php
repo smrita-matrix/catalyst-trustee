@@ -132,7 +132,7 @@ class ServiceCategoryController extends Controller
         return [
             'name'       => 'required|string|max:255',
             'sort_order' => 'nullable|integer',
-            'icon'       => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'icon'       => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
         ];
     }
 
@@ -140,7 +140,7 @@ class ServiceCategoryController extends Controller
     {
         return [
             'name.required' => 'The Category Name is required.',
-            'icon.max'      => 'The icon must not be larger than 2MB.',
+            'icon.max'      => 'The icon must not be larger than 8MB.',
         ];
     }
 

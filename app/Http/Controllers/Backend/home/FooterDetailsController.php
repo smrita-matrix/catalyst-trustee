@@ -119,7 +119,7 @@ class FooterDetailsController extends Controller
             'phone'         => 'nullable|string|max:100',
             'email'         => 'nullable|string|max:150',
             'address'       => 'nullable|string',
-            'logo'          => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'logo'          => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
             'social_icon'   => 'nullable|array',
             'social_icon.*' => 'nullable|string|max:100',
             'social_url.*'  => 'nullable|string|max:255',
@@ -129,7 +129,7 @@ class FooterDetailsController extends Controller
     private function messages()
     {
         return [
-            'logo.max' => 'The logo must not be larger than 2MB.',
+            'logo.max' => 'The logo must not be larger than 8MB.',
         ];
     }
 

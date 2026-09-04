@@ -32,8 +32,8 @@ class ContactController extends Controller
     public function updateContent(Request $request)
     {
         $request->validate([
-            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
-            'form_image'              => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'form_image'              => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'services_options'        => 'nullable|string|max:5000',
             'location_options'        => 'nullable|string|max:5000',
             'notify_email'            => 'nullable|email|max:255',

@@ -58,7 +58,7 @@ class NoticeCategoryController extends Controller
             'title'             => 'nullable|string|max:255',
             'breadcrumb_parent' => 'nullable|string|max:255',
             'breadcrumb_child'  => 'nullable|string|max:255',
-            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
         $banner = NoticeBannerDetails::whereNull('deleted_at')->latest('id')->first();
@@ -117,6 +117,13 @@ class NoticeCategoryController extends Controller
         'status' => [
             'summary' => 'Wide boxes with a calendar icon, title and a longer description underneath.',
             'fields'  => ['Title (e.g. FY 2025-26)', 'Description', 'PDF'],
+        ],
+        'table' => [
+            'summary' => 'A plain table with a search box above it. Best where there are far too '
+                . 'many rows for boxes - the credit ratings page holds 179. The title fills the '
+                . 'first column and links to its document; Group and Date fill the other two. '
+                . 'Name the three columns in the Page Design panel.',
+            'fields'  => ['Title (links to the document)', 'Group (second column)', 'Date (third column)', 'PDF'],
         ],
     ];
 
@@ -296,6 +303,9 @@ class NoticeCategoryController extends Controller
             'page_title'    => $request->page_title ?: $request->name,
             'page_intro'    => $request->page_intro,
             'banner_title'  => $request->banner_title,
+            'col_one_label'   => $linkType === 'page' ? $request->col_one_label : null,
+            'col_two_label'   => $linkType === 'page' ? $request->col_two_label : null,
+            'col_three_label' => $linkType === 'page' ? $request->col_three_label : null,
             'alert_heading' => $request->alert_heading,
             'alert_text'    => $request->alert_text,
             'sort_order'    => $request->sort_order ?? 0,
@@ -453,10 +463,13 @@ class NoticeCategoryController extends Controller
             'layout'        => 'nullable|in:' . implode(',', array_keys(NoticeCategory::LAYOUTS)),
             'external_link' => 'nullable|url|max:500',
             'sort_order'    => 'nullable|integer',
-            'icon'          => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'icon'          => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
             'document_file' => 'nullable|mimes:pdf,jpg,jpeg,png,webp|max:20480',
-            'banner_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'banner_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'banner_title'  => 'nullable|string|max:255',
+            'col_one_label'   => 'nullable|string|max:100',
+            'col_two_label'   => 'nullable|string|max:100',
+            'col_three_label' => 'nullable|string|max:100',
             'doc_title'         => 'nullable|array',
             'doc_title.*'       => 'nullable|string|max:255',
             'doc_group.*'       => 'nullable|string|max:100',

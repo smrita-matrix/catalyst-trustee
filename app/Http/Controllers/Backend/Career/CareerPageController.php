@@ -180,14 +180,14 @@ class CareerPageController extends Controller
         return [
             'banner_title'     => 'nullable|string|max:255',
             'breadcrumb_child' => 'nullable|string|max:255',
-            'banner_image'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'banner_image'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'intro_heading'    => 'nullable|string',
             'intro_text'       => 'nullable|string',
             'life_stories'          => 'nullable|array',
             'life_stories.*.title'  => 'nullable|string|max:255',
             'life_stories.*.text'   => 'nullable|string',
             'life_stories.*.link'   => 'nullable|string|max:1000',
-            'life_stories.*.images.*' => ['nullable', 'file', 'max:4096', 'mimes:jpg,jpeg,png,webp'],
+            'life_stories.*.images.*' => ['nullable', 'file', 'max:8192', 'mimes:jpg,jpeg,png,webp'],
             'form_sub_heading' => 'nullable|string|max:255',
             'form_heading'     => 'nullable|string|max:255',
             'notify_email'     => 'nullable|email|max:255',
@@ -198,7 +198,7 @@ class CareerPageController extends Controller
     private function messages()
     {
         return [
-            'banner_image.max'   => 'The banner image must not be larger than 4MB.',
+            'banner_image.max'   => 'The banner image must not be larger than 8MB.',
             'notify_email.email' => 'Please enter a valid email address.',
         ];
     }

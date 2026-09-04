@@ -110,7 +110,7 @@ class CareerController extends Controller
             'city'       => ['required', 'string', 'max:100', 'regex:/^[\pL\s.\'-]+$/u'],
             'position'   => ['required', 'string', 'max:255'],
             'intro'      => ['nullable', 'string', 'max:2000'],
-            'resume'     => ['required', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
+            'resume'     => ['required', 'file', 'mimes:pdf,doc,docx', 'max:8192'],
         ];
     }
 
@@ -130,7 +130,7 @@ class CareerController extends Controller
             'position.required'   => 'Please choose the position you are applying for.',
             'resume.required'     => 'Please attach your resume.',
             'resume.mimes'        => 'The resume must be a PDF, DOC or DOCX file.',
-            'resume.max'          => 'The resume must not be larger than 5MB.',
+            'resume.max'          => 'The resume must not be larger than 8MB.',
         ];
     }
 }

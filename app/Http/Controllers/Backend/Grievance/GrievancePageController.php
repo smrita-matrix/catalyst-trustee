@@ -111,6 +111,18 @@ class GrievancePageController extends Controller
             'complaint_options'  => $this->cleanList($request->input('complaint_options', [])),
             'notes'              => $this->cleanList($request->input('notes', [])),
             'notify_email'       => $request->notify_email,
+            'notify_cc'          => $request->notify_cc,
+            'sebi_heading'            => $request->sebi_heading,
+            'sebi_intro'              => $request->sebi_intro,
+            'sebi_officer_name'       => $request->sebi_officer_name,
+            'sebi_officer_phone'      => $request->sebi_officer_phone,
+            'sebi_officer_email'      => $request->sebi_officer_email,
+            'non_sebi_heading'        => $request->non_sebi_heading,
+            'non_sebi_intro'          => $request->non_sebi_intro,
+            'non_sebi_officer_name'   => $request->non_sebi_officer_name,
+            'non_sebi_officer_phone'  => $request->non_sebi_officer_phone,
+            'non_sebi_officer_email'  => $request->non_sebi_officer_email,
+            'non_sebi_note'           => $request->non_sebi_note,
         ];
     }
 
@@ -127,7 +139,7 @@ class GrievancePageController extends Controller
         return [
             'banner_title'        => 'nullable|string|max:255',
             'breadcrumb_child'    => 'nullable|string|max:255',
-            'banner_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'banner_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'intro_text'          => 'nullable|string',
             'holder_heading'      => 'nullable|string|max:255',
             'instrument_heading'  => 'nullable|string|max:255',
@@ -136,6 +148,18 @@ class GrievancePageController extends Controller
             'notes'               => 'nullable|array',
             'notes.*'             => 'nullable|string',
             'notify_email'        => 'nullable|email|max:255',
+            'notify_cc'           => 'nullable|string|max:500',
+            'sebi_heading'            => 'nullable|string|max:255',
+            'sebi_intro'              => 'nullable|string',
+            'sebi_officer_name'       => 'nullable|string|max:255',
+            'sebi_officer_phone'      => 'nullable|string|max:255',
+            'sebi_officer_email'      => 'nullable|email|max:255',
+            'non_sebi_heading'        => 'nullable|string|max:255',
+            'non_sebi_intro'          => 'nullable|string',
+            'non_sebi_officer_name'   => 'nullable|string|max:255',
+            'non_sebi_officer_phone'  => 'nullable|string|max:255',
+            'non_sebi_officer_email'  => 'nullable|email|max:255',
+            'non_sebi_note'           => 'nullable|string',
             'support_pdf'         => 'nullable|mimes:pdf|max:20480',
         ];
     }
@@ -144,7 +168,7 @@ class GrievancePageController extends Controller
     {
         return [
             'support_pdf.mimes' => 'The Contact for Support file must be a PDF.',
-            'banner_image.max'  => 'The banner image must not be larger than 4MB.',
+            'banner_image.max'  => 'The banner image must not be larger than 8MB.',
         ];
     }
 

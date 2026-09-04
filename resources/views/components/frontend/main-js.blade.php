@@ -30,6 +30,8 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="{{ versioned_asset('frontend/assets/js/menu.js') }}"></script>
     <script src="{{ versioned_asset('frontend/assets/js/menu-subsub.js') }}"></script>
+    <script src="{{ versioned_asset('frontend/assets/js/notice-table.js') }}"></script>
+    <script src="{{ versioned_asset('frontend/assets/js/grievance-validate.js') }}"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
     <script src="https://ciromattia.github.io/jquery.counterup/jquery.counterup.js"></script>

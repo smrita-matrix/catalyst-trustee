@@ -113,7 +113,7 @@ class CompanyOverviewIntroductionDetailsController extends Controller
     {
         return [
             'heading'      => 'required|string',
-            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ];
     }
 
@@ -122,7 +122,7 @@ class CompanyOverviewIntroductionDetailsController extends Controller
         return [
             'heading.required' => 'The Heading is required.',
             'image.image'      => 'The image must be a valid image (jpg, jpeg, png, webp).',
-            'image.max'        => 'The image must not be larger than 2MB.',
+            'image.max'        => 'The image must not be larger than 8MB.',
         ];
     }
 

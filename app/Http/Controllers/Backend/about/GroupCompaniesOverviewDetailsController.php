@@ -118,12 +118,12 @@ class GroupCompaniesOverviewDetailsController extends Controller
         return [
             'heading'             => 'required|string',
             'description'         => 'nullable|string',
-            'main_image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'small_image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'main_image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'small_image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'entity_title.*'      => 'nullable|string|max:255',
             'entity_description.*' => 'nullable|string',
             'entity_link.*'       => 'nullable|string|max:255',
-            'entity_image.*'      => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'entity_image.*'      => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
         ];
     }
 
@@ -131,9 +131,9 @@ class GroupCompaniesOverviewDetailsController extends Controller
     {
         return [
             'heading.required'  => 'The Heading is required.',
-            'main_image.max'    => 'The main image must not be larger than 2MB.',
-            'small_image.max'   => 'The small image must not be larger than 2MB.',
-            'entity_image.*.max' => 'Each entity logo must not be larger than 2MB.',
+            'main_image.max'    => 'The main image must not be larger than 8MB.',
+            'small_image.max'   => 'The small image must not be larger than 8MB.',
+            'entity_image.*.max' => 'Each entity logo must not be larger than 8MB.',
         ];
     }
 

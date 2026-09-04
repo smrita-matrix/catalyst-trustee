@@ -35,7 +35,7 @@ class OurJourneyMilestoneDetailsController extends Controller
             'year.*'        => 'nullable|string|max:50',
             'sort_order.*'  => 'nullable|integer',
             'description.*' => 'nullable|string',
-            'icon_image.*'  => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'icon_image.*'  => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
         ], [
             'year.required' => 'Please add at least one milestone.',
         ]);
@@ -134,7 +134,7 @@ class OurJourneyMilestoneDetailsController extends Controller
             'year'        => 'required|string|max:50',
             'description' => 'nullable|string',
             'sort_order'  => 'nullable|integer',
-            'icon_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'icon_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:8192',
         ];
     }
 
@@ -143,7 +143,7 @@ class OurJourneyMilestoneDetailsController extends Controller
         return [
             'year.required'    => 'The Year is required.',
             'icon_image.image' => 'The icon must be an image (jpg, jpeg, png, webp, svg).',
-            'icon_image.max'   => 'The icon image must not be larger than 2MB.',
+            'icon_image.max'   => 'The icon image must not be larger than 8MB.',
         ];
     }
 

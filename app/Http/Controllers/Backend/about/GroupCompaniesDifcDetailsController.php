@@ -120,9 +120,9 @@ class GroupCompaniesDifcDetailsController extends Controller
             'bottom_description' => 'nullable|string',
             'button_text'        => 'nullable|string|max:100',
             'button_link'        => 'nullable|string|max:255',
-            'logo_image'         => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'logo_image'         => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
             'service_title.*'    => 'nullable|string|max:255',
-            'service_icon.*'     => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'service_icon.*'     => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
@@ -130,8 +130,8 @@ class GroupCompaniesDifcDetailsController extends Controller
     {
         return [
             'heading.required'   => 'The Heading is required.',
-            'logo_image.max'     => 'The logo must not be larger than 2MB.',
-            'service_icon.*.max' => 'Each service icon must not be larger than 2MB.',
+            'logo_image.max'     => 'The logo must not be larger than 8MB.',
+            'service_icon.*.max' => 'Each service icon must not be larger than 8MB.',
         ];
     }
 

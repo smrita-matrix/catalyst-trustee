@@ -142,7 +142,7 @@ class PolicyPageController extends Controller
             'title'            => 'required|string|max:255',
             'slug'             => ['nullable', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', Rule::unique('policy_pages', 'slug')->ignore($ignoreId)],
             'breadcrumb_child' => 'nullable|string|max:255',
-            'banner_image'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'banner_image'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'intro_text'       => 'nullable|string',
             'sections'         => 'nullable|array',
             'sections.*.heading' => 'nullable|string|max:255',
@@ -158,7 +158,7 @@ class PolicyPageController extends Controller
             'title.required'   => 'Please enter the page title.',
             'slug.regex'       => 'The web address may use small letters, numbers and hyphens only — for example privacy-policy.',
             'slug.unique'      => 'Another policy page already uses that web address.',
-            'banner_image.max' => 'The banner image must not be larger than 4MB.',
+            'banner_image.max' => 'The banner image must not be larger than 8MB.',
         ];
     }
 

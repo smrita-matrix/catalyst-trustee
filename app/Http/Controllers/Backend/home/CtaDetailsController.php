@@ -109,7 +109,7 @@ class CtaDetailsController extends Controller
             'description'      => 'nullable|string',
             'button_text'      => 'nullable|string|max:100',
             'button_link'      => 'nullable|string|max:255',
-            'background_image' => [$isCreate ? 'nullable' : 'nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'background_image' => [$isCreate ? 'nullable' : 'nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ];
     }
 
@@ -117,7 +117,7 @@ class CtaDetailsController extends Controller
     {
         return [
             'heading.required'      => 'The Heading is required.',
-            'background_image.max'  => 'The background image must not be larger than 2MB.',
+            'background_image.max'  => 'The background image must not be larger than 8MB.',
             'background_image.image' => 'The background must be an image (jpg, jpeg, png, webp).',
         ];
     }

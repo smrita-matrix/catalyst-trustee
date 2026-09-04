@@ -35,4 +35,24 @@ class ContactOffice extends Model
         'deleted_at',
         'deleted_by',
     ];
+
+    /**
+     * Where this office's address should point.
+     *
+     * A map link pasted in the dashboard is used as it stands. Otherwise the
+     * address itself is looked up on Google Maps, so every office is clickable
+     * without anyone having to find and paste a link for each one.
+     */
+    public function getMapUrlAttribute(): ?string
+    {
+        if (trim((string) $this->map_link) !== '') {
+            return $this->map_link;
+        }
+
+        $query = trim(preg_replace('/\s+/u', ' ', $this->city . ' ' . $this->address));
+
+        return $query === ''
+            ? null
+            : 'https://www.google.com/maps/search/?api=1&query=' . urlencode($query);
+    }
 }

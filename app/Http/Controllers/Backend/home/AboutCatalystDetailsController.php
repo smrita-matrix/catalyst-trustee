@@ -116,7 +116,7 @@ class AboutCatalystDetailsController extends Controller
             'feature_title.*'         => 'nullable|string|max:255',
             'feature_description.*'   => 'nullable|string',
             'feature_icon_svg.*'      => 'nullable|string',
-            'feature_icon.*'          => ['nullable', 'file', 'max:2048', $this->iconExtensionRule()],
+            'feature_icon.*'          => ['nullable', 'file', 'max:8192', $this->iconExtensionRule()],
         ];
     }
 
@@ -128,7 +128,7 @@ class AboutCatalystDetailsController extends Controller
             'description.required' => 'The Description is required.',
             'button_text.required' => 'The Button Text is required.',
             'button_link.required' => 'The Button Link is required.',
-            'feature_icon.*.max'   => 'Each feature icon must not be larger than 2MB.',
+            'feature_icon.*.max'   => 'Each feature icon must not be larger than 8MB.',
         ];
     }
 

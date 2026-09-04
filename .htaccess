@@ -35,3 +35,35 @@ Options -Indexes
         Deny from all
     </IfModule>
 </FilesMatch>
+
+# ============================================================
+#  Upload limits
+#
+#  The default on most shared hosting is 2M, which refuses the
+#  PDFs and images uploaded through the dashboard before the
+#  site ever sees them.
+#
+#  These lines apply only where PHP runs as an Apache module.
+#  On CGI/FastCGI hosting - which cPanel normally uses - Apache
+#  rejects them outright, so they are guarded: without the guard
+#  the whole site returns a 500 error. public/.user.ini covers
+#  that case instead.
+# ============================================================
+<IfModule mod_php.c>
+    php_value upload_max_filesize 64M
+    php_value post_max_size 72M
+    php_value max_file_uploads 50
+    php_value memory_limit 256M
+</IfModule>
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 64M
+    php_value post_max_size 72M
+    php_value max_file_uploads 50
+    php_value memory_limit 256M
+</IfModule>
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 64M
+    php_value post_max_size 72M
+    php_value max_file_uploads 50
+    php_value memory_limit 256M
+</IfModule>

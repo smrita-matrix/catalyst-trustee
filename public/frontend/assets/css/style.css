@@ -11375,3 +11375,246 @@ strong {
   display: block;
   padding-left: 6px;
 }
+
+/* Headings and tick-boxes inside the grievance forms. */
+.grievance-form-title {
+  margin: 0 0 22px;
+  font-family: 'CormorantGaramond-Bold';
+  font-size: 32px;
+  color: #444343;
+}
+
+.grievance-group-title {
+  margin: 28px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+  font-family: 'Poppins-SemiBold';
+  font-size: 18px;
+  color: #c9624c;
+}
+
+.grievance-group-title:first-of-type {
+  margin-top: 0;
+}
+
+.grievance-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-bottom: 6px;
+}
+
+.grievance-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-weight: 400;
+  color: #444343;
+  cursor: pointer;
+}
+
+.grievance-check input {
+  width: auto;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+
+  .grievance-form-title {
+    font-size: 26px;
+  }
+
+  .grievance-checks {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* The second grievance form sits on a tint, so the two are easy to tell apart
+   now that both are on the one page. */
+.grievances-wrap--alt {
+  background: #fff3f0;
+}
+
+/* ===== Grievance page: form and officer side by side ===== */
+.grievance-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.grievance-aside {
+  position: sticky;
+  top: 120px;
+  display: block;
+}
+
+.grievance-aside .grievance-officer {
+  margin-top: 0;
+}
+
+.grievance-aside .grievance-disclaimer {
+  margin-top: 16px;
+}
+
+@media (max-width: 991px) {
+
+  /* Stacked on smaller screens, with the officer under the form. */
+  .grievance-layout {
+    display: block;
+  }
+
+  .grievance-aside {
+    position: static;
+    margin-top: 26px;
+  }
+}
+
+/* The message shown under a field that needs fixing. */
+.field-error {
+  display: block;
+  margin-top: 6px;
+  color: #d9534f;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.grievances-form-box .form-control.is-invalid,
+.grievances-form-box .is-invalid {
+  border-color: #d9534f;
+}
+
+/* Just spacing around the Submit button. The similarly named
+   ".grievances-submit" is a bordered button style used elsewhere, and wrapping
+   the button in it drew a box around the button. */
+.grievance-actions {
+  margin-top: 26px;
+}
+
+/* ===== Public Notice: table layout =====
+   For pages with far more rows than a card grid can carry - the credit
+   ratings page holds 179. */
+.notice-table-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.notice-table-search input[type="search"] {
+  flex: 1 1 320px;
+  max-width: 440px;
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid #ded9d4;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.notice-table-search input[type="search"]:focus {
+  border-color: #c9624c;
+  outline: none;
+}
+
+.notice-table-count {
+  color: #6f6b69;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* The table scrolls inside its own box, so a long row never pushes the page
+   sideways. */
+.notice-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #ececec;
+  border-radius: 10px;
+}
+
+.notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.notice-table thead th {
+  position: sticky;
+  top: 0;
+  padding: 14px 18px;
+  background: #c9624c;
+  color: #ffffff;
+  font-family: 'Poppins-SemiBold';
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.notice-table tbody td {
+  padding: 13px 18px;
+  border-top: 1px solid #efe7e3;
+  color: #444343;
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.notice-table tbody tr:nth-child(even) {
+  background: #fdf9f8;
+}
+
+.notice-table tbody tr:hover {
+  background: #fff3f0;
+}
+
+.notice-table a {
+  color: #c9624c;
+  text-decoration: none;
+}
+
+.notice-table a:hover {
+  text-decoration: underline;
+}
+
+.notice-table-empty {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 8px;
+  background: #f7f6f4;
+  color: #6f6b69;
+}
+
+@media (max-width: 767px) {
+
+  /* Each row becomes its own block, with the column heading beside the value -
+     three columns will not fit across a phone. */
+  .notice-table thead {
+    display: none;
+  }
+
+  .notice-table,
+  .notice-table tbody,
+  .notice-table tr,
+  .notice-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .notice-table tbody tr {
+    padding: 6px 0;
+    border-top: 1px solid #efe7e3;
+  }
+
+  .notice-table tbody td {
+    display: flex;
+    gap: 12px;
+    padding: 6px 14px;
+    border: 0;
+  }
+
+  .notice-table tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 108px;
+    color: #6f6b69;
+    font-size: 13px;
+  }
+}

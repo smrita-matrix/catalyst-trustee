@@ -167,6 +167,31 @@
               <input type="text" name="alert_heading" class="form-control" value="{{ old('alert_heading', $category->alert_heading) }}" placeholder="e.g. Attention Investors!">
             </div>
 
+            {{-- Only the table design uses these. The names sit at the top of
+                 each column, so they change with the page: "Issuer Name /
+                 Issued By / Date" on credit ratings. --}}
+            <div class="col-12 table-labels" @if(old('layout', $category->layout) !== 'table') style="display:none" @endif>
+              <div class="card border bg-light">
+                <div class="card-body">
+                  <label class="form-label"><b>Table Column Names</b></label>
+                  <div class="row g-3">
+                    <div class="col-lg-4">
+                      <input type="text" name="col_one_label" class="form-control" value="{{ old('col_one_label', $category->col_one_label) }}" placeholder="First column, e.g. Issuer Name">
+                      <small class="text-secondary">Holds the title, and links to the document.</small>
+                    </div>
+                    <div class="col-lg-4">
+                      <input type="text" name="col_two_label" class="form-control" value="{{ old('col_two_label', $category->col_two_label) }}" placeholder="Second column, e.g. Issued By">
+                      <small class="text-secondary">Shows each row's <b>Group</b>.</small>
+                    </div>
+                    <div class="col-lg-4">
+                      <input type="text" name="col_three_label" class="form-control" value="{{ old('col_three_label', $category->col_three_label) }}" placeholder="Third column, e.g. Date">
+                      <small class="text-secondary">Shows each row's <b>Date</b>.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-12">
               <label class="form-label">Notice Box Text</label>
               <textarea name="alert_text" class="form-control" rows="2" placeholder="Leave both boxes blank to hide it.">{{ old('alert_text', $category->alert_text) }}</textarea>
@@ -318,3 +343,17 @@
   })();
 </script>
 @endif
+
+<script>
+  // The column names only mean anything on the table design, so they appear
+  // when it is picked and go away again when it is not.
+  (function () {
+    var picker = document.querySelector('select[name="layout"]');
+    var box    = document.querySelector('.table-labels');
+    if (!picker || !box) { return; }
+
+    picker.addEventListener('change', function () {
+      box.style.display = picker.value === 'table' ? '' : 'none';
+    });
+  })();
+</script>

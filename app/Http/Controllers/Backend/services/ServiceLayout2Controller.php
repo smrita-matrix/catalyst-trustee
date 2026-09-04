@@ -81,17 +81,17 @@ class ServiceLayout2Controller extends Controller
     private function rules()
     {
         return [
-            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'nature_image'            => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'process_image'           => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'keyfacts_image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'banner_background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'nature_image'            => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'process_image'           => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'keyfacts_image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ];
     }
 
     private function messages()
     {
         return [
-            'banner_background_image.max' => 'The banner image must not be larger than 2MB.',
+            'banner_background_image.max' => 'The banner image must not be larger than 8MB.',
         ];
     }
 

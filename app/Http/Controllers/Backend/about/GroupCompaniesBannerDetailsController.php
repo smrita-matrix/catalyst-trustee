@@ -103,7 +103,7 @@ class GroupCompaniesBannerDetailsController extends Controller
         return [
             'title'             => 'required|string|max:255',
             'breadcrumb_parent' => 'nullable|string|max:255',
-            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ];
     }
 
@@ -112,7 +112,7 @@ class GroupCompaniesBannerDetailsController extends Controller
         return [
             'title.required'         => 'The Title is required.',
             'background_image.image' => 'The background must be an image (jpg, jpeg, png, webp).',
-            'background_image.max'   => 'The background image must not be larger than 2MB.',
+            'background_image.max'   => 'The background image must not be larger than 8MB.',
         ];
     }
 

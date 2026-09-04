@@ -104,8 +104,8 @@ class SebiServiceDetailsController extends Controller
             'item_title_link.*'     => 'nullable|string|max:255',
             'item_description.*'    => 'nullable|string',
             'item_read_more_link.*' => 'nullable|string|max:255',
-            'item_service_img.*'    => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
-            'item_icon.*'           => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'item_service_img.*'    => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
+            'item_icon.*'           => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
@@ -113,8 +113,8 @@ class SebiServiceDetailsController extends Controller
     {
         return [
             'heading.required'       => 'The Heading is required.',
-            'item_service_img.*.max' => 'Each service image must not be larger than 2MB.',
-            'item_icon.*.max'        => 'Each icon must not be larger than 2MB.',
+            'item_service_img.*.max' => 'Each service image must not be larger than 8MB.',
+            'item_icon.*.max'        => 'Each icon must not be larger than 8MB.',
         ];
     }
 

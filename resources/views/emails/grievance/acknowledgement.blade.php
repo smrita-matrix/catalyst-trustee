@@ -2,7 +2,7 @@
 
 @section('title', 'We have received your grievance')
 @section('heading', 'Thank You for Reaching Out')
-@section('subtitle', 'We have received your grievance')
+@section('subtitle', $grievance->type_label)
 
 @section('content')
 
@@ -15,34 +15,34 @@
     at this email address as soon as possible.
   </p>
 
+  <p style="margin:0 0 16px; font-size:14px; line-height:1.7;">
+    It was submitted under <strong>{{ $grievance->type_label }}</strong>.
+  </p>
+
   <p style="margin:0 0 10px; font-size:15px; font-weight:bold; color:#c9624c;">A Summary of What You Submitted</p>
+
+  {{-- Only the fields this form actually asked for. --}}
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px; border-collapse:collapse; margin-bottom:22px; background-color:#fff3f0;">
+    @php $rows = $grievance->summaryRows(); $last = array_key_last($rows); @endphp
+    @foreach($rows as $label => $value)
     <tr>
-      <td style="padding:11px 16px; width:190px; color:#6f6b69; border-bottom:1px solid #efe7e3;">Debenture Issuer</td>
-      <td style="padding:11px 16px; border-bottom:1px solid #efe7e3;"><strong>{{ $grievance->issuer_name }}</strong></td>
+      <td style="padding:11px 16px; width:190px; color:#6f6b69; vertical-align:top; {{ $label === $last ? '' : 'border-bottom:1px solid #efe7e3;' }}">{{ $label }}</td>
+      <td style="padding:11px 16px; vertical-align:top; {{ $label === $last ? '' : 'border-bottom:1px solid #efe7e3;' }}">{!! nl2br(e($value)) !!}</td>
     </tr>
-    <tr>
-      <td style="padding:11px 16px; color:#6f6b69; border-bottom:1px solid #efe7e3;">ISIN</td>
-      <td style="padding:11px 16px; border-bottom:1px solid #efe7e3;">{{ $grievance->isin }}</td>
-    </tr>
-    <tr>
-      <td style="padding:11px 16px; color:#6f6b69; border-bottom:1px solid #efe7e3;">No of Bonds Held</td>
-      <td style="padding:11px 16px; border-bottom:1px solid #efe7e3;">{{ $grievance->bonds_held }}</td>
-    </tr>
-    <tr>
-      <td style="padding:11px 16px; color:#6f6b69; border-bottom:1px solid #efe7e3; vertical-align:top;">Complaint Particulars</td>
-      <td style="padding:11px 16px; border-bottom:1px solid #efe7e3;">{{ implode(', ', (array) $grievance->complaint_types) }}</td>
-    </tr>
-    <tr>
-      <td style="padding:11px 16px; color:#6f6b69; vertical-align:top;">Your Message</td>
-      <td style="padding:11px 16px;">{!! nl2br(e($grievance->complaint_details)) !!}</td>
-    </tr>
+    @endforeach
   </table>
 
-  <p style="margin:0 0 16px; font-size:14px; line-height:1.7;">
-    You may also register complaints on the SEBI SCORES portal at
-    <a href="https://www.scores.gov.in/" style="color:#c9624c; text-decoration:none;">https://www.scores.gov.in/</a>.
-  </p>
+  @if($grievance->type === 'sebi')
+    <p style="margin:0 0 16px; font-size:14px; line-height:1.7;">
+      You may also register complaints on the SEBI SCORES portal at
+      <a href="https://www.scores.gov.in/" style="color:#c9624c; text-decoration:none;">https://www.scores.gov.in/</a>.
+    </p>
+  @else
+    <p style="margin:0 0 16px; font-size:13px; line-height:1.7; color:#6f6b69;">
+      Please note that the SEBI investor protection mechanisms are not available for grievances
+      relating to activities that are not regulated by SEBI.
+    </p>
+  @endif
 
   <p style="margin:0 0 6px; font-size:14px; line-height:1.7;">Warm regards,</p>
   <p style="margin:0; font-size:14px; line-height:1.7;">

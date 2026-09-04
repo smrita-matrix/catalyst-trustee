@@ -38,7 +38,7 @@ class ArticleController extends Controller
             'title'             => 'nullable|string|max:255',
             'breadcrumb_parent' => 'nullable|string|max:255',
             'breadcrumb_child'  => 'nullable|string|max:255',
-            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'background_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
         $banner = NewsletterBannerDetails::whereNull('deleted_at')->latest('id')->first();
@@ -84,7 +84,7 @@ class ArticleController extends Controller
             'title.*'    => 'nullable|string|max:255',
             'year.*'     => 'nullable|string|max:50',
             'sort_order.*' => 'nullable|integer',
-            'image.*'    => 'nullable|mimes:webp|max:2048',
+            'image.*'    => 'nullable|mimes:webp|max:8192',
             'pdf_file.*' => 'nullable|mimes:pdf|max:25600',
         ], [
             'title.required'  => 'Please add at least one article.',
@@ -150,7 +150,7 @@ class ArticleController extends Controller
             'year'       => 'nullable|string|max:50',
             'sort_order' => 'nullable|integer',
             'status'     => 'nullable|in:0,1',
-            'image'      => 'nullable|mimes:webp|max:2048',
+            'image'      => 'nullable|mimes:webp|max:8192',
             'pdf_file'   => 'nullable|mimes:pdf|max:25600',
         ], [
             'title.required'  => 'The Title is required.',

@@ -206,8 +206,13 @@ Route::get('/public-notice/{slug}', [PublicNoticeController::class, 'show'])->na
 Route::get('/careers', [CareerController::class, 'careers'])->name('frontend.careers');
 Route::post('/careers', [CareerController::class, 'store'])->name('frontend.careers.store');
 Route::get('/thank-you', [GrievanceController::class, 'thankYou'])->name('frontend.thank_you');
-Route::get('/investor-grievance', [GrievanceController::class, 'investorGrievance'])->name('frontend.investor_grievance');
+// One page per form, matching the addresses used on the live site.
+Route::get('/grievance-redressal-for-services-regulated-by-sebi', [GrievanceController::class, 'sebiGrievance'])->name('frontend.grievance_sebi');
+Route::get('/for-services-not-regulated-by-sebi', [GrievanceController::class, 'nonSebiGrievance'])->name('frontend.grievance_non_sebi');
+// The old single address still works, and lands on the SEBI form.
+Route::get('/investor-grievance', fn () => redirect()->route('frontend.grievance_sebi', [], 301))->name('frontend.investor_grievance');
 Route::post('/investor-grievance', [GrievanceController::class, 'store'])->name('frontend.investor_grievance.store');
+Route::post('/investor-grievance/sebi', [GrievanceController::class, 'storeSebi'])->name('frontend.investor_grievance.sebi.store');
 Route::get('/newsletter/news-and-media', [NewsletterController::class, 'newsMedia'])->name('frontend.news_media');
 Route::get('/newsletter/articles', [NewsletterController::class, 'articles'])->name('frontend.articles');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('frontend.search.suggest');

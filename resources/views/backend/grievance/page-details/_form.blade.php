@@ -74,18 +74,99 @@
   {{-- ---------------- Email notifications ---------------- --}}
   <div class="col-12">
     <div class="card border">
-      <div class="card-header py-2"><b>Email Notifications</b></div>
-      <div class="card-body">
-        <label class="form-label">Send New Grievances To</label>
-        <input class="form-control" type="email" name="notify_email" value="{{ old('notify_email', $content->notify_email) }}" placeholder="e.g. grievance@ctltrustee.com">
-        <small class="text-secondary d-block mt-1">
-          <i class="fa fa-info-circle"></i>
-          Every grievance submitted on the website is emailed here. The investor always gets an
-          acknowledgement at their own address. Leave blank to stop the team notification.
+      <div class="card-header py-2"><b>Email Notifications</b>
+        <small class="text-secondary d-block">
+          Each form below names its own grievance officer, and submissions go to that officer.
+          This address is the fallback when an officer's address is left blank.
         </small>
+      </div>
+      <div class="card-body">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <label class="form-label">Fallback Address</label>
+            <input class="form-control" type="email" name="notify_email" value="{{ old('notify_email', $content->notify_email) }}" placeholder="e.g. grievance@ctltrustee.com">
+            <small class="text-secondary d-block mt-1">
+              <i class="fa fa-info-circle"></i>
+              Used only when the form's own officer has no address set. The person who submitted
+              always gets an acknowledgement at their own address.
+            </small>
+          </div>
+
+          <div class="col-lg-6">
+            <label class="form-label">Copy To (CC)</label>
+            <input class="form-control" type="text" name="notify_cc" value="{{ old('notify_cc', $content->notify_cc) }}" placeholder="e.g. smrita@matrixbricks.com">
+            <small class="text-secondary d-block mt-1">
+              <i class="fa fa-info-circle"></i>
+              Anyone here is copied on the officer's notification. Separate several addresses with
+              commas. The person who submitted never sees these addresses.
+            </small>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+
+  {{-- ---------------- The two grievance forms ---------------- --}}
+  @foreach ([
+      'sebi'     => ['For Services Regulated By SEBI', 'Compliance and Grievance Officer'],
+      'non_sebi' => ['For Services Not Regulated By SEBI', 'Grievance Officer'],
+  ] as $key => $labels)
+  <div class="col-12">
+    <div class="card border">
+      <div class="card-header py-2"><b>Tab &mdash; {{ $labels[0] }}</b>
+        <small class="text-secondary d-block">The wording above this form and the officer named beneath it.</small>
+      </div>
+      <div class="card-body">
+        <div class="row g-4">
+
+          <div class="col-lg-6">
+            <label class="form-label">Tab Label</label>
+            <input class="form-control" type="text" name="{{ $key }}_heading"
+                   value="{{ old($key.'_heading', $content->{$key.'_heading'}) }}" placeholder="{{ $labels[0] }}">
+          </div>
+
+          <div class="col-lg-6">
+            <label class="form-label">{{ $labels[1] }} &mdash; Name</label>
+            <input class="form-control" type="text" name="{{ $key }}_officer_name"
+                   value="{{ old($key.'_officer_name', $content->{$key.'_officer_name'}) }}" placeholder="e.g. Ms. Kalyani Pandey">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Note Above This Form</label>
+            <textarea class="form-control" name="{{ $key }}_intro" rows="2"
+                      placeholder="Optional. Shown above the form.">{{ old($key.'_intro', $content->{$key.'_intro'}) }}</textarea>
+          </div>
+
+          <div class="col-lg-6">
+            <label class="form-label">Officer Phone</label>
+            <input class="form-control" type="text" name="{{ $key }}_officer_phone"
+                   value="{{ old($key.'_officer_phone', $content->{$key.'_officer_phone'}) }}" placeholder="e.g. +91 22 4922 0555">
+          </div>
+
+          <div class="col-lg-6">
+            <label class="form-label">Officer Email</label>
+            <input class="form-control" type="email" name="{{ $key }}_officer_email"
+                   value="{{ old($key.'_officer_email', $content->{$key.'_officer_email'}) }}" placeholder="e.g. grievance@ctltrustee.com">
+            <small class="text-secondary d-block mt-1">
+              <i class="fa fa-info-circle"></i>
+              Grievances from this form are emailed here.
+            </small>
+          </div>
+
+          @if($key === 'non_sebi')
+          <div class="col-12">
+            <label class="form-label">Note Below This Form</label>
+            <textarea class="form-control" name="non_sebi_note" rows="3"
+                      placeholder="e.g. None of the SEBI investor protection mechanisms shall be available...">{{ old('non_sebi_note', $content->non_sebi_note) }}</textarea>
+          </div>
+          @endif
+
+        </div>
+      </div>
+    </div>
+  </div>
+  @endforeach
 
   {{-- ---------------- Complaint tick-boxes ---------------- --}}
   <div class="col-12">

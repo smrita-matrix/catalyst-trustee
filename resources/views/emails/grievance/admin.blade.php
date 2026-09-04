@@ -3,74 +3,58 @@
 @section('title', 'New Investor Grievance')
 @section('heading', 'New Investor Grievance')
 @section('subtitle')
-  Received {{ $grievance->created_at ? \Carbon\Carbon::parse($grievance->created_at)->format('d M Y, H:i') : '' }}
+  {{ $grievance->type_label }}
 @endsection
 
 @section('content')
 
   <p style="margin:0 0 18px; font-size:14px; line-height:1.7;">
-    An investor has submitted a grievance through the website.
+    A grievance has been submitted through the website under
+    <strong>{{ $grievance->type_label }}</strong>.
   </p>
 
-  <p style="margin:0 0 10px; font-size:15px; font-weight:bold; color:#c9624c;">Investor / Debenture Holder</p>
+  <p style="margin:0 0 10px; font-size:15px; font-weight:bold; color:#c9624c;">The Grievance</p>
+
+  {{-- Only the fields this form asked for, plus the sender's contact details
+       so the team can reply without opening the dashboard. --}}
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px; border-collapse:collapse; margin-bottom:22px;">
+    @php $rows = $grievance->summaryRows(true); $last = array_key_last($rows); @endphp
+    @foreach($rows as $label => $value)
     <tr>
-      <td style="padding:9px 0; width:190px; color:#6f6b69; border-bottom:1px solid #efe7e3;">Full Name</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;"><strong>{{ $grievance->full_name }}</strong></td>
-    </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; border-bottom:1px solid #efe7e3;">PAN</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">{{ $grievance->pan }}</td>
-    </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; border-bottom:1px solid #efe7e3;">Email</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">
-        <a href="mailto:{{ $grievance->email }}" style="color:#c9624c; text-decoration:none;">{{ $grievance->email }}</a>
+      <td style="padding:9px 0; width:190px; color:#6f6b69; vertical-align:top; {{ $label === $last ? '' : 'border-bottom:1px solid #efe7e3;' }}">{{ $label }}</td>
+      <td style="padding:9px 0; vertical-align:top; {{ $label === $last ? '' : 'border-bottom:1px solid #efe7e3;' }}">
+        @if($label === 'Email')
+          <a href="mailto:{{ $value }}" style="color:#c9624c; text-decoration:none;">{{ $value }}</a>
+        @elseif($label === 'Mobile')
+          <a href="tel:{{ preg_replace('/\s+/', '', $value) }}" style="color:#c9624c; text-decoration:none;">{{ $value }}</a>
+        @elseif($label === 'Full Name')
+          <strong>{{ $value }}</strong>
+        @else
+          {!! nl2br(e($value)) !!}
+        @endif
       </td>
     </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; border-bottom:1px solid #efe7e3;">Mobile</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">{{ $grievance->mobile ?: '-' }}</td>
-    </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; vertical-align:top;">Postal Address</td>
-      <td style="padding:9px 0;">{!! nl2br(e($grievance->address)) !!}</td>
-    </tr>
+    @endforeach
   </table>
 
-  <p style="margin:0 0 10px; font-size:15px; font-weight:bold; color:#c9624c;">Instrument Details</p>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px; border-collapse:collapse; margin-bottom:22px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:13px; border-collapse:collapse; margin-bottom:22px; background-color:#f7f6f4;">
     <tr>
-      <td style="padding:9px 0; width:190px; color:#6f6b69; border-bottom:1px solid #efe7e3;">Debenture Issuer</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">{{ $grievance->issuer_name }}</td>
+      <td style="padding:10px 14px; width:190px; color:#6f6b69;">Received</td>
+      <td style="padding:10px 14px;">{{ $grievance->created_at ? \Carbon\Carbon::parse($grievance->created_at)->format('d M Y, H:i') : '' }}</td>
     </tr>
+    @if($grievance->ip_address)
     <tr>
-      <td style="padding:9px 0; color:#6f6b69; border-bottom:1px solid #efe7e3;">Series Name</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">{{ $grievance->series_name ?: '-' }}</td>
+      <td style="padding:10px 14px; color:#6f6b69;">Submitted from</td>
+      <td style="padding:10px 14px;">{{ $grievance->ip_address }}</td>
     </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; border-bottom:1px solid #efe7e3;">ISIN</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">{{ $grievance->isin }}</td>
-    </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; border-bottom:1px solid #efe7e3;">No of Bonds Held</td>
-      <td style="padding:9px 0; border-bottom:1px solid #efe7e3;">{{ $grievance->bonds_held }}</td>
-    </tr>
-    <tr>
-      <td style="padding:9px 0; color:#6f6b69; vertical-align:top;">Complaint Particulars</td>
-      <td style="padding:9px 0;">{{ implode(', ', (array) $grievance->complaint_types) }}</td>
-    </tr>
+    @endif
   </table>
 
-  <p style="margin:0 0 10px; font-size:15px; font-weight:bold; color:#c9624c;">Details of Grievance</p>
-  <div style="margin:0 0 22px; padding:14px 16px; background-color:#fff3f0; border-left:3px solid #c9624c; font-size:14px; line-height:1.7;">
-    {!! nl2br(e($grievance->complaint_details)) !!}
-  </div>
-
-  <p style="margin:0; padding-top:16px; border-top:1px solid #efe7e3; font-size:13px; color:#6f6b69;">
-    Reply to this email to contact the investor directly.
+  <p style="margin:0; font-size:13px; line-height:1.7; color:#6f6b69;">
+    The person who submitted this has been sent an acknowledgement at
+    <a href="mailto:{{ $grievance->email }}" style="color:#c9624c; text-decoration:none;">{{ $grievance->email }}</a>.
   </p>
 
 @endsection
 
-@section('note', 'Sent automatically from the Investor Grievance form on the website.')
+@section('note', 'Sent automatically from the website. Reply to the investor at the address above.')

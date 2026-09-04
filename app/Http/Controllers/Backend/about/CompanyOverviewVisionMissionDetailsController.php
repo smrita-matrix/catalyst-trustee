@@ -98,14 +98,14 @@ class CompanyOverviewVisionMissionDetailsController extends Controller
             'item_title.*'       => 'nullable|string|max:255',
             'item_tag.*'         => 'nullable|string|max:100',
             'item_description.*' => 'nullable|string',
-            'item_icon.*'        => ['nullable', 'file', 'max:2048', $this->imageExtensionRule()],
+            'item_icon.*'        => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
     }
 
     private function messages()
     {
         return [
-            'item_icon.*.max' => 'Each icon must not be larger than 2MB.',
+            'item_icon.*.max' => 'Each icon must not be larger than 8MB.',
         ];
     }
 
