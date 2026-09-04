@@ -11710,3 +11710,88 @@ strong {
   line-height: 1.45;
   color: #444343;
 }
+
+/* ===== Public Notice table: paging ===== */
+.notice-table-per {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: #6f6b69;
+  font-size: 14px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.notice-table-per select {
+  width: auto;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ded9d4;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.notice-table-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.notice-page-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.notice-page-btn,
+.notice-page-num {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid #ecd9d3;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #444343;
+  font-size: 14px;
+  line-height: 38px;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.notice-page-btn:hover:not(:disabled),
+.notice-page-num:hover {
+  border-color: #c9624c;
+  color: #c9624c;
+}
+
+.notice-page-num.is-current {
+  background: #c9624c;
+  border-color: #c9624c;
+  color: #ffffff;
+}
+
+.notice-page-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.notice-page-gap {
+  padding: 0 2px;
+  color: #a5a09d;
+}
+
+@media (max-width: 767px) {
+
+  /* On a phone the numbers alone are enough; the words would wrap awkwardly. */
+  .notice-page-btn {
+    padding: 0 12px;
+  }
+
+  .notice-table-pager {
+    gap: 6px;
+  }
+}

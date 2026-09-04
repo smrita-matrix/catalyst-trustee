@@ -26,6 +26,19 @@
           <input type="search" id="notice-table-filter" class="form-control"
                  placeholder="Search by issuer, agency or date…" autocomplete="off">
           <span class="notice-table-count" data-table-count>{{ $notices->count() }} entries</span>
+
+          {{-- Page size sits with the search, since both decide how much of
+               the list is on screen. --}}
+          <label class="notice-table-per">
+            Show
+            <select id="notice-table-per" class="form-control">
+              <option value="25" selected>25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="all">All</option>
+            </select>
+            per page
+          </label>
         </div>
 
         <div class="notice-table-wrap">
@@ -57,6 +70,18 @@
         </div>
 
         <p class="notice-table-empty" data-table-empty hidden>No entries match your search.</p>
+
+        {{-- Built by the page as the list is searched and paged, so it always
+             matches what is actually on screen. --}}
+        <nav class="notice-table-pager" data-table-pager aria-label="Table pages" hidden>
+          <button type="button" class="notice-page-btn" data-page-prev>
+            <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
+          </button>
+          <span class="notice-page-numbers" data-page-numbers></span>
+          <button type="button" class="notice-page-btn" data-page-next>
+            Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </button>
+        </nav>
 
       </div>
     </div>
