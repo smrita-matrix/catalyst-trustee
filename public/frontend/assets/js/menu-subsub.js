@@ -15,8 +15,28 @@
     var toggles = document.querySelectorAll('.subsub-toggle');
     if (!toggles.length) { return; }
 
+    /*
+     * The open list floats over the menu rather than sitting in it, so the
+     * menu is told how tall to be while it is open - otherwise the last few
+     * entries are cut off by the bottom of the menu.
+     */
+    function fitMenuTo(li) {
+      var menu  = li.closest('.sub-menu');
+      var panel = li.querySelector('.sebi-compliance-subsub-menu-custom-sec');
+      if (!menu || !panel) { return; }
+
+      var needed = panel.getBoundingClientRect().bottom - menu.getBoundingClientRect().top;
+      menu.style.minHeight = Math.ceil(needed + 40) + 'px';
+    }
+
+    function releaseMenu(li) {
+      var menu = li.closest('.sub-menu');
+      if (menu) { menu.style.minHeight = ''; }
+    }
+
     function close(li) {
       li.classList.remove('is-open');
+      releaseMenu(li);
       var t = li.querySelector('.subsub-toggle');
       if (t) { t.setAttribute('aria-expanded', 'false'); }
     }
@@ -40,6 +60,7 @@
         if (opening) {
           li.classList.add('is-open');
           toggle.setAttribute('aria-expanded', 'true');
+          fitMenuTo(li);
         }
       });
     });

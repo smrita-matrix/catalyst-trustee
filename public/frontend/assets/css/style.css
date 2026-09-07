@@ -11838,8 +11838,8 @@ strong {
   margin-right: 0 !important;
 }
 
-/* The list opens into that free space, level with its own heading, so the
-   entries underneath stay where they are and nothing is covered up. */
+/* The list opens into that free space as a column of its own, level with its
+   heading. Nothing is pushed down and nothing is covered up. */
 .sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
   position: absolute;
   top: -12px;
@@ -11885,8 +11885,10 @@ strong {
    menu box is given room for it while it is open. The panel also carries its
    own limit, for browsers that cannot match on "has an open list" - it
    scrolls inside itself rather than being cut off. */
+/* A rough floor while the list is open; the exact height is set as it opens,
+   so the menu always fits the list however many entries it has. */
 .notice-mega:has(.has-subsub.is-open) {
-  min-height: 640px;
+  min-height: 480px;
 }
 
 /* Growing the box must not re-centre the headings, or they drift down the
