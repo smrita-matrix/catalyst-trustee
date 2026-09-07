@@ -67,27 +67,22 @@
                   </li>
                   <li class="menu-item-has-children">
                     <a class="menu-opener">Public Notice <i class="fa fa-angle-down"></i></a>
-                    <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar" id="style-3">
+                    <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar notice-mega" id="style-3">
                       <div class="row">
                         <div class="col-md-12">
                           <div class="row">
                             @php
-                              // Match the approved design: a category that has sub categories puts
-                              // them in its own column, and its plain links spill into a second,
-                              // heading-less column beside it.
+                              // One column per heading, everything under it in the order the
+                              // dashboard sets. An entry that opens its own list does so in
+                              // place, pushing the entries below it down, rather than throwing
+                              // them into a separate column away from their heading.
                               $menuColumns = [];
                               foreach (($noticeMenu ?? []) as $cat) {
-                                  $subCats = $cat->children->filter(fn ($c) => $c->children->count())->values();
-                                  $links   = $cat->children->filter(fn ($c) => !$c->children->count())->values();
-
-                                  if ($subCats->count()) {
-                                      $menuColumns[] = ['category' => $cat, 'items' => $subCats, 'heading' => true];
-                                      if ($links->count()) {
-                                          $menuColumns[] = ['category' => $cat, 'items' => $links, 'heading' => false];
-                                      }
-                                  } else {
-                                      $menuColumns[] = ['category' => $cat, 'items' => $links, 'heading' => true];
-                                  }
+                                  $menuColumns[] = [
+                                      'category' => $cat,
+                                      'items'    => $cat->children,
+                                      'heading'  => true,
+                                  ];
                               }
                             @endphp
 

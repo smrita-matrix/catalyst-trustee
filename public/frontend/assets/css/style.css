@@ -11795,3 +11795,122 @@ strong {
     gap: 6px;
   }
 }
+
+/* ===== Mega menu: let an opened sub-list have its room =====
+   The menu box was a fixed 400px tall, which was fine while every entry was
+   one line. Now that "SEBI Compliance by Debenture Trustee" opens its own
+   list in place, the box grows with it and only starts scrolling when it
+   would otherwise run off the bottom of the screen. */
+.main_menu .menu > ul > li .sub-menu.mega-menu.scrollbar {
+  height: auto;
+  max-height: calc(100vh - 130px);
+  overflow-y: auto;
+}
+
+/* The scrollbar was white on white, so there was no sign the menu had more
+   to show. */
+#style-3::-webkit-scrollbar-thumb {
+  background-color: #e3d3ce;
+  border-radius: 4px;
+}
+
+#style-3::-webkit-scrollbar-thumb:hover {
+  background-color: #c9624c;
+}
+
+/* ===== Mega menu: an opened sub-list uses the space beside it =====
+   Opening "SEBI Compliance by Debenture Trustee" used to push everything
+   under it down the page, which made the menu tall and pushed the entries
+   below it out of sight. The list now opens into the empty column to its
+   left instead, level with its own heading, so nothing else moves. */
+.main_menu .menu > ul > li .sub-menu.mega-menu .list-item {
+  position: relative;
+}
+
+/* The two headings sit together on the left of the Public Notice menu, which
+   keeps the right-hand third of it free. */
+.main_menu .menu > ul > li .sub-menu.mega-menu.notice-mega .row {
+  justify-content: flex-start;
+}
+
+.main_menu .menu > ul > li .sub-menu.mega-menu.notice-mega .list-item {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* The list opens into that free space, level with its own heading, so the
+   entries underneath stay where they are and nothing is covered up. */
+.sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
+  position: absolute;
+  top: -12px;
+  left: 100%;
+  z-index: 5;
+  width: 470px;
+  margin-left: 26px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border: 1px solid #f0e4e0;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(40, 30, 28, 0.12);
+}
+
+/* The panel's own entries need no bottom rule on the last one. */
+.sebi-compliance-subsub-menu-custom-sec ul li:last-child a {
+  border-bottom: 0;
+}
+
+@media (max-width: 1399px) {
+  .sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
+    width: 360px;
+    margin-left: 18px;
+  }
+}
+
+/* Below the wide layout the columns stack, so there is no room beside the
+   heading - the list opens under it, as it did before. */
+@media (max-width: 991px) {
+  .sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
+    position: static;
+    width: auto;
+    margin-left: 0;
+    padding: 0 0 0 10px;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    max-height: none;
+  }
+}
+
+/* The opened panel is taller than the two short columns beside it, so the
+   menu box is given room for it while it is open. The panel also carries its
+   own limit, for browsers that cannot match on "has an open list" - it
+   scrolls inside itself rather than being cut off. */
+.notice-mega:has(.has-subsub.is-open) {
+  min-height: 640px;
+}
+
+/* Growing the box must not re-centre the headings, or they drift down the
+   moment the list is opened. */
+.notice-mega {
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
+}
+
+/* On a phone the list opens under its heading and the page scrolls, so it
+   needs no height limit of its own. This sits after the desktop rule so it
+   wins on a narrow screen. */
+@media (max-width: 991px) {
+  .sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .notice-mega:has(.has-subsub.is-open) {
+    min-height: 0;
+  }
+}
