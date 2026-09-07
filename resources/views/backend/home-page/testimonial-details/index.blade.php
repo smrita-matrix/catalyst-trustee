@@ -46,9 +46,6 @@
                         <a href="{{ route('testimonial-details.create') }}" class="btn btn-primary px-5 radius-30">+ Add Testimonials</a>
                     </div>
 
-                    @if(session('message'))
-                      <div class="alert alert-success">{{ session('message') }}</div>
-                    @endif
                     @if(session('error'))
                       <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif

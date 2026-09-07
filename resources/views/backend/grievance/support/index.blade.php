@@ -31,9 +31,6 @@
             <div class="card">
               <div class="card-body">
 
-                @if(session('message'))
-                  <div class="alert alert-success">{{ session('message') }}</div>
-                @endif
                 @if($errors->any())
                   <div class="alert alert-danger">
                     <ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
