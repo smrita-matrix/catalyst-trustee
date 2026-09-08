@@ -49,3 +49,70 @@ if (!function_exists('versioned_asset')) {
             : asset($path);
     }
 }
+
+if (!function_exists('site_page_links')) {
+    /**
+     * Every page on the website, as a list an admin can pick from.
+     *
+     * Link boxes in the dashboard take a path typed by hand, which means
+     * knowing what the paths are. This gathers them - the fixed pages, plus
+     * the services, notice pages and blog posts as they are added - so the
+     * boxes can suggest them instead.
+     *
+     * Returns [path => what the page is called].
+     */
+    function site_page_links(): array
+    {
+        $links = [
+            ''                                          => 'Home',
+            'company-overview'                          => 'About — Company Overview',
+            'leadership'                                => 'About — Our Leadership',
+            'group-companies'                           => 'About — Group Companies',
+            'our-journey'                               => 'About — Our Journey',
+            'services'                                  => 'Services — all services',
+            'careers/life-at-catalyst'                  => 'Careers — Life at Catalyst',
+            'careers/current-openings'                  => 'Careers — Current Openings',
+            'newsletter/articles'                       => 'Articles — Newsletter',
+            'blog'                                      => 'Articles — Blog',
+            'newsletter/news-and-media'                 => 'Articles — News & Media',
+            'grievance-redressal-for-services-regulated-by-sebi' => 'Grievance — SEBI regulated',
+            'for-services-not-regulated-by-sebi'        => 'Grievance — not SEBI regulated',
+            'notices-and-announcements'                 => 'Public Notice — all notices',
+            'contact-us'                                => 'Contact Us',
+        ];
+
+        // The pages that come and go with the content.
+        try {
+            if (class_exists(\App\Models\ProductCategory::class)) {
+                foreach (\App\Models\ProductCategory::with('serviceCategory')
+                    ->whereNull('deleted_at')->where('status', 1)
+                    ->orderBy('sort_order')->get() as $service) {
+
+                    $url = $service->url;
+                    if (!$url) { continue; }
+
+                    $links[ltrim(parse_url($url, PHP_URL_PATH) ?? '', '/')] =
+                        'Service — ' . $service->name;
+                }
+            }
+
+            if (class_exists(\App\Models\NoticeCategory::class)) {
+                foreach (\App\Models\NoticeCategory::live()->where('link_type', 'page')
+                    ->ordered()->get() as $page) {
+                    if (!$page->slug) { continue; }
+                    $links['public-notice/' . $page->slug] = 'Notice page — ' . $page->name;
+                }
+            }
+
+            if (class_exists(\App\Models\Blog::class)) {
+                foreach (\App\Models\Blog::live()->newestFirst()->get() as $post) {
+                    $links['blog/' . $post->slug] = 'Blog — ' . $post->title;
+                }
+            }
+        } catch (\Throwable $e) {
+            // Before the tables exist, the fixed list on its own is still useful.
+        }
+
+        return $links;
+    }
+}

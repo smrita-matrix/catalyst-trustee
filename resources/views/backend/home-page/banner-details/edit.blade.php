@@ -74,7 +74,7 @@
                                     <!-- Button Link-->
                                     <div class="col-lg-6">
                                         <label class="form-label" for="button_link">Button Link <span class="txt-danger">*</span></label>
-                                        <input class="form-control" id="button_link" type="text" name="button_link" value="{{ old('button_link', $banner_details->button_link) }}" placeholder="e.g. /about-us or https://..." required>
+                                        <input class="form-control" id="button_link" type="text" name="button_link" list="site-pages" value="{{ old('button_link', $banner_details->button_link) }}" placeholder="Start typing, or pick a page from the list" required>
                                         <div class="invalid-feedback">Please enter the Button Link.</div>
                                     </div>
 
@@ -173,3 +173,5 @@
 </body>
 
 </html>
+
+@include('components.backend.link-picker')
