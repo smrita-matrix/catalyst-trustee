@@ -99,6 +99,7 @@ class LandmarkDetailsController extends Controller
             'item_title'         => 'nullable|array',
             'item_title.*'       => 'nullable|string|max:255',
             'item_description.*' => 'nullable|string',
+            'item_details.*'     => 'nullable|string',
             'item_link.*'        => 'nullable|string|max:255',
             'item_image.*'       => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
         ];
@@ -116,6 +117,7 @@ class LandmarkDetailsController extends Controller
     {
         $titles        = $request->input('item_title', []);
         $descriptions  = $request->input('item_description', []);
+        $details       = $request->input('item_details', []);
         $links         = $request->input('item_link', []);
         $existingImages = $request->input('item_existing_image', []);
 
@@ -124,6 +126,7 @@ class LandmarkDetailsController extends Controller
         foreach ($titles as $i => $title) {
             $title       = trim((string) $title);
             $description = trim((string) ($descriptions[$i] ?? ''));
+            $detail      = trim((string) ($details[$i] ?? ''));
             $link        = trim((string) ($links[$i] ?? ''));
             $existingImage = $existingImages[$i] ?? null;
 
@@ -136,7 +139,7 @@ class LandmarkDetailsController extends Controller
                 }
             }
 
-            if ($title === '' && $description === '' && !$image && $link === '') {
+            if ($title === '' && $description === '' && $detail === '' && !$image && $link === '') {
                 continue;
             }
 
@@ -144,6 +147,9 @@ class LandmarkDetailsController extends Controller
                 'image'       => $image,
                 'title'       => $title,
                 'description' => $description,
+                // The longer story, shown in the pop-up when "Read more" is
+                // clicked. Blank means the card has no pop-up.
+                'details'     => $detail,
                 'link'        => $link,
             ];
         }

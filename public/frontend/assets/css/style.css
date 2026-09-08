@@ -12113,3 +12113,31 @@ a.services-index-card:hover:before {
     text-align: left;
   }
 }
+
+/* The transaction name at the top of a landmark pop-up. The design keeps it
+   hidden behind the logo, but a pop-up with no logo would open unnamed. */
+.catalyst-body .catalyst-title {
+  margin: 0 0 18px;
+  font-family: 'CormorantGaramond-Bold';
+  font-size: 24px;
+  line-height: 1.35;
+  color: #c9624c;
+  text-align: center;
+}
+
+.catalyst-body .company-logo + .catalyst-title {
+  font-size: 20px;
+  color: #444343;
+}
+
+/* The site header sits over the top of the screen, so the pop-up starts
+   below it - otherwise its logo and close button are behind the menu. */
+.catalyst-modal .modal-dialog {
+  margin-top: 115px;
+}
+
+@media (max-width: 767px) {
+  .catalyst-modal .modal-dialog {
+    margin-top: 90px;
+  }
+}

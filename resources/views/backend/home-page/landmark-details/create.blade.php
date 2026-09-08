@@ -66,7 +66,8 @@
                                                 <th style="width: 55px;">#</th>
                                                 <th style="width: 200px;">Image / Logo</th>
                                                 <th style="width: 240px;">Title</th>
-                                                <th>Description</th>
+                                                <th>Card Description</th>
+                                                <th>Pop-up Text</th>
                                                 <th style="width: 180px;">Read More Link</th>
                                                 <th style="width: 60px;"></th>
                                             </tr>
@@ -82,6 +83,7 @@
                                                     </td>
                                                     <td><textarea class="form-control" name="item_title[]" rows="2" placeholder="e.g. Landmark USD 750 Million ECB Facility for Adani Airport Holdings">{{ $oldTitle }}</textarea></td>
                                                     <td><textarea class="form-control" name="item_description[]" rows="2" placeholder="Card description">{{ old('item_description')[$i] ?? '' }}</textarea></td>
+                                                    <td><textarea class="form-control" name="item_details[]" rows="2" placeholder="The full story, shown when Read more is clicked. Leave blank for no pop-up.">{{ old('item_details')[$i] ?? '' }}</textarea></td>
                                                     <td><input class="form-control" type="text" name="item_link[]" value="{{ old('item_link')[$i] ?? '' }}" placeholder="e.g. #"></td>
                                                     <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm btn-remove-item" title="Remove"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
@@ -130,6 +132,7 @@
                 '<td><input class="form-control mb-2 item-image-input" type="file" name="item_image[]" accept=".png, .jpg, .jpeg, .webp, .svg"><div class="img-preview item-image-preview"></div></td>' +
                 '<td><textarea class="form-control" name="item_title[]" rows="2" placeholder="Transaction title"></textarea></td>' +
                 '<td><textarea class="form-control" name="item_description[]" rows="2" placeholder="Card description"></textarea></td>' +
+                '<td><textarea class="form-control" name="item_details[]" rows="2" placeholder="The full story, shown when Read more is clicked. Leave blank for no pop-up."></textarea></td>' +
                 '<td><input class="form-control" type="text" name="item_link[]" placeholder="e.g. #"></td>' +
                 '<td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm btn-remove-item" title="Remove"><i class="fa fa-trash"></i></button></td>';
             return row;

@@ -67,7 +67,8 @@
                                                 <th style="width: 55px;">#</th>
                                                 <th style="width: 200px;">Image / Logo</th>
                                                 <th style="width: 240px;">Title</th>
-                                                <th>Description</th>
+                                                <th>Card Description</th>
+                                                <th>Pop-up Text</th>
                                                 <th style="width: 180px;">Read More Link</th>
                                                 <th style="width: 60px;"></th>
                                             </tr>
@@ -79,11 +80,12 @@
                                                         return [
                                                             'title'       => $t,
                                                             'description' => old('item_description')[$i] ?? '',
+                                                            'details'     => old('item_details')[$i] ?? '',
                                                             'link'        => old('item_link')[$i] ?? '',
                                                             'image'       => old('item_existing_image')[$i] ?? null,
                                                         ];
                                                     })->all()
-                                                    : ($landmark->items ?: [['title' => '', 'description' => '', 'link' => '', 'image' => null]]);
+                                                    : ($landmark->items ?: [['title' => '', 'description' => '', 'details' => '', 'link' => '', 'image' => null]]);
                                             @endphp
                                             @foreach ($existingItems as $i => $item)
                                                 <tr class="item-row">
@@ -99,6 +101,7 @@
                                                     </td>
                                                     <td><textarea class="form-control" name="item_title[]" rows="2" placeholder="e.g. Landmark USD 750 Million ECB Facility for Adani Airport Holdings">{{ $item['title'] ?? '' }}</textarea></td>
                                                     <td><textarea class="form-control" name="item_description[]" rows="2" placeholder="Card description">{{ $item['description'] ?? '' }}</textarea></td>
+                                                    <td><textarea class="form-control" name="item_details[]" rows="2" placeholder="The full story, shown when Read more is clicked. Leave blank for no pop-up.">{{ $item['details'] ?? '' }}</textarea></td>
                                                     <td><input class="form-control" type="text" name="item_link[]" value="{{ $item['link'] ?? '' }}" placeholder="e.g. #"></td>
                                                     <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm btn-remove-item" title="Remove"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
@@ -147,6 +150,7 @@
                 '<td><input class="form-control mb-2 item-image-input" type="file" name="item_image[]" accept=".png, .jpg, .jpeg, .webp, .svg"><input type="hidden" name="item_existing_image[]" value=""><div class="img-preview item-image-preview"></div></td>' +
                 '<td><textarea class="form-control" name="item_title[]" rows="2" placeholder="Transaction title"></textarea></td>' +
                 '<td><textarea class="form-control" name="item_description[]" rows="2" placeholder="Card description"></textarea></td>' +
+                '<td><textarea class="form-control" name="item_details[]" rows="2" placeholder="The full story, shown when Read more is clicked. Leave blank for no pop-up."></textarea></td>' +
                 '<td><input class="form-control" type="text" name="item_link[]" placeholder="e.g. #"></td>' +
                 '<td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm btn-remove-item" title="Remove"><i class="fa fa-trash"></i></button></td>';
             return row;

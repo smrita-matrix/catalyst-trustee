@@ -324,6 +324,7 @@
                 <div class="swiper landmarkSwiper">
                   <div class="swiper-wrapper">
                     @foreach ($landmark?->items ?? [] as $i => $item)
+                    @php $hasPopup = trim($item['details'] ?? '') !== ''; @endphp
                     <div class="swiper-slide single-casestudy">
                       <h2>{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</h2>
                       @if (!empty($item['image']))
@@ -331,10 +332,19 @@
                       @endif
                       <h3>{{ $item['title'] ?? '' }}</h3>
                       <p>{{ $item['description'] ?? '' }}</p>
+                      {{-- With a story behind it, "Read more" opens the pop-up.
+                           Otherwise it goes wherever the dashboard points it. --}}
+                      @if ($hasPopup)
+                      <a href="#" class="read-more-btn" data-toggle="modal" data-target="#landmark-{{ $i + 1 }}">
+                      <span>Read more</span>
+                      <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}" alt="">
+                      </a>
+                      @else
                       <a href="{{ site_link($item['link'] ?? '') }}" class="read-more-btn">
                       <span>Read more</span>
                       <img src="{{ asset('frontend/assets/images/icons/right-arrow-bold.svg')}}" alt="">
                       </a>
+                      @endif
                     </div>
                     @endforeach
                   </div>
@@ -343,6 +353,29 @@
             </div>
           </div>
         </section>
+
+        {{-- The pop-ups sit outside the slider, so it cannot clip them and they
+             are not dragged along as the slides move. --}}
+        @foreach ($landmark?->items ?? [] as $i => $item)
+        @continue(trim($item['details'] ?? '') === '')
+        <div class="modal fade catalyst-modal" id="landmark-{{ $i + 1 }}" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <button type="button" class="close catalyst-close" data-dismiss="modal" aria-label="Close">&times;</button>
+              <div class="modal-body catalyst-body">
+                @if (!empty($item['image']))
+                <img src="{{ asset('home/landmark/' . $item['image']) }}" class="company-logo" alt="{{ $item['title'] ?? '' }}">
+                @endif
+                <h2 class="catalyst-title">{{ $item['title'] ?? '' }}</h2>
+                @foreach (preg_split("/\r?\n\s*\r?\n/", trim($item['details'])) as $para)
+                <p>{{ trim($para) }}</p>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
+        @endforeach
+
         <div class="clearfix"></div>
 
         <section class="proofs-section" id="proofs">
