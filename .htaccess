@@ -17,6 +17,16 @@ Options -Indexes
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # A page whose name matches a folder left over from an earlier version.
+    #
+    # The service pictures used to live in public/services. They have moved,
+    # but where the old folder is still sitting on a server the web server
+    # hands a request for the /services page to that folder instead of to
+    # the site, and the visitor gets "Forbidden". This sends the page to the
+    # site regardless. Addresses with more to them - a picture inside a
+    # folder, or a single service page - are unaffected.
+    RewriteRule ^services/?$ public/index.php [L]
+
     # Send everything into public/.
     # Skip requests that already point at public/, otherwise the rule
     # would re-apply to its own output and produce public/public/...
