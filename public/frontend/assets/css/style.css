@@ -12443,3 +12443,32 @@ a.services-index-card:hover:before {
   .blog-post-body h2 { font-size: 25px; }
   .blog-post-body h3 { font-size: 21px; }
 }
+
+/* ===== Home banner: let the picture show =====
+   The wash over the banner was a flat 55% black across the whole picture,
+   which held the headline well but left the photograph barely visible. It is
+   now dark where the words are and clears towards the right, so the picture
+   is seen and the headline still reads. */
+.hero-banner .banner-item .overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(20, 16, 15, 0.82) 0%,
+    rgba(20, 16, 15, 0.68) 34%,
+    rgba(20, 16, 15, 0.38) 62%,
+    rgba(20, 16, 15, 0.22) 100%
+  );
+}
+
+@media (max-width: 991px) {
+
+  /* Narrower screens put the words over more of the picture, so the wash
+     carries further across. */
+  .hero-banner .banner-item .overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(20, 16, 15, 0.84) 0%,
+      rgba(20, 16, 15, 0.74) 55%,
+      rgba(20, 16, 15, 0.55) 100%
+    );
+  }
+}
