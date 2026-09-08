@@ -354,28 +354,6 @@
           </div>
         </section>
 
-        {{-- The pop-ups sit outside the slider, so it cannot clip them and they
-             are not dragged along as the slides move. --}}
-        @foreach ($landmark?->items ?? [] as $i => $item)
-        @continue(trim($item['details'] ?? '') === '')
-        <div class="modal fade catalyst-modal" id="landmark-{{ $i + 1 }}" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <button type="button" class="close catalyst-close" data-dismiss="modal" aria-label="Close">&times;</button>
-              <div class="modal-body catalyst-body">
-                @if (!empty($item['image']))
-                <img src="{{ asset('home/landmark/' . $item['image']) }}" class="company-logo" alt="{{ $item['title'] ?? '' }}">
-                @endif
-                <h2 class="catalyst-title">{{ $item['title'] ?? '' }}</h2>
-                @foreach (preg_split("/\r?\n\s*\r?\n/", trim($item['details'])) as $para)
-                <p>{{ trim($para) }}</p>
-                @endforeach
-              </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-
         <div class="clearfix"></div>
 
         <section class="proofs-section" id="proofs">
@@ -470,6 +448,33 @@
         @include('components.frontend.footer')
       </div>
     </div>
+    {{-- Landmark Transaction pop-ups.
+         These sit outside the scrolling wrapper on purpose. The wrapper is
+         moved as the page scrolls, and anything pinned to the screen from
+         inside it is measured against the wrapper rather than the screen - so
+         a pop-up opened halfway down the page would open far above it, out of
+         sight. Out here it opens where the visitor is looking, which is also
+         where the Leadership pop-ups below sit. --}}
+    @foreach ($landmark?->items ?? [] as $i => $item)
+    @continue(trim($item['details'] ?? '') === '')
+    <div class="modal fade catalyst-modal" id="landmark-{{ $i + 1 }}" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <button type="button" class="close catalyst-close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <div class="modal-body catalyst-body">
+            @if (!empty($item['image']))
+            <img src="{{ asset('home/landmark/' . $item['image']) }}" class="company-logo" alt="{{ $item['title'] ?? '' }}">
+            @endif
+            <h2 class="catalyst-title">{{ $item['title'] ?? '' }}</h2>
+            @foreach (preg_split("/\r?\n\s*\r?\n/", trim($item['details'])) as $para)
+            <p>{{ trim($para) }}</p>
+            @endforeach
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+
     <!-- Leadership Modals -->
     @foreach ($leadership?->leaders ?? [] as $i => $leader)
     <div class="modal fade" id="team{{ $i }}" role="dialog">
