@@ -13,6 +13,20 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
+    # Keep "public" out of the address.
+    #
+    # Everything is served from inside this folder, but that is the site's
+    # own business and should not show in the address bar. Anyone arriving
+    # on an address with public/ in it - an old link, or a redirect from the
+    # web server itself - is sent to the tidy one.
+    #
+    # It reads the request the browser actually made, so it never fires on
+    # the site's own internal handover into this folder. The leading part of
+    # the path is kept, so it works whether the site sits at the top of a
+    # domain or in a folder below it.
+    RewriteCond %{THE_REQUEST} \s(/.*?)public/(\S*)
+    RewriteRule ^ %1%2 [R=301,L,NE]
+
     # Same guard, for a server whose document root is this folder.
     RewriteRule ^services/?$ index.php [L]
 
