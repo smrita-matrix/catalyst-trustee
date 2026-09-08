@@ -54,6 +54,7 @@ use App\Http\Controllers\Backend\Career\CareerOpeningController;
 use App\Http\Controllers\Backend\Career\CareerApplicationController;
 // Newsletter controllers
 use App\Http\Controllers\Backend\Newsletter\ArticleController;
+use App\Http\Controllers\Backend\Newsletter\BlogController;
 use App\Http\Controllers\Backend\Newsletter\NewsMediaController;
 // Contact controllers
 use App\Http\Controllers\Backend\Contact\ContactController as BackendContactController;
@@ -178,6 +179,8 @@ Route::post('news-media-banner', [NewsMediaController::class, 'updateBanner'])->
 Route::resource('news-media', NewsMediaController::class);
 Route::post('articles-banner', [ArticleController::class, 'updateBanner'])->name('articles.banner.update');
 Route::resource('articles', ArticleController::class);
+Route::get('blogs/{blog}/toggle-status', [BlogController::class, 'toggleStatus'])->name('blogs.toggle-status');
+Route::resource('blogs', BlogController::class);
 
 //Contact Us
 Route::get('contact-enquiry', [ContactEnquiryController::class, 'index'])->name('contact-enquiry.index');
@@ -224,6 +227,9 @@ Route::post('/investor-grievance', [GrievanceController::class, 'store'])->name(
 Route::post('/investor-grievance/sebi', [GrievanceController::class, 'storeSebi'])->name('frontend.investor_grievance.sebi.store');
 Route::get('/newsletter/news-and-media', [NewsletterController::class, 'newsMedia'])->name('frontend.news_media');
 Route::get('/newsletter/articles', [NewsletterController::class, 'articles'])->name('frontend.articles');
+// The blog, listed under Articles in the menu.
+Route::get('/blog', [NewsletterController::class, 'blogs'])->name('frontend.blogs');
+Route::get('/blog/{slug}', [NewsletterController::class, 'blog'])->name('frontend.blog');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('frontend.search.suggest');
 Route::get('/contact-us', [ContactController::class, 'contact'])->name('frontend.contact');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('frontend.contact.store');

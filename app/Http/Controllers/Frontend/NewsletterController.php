@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\NewsletterBannerDetails;
 use App\Models\FooterDetails;
 use App\Models\NewsMedia;
+use App\Models\Blog;
 use App\Models\NewsMediaBannerDetails;
 
 class NewsletterController extends Controller
@@ -34,6 +35,27 @@ class NewsletterController extends Controller
         $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
 
         return view('frontend.newsletter.articles', compact('banner', 'blocks', 'footer'));
+    }
+
+    /** The blog listing, newest post first. */
+    public function blogs()
+    {
+        return view('frontend.newsletter.blogs', [
+            'blogs'  => Blog::live()->newestFirst()->get(),
+            'footer' => FooterDetails::whereNull('deleted_at')->latest('id')->first(),
+        ]);
+    }
+
+    /** One blog post. */
+    public function blog(string $slug)
+    {
+        $blog = Blog::live()->where('slug', $slug)->firstOrFail();
+
+        return view('frontend.newsletter.blog', [
+            'blog'   => $blog,
+            'more'   => Blog::live()->newestFirst()->where('id', '!=', $blog->id)->take(3)->get(),
+            'footer' => FooterDetails::whereNull('deleted_at')->latest('id')->first(),
+        ]);
     }
 
     /** Newsletter > News & Media listing. */

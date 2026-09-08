@@ -311,7 +311,7 @@
                   </ul>
                 </li>
 
-                @php $newsletterActive = request()->routeIs('articles.*') || request()->routeIs('news-media.*'); @endphp
+                @php $newsletterActive = request()->routeIs('articles.*') || request()->routeIs('blogs.*') || request()->routeIs('news-media.*'); @endphp
                 <li class="sidebar-list {{ $newsletterActive ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title {{ $newsletterActive ? 'active' : '' }}" href="#">
@@ -327,6 +327,7 @@
                     {{-- Named to match the website: the heading is "Articles"
                          and the page under it is "Newsletter". --}}
                     <li><a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active' : '' }}">Newsletter</a></li>
+                    <li><a href="{{ route('blogs.index') }}" class="{{ request()->routeIs('blogs.*') ? 'active' : '' }}">Blog</a></li>
                     <li><a href="{{ route('news-media.index') }}" class="{{ request()->routeIs('news-media.*') ? 'active' : '' }}">News &amp; Media</a></li>
                   </ul>
                 </li>

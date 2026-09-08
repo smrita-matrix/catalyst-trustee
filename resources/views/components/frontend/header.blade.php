@@ -173,6 +173,7 @@
                              /newsletter/articles so nothing already linked or
                              bookmarked breaks. --}}
                         <li><a href="{{ route('frontend.articles') }}">Newsletter</a></li>
+                        <li><a href="{{ route('frontend.blogs') }}">Blog</a></li>
                         <li><a href="{{ route('frontend.news_media') }}">News & Media </a></li>
                       </ul>
                     </div>
