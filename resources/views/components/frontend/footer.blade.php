@@ -38,7 +38,7 @@
                       @empty
                         <li><a href="{{ route('frontend.index') }}">Home</a></li>
                         <li><a href="{{ route('frontend.company_overview') }}">About Us</a></li>
-                        <li><a href="{{ route('frontend.careers') }}">Careers</a></li>
+                        <li><a href="{{ route('frontend.careers_life') }}">Careers</a></li>
                         <li><a href="{{ route('frontend.contact') }}">Contact Us</a></li>
                       @endforelse
                     </ul>

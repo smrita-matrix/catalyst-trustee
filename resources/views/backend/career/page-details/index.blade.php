@@ -65,7 +65,11 @@
                           @endif
                         </td>
                       </tr>
-                      <tr><th>Live Page</th><td><a href="{{ route('frontend.careers') }}" target="_blank" rel="noopener noreferrer">/careers</a></td></tr>
+                      <tr><th>Live Pages</th><td>
+                        <a href="{{ route('frontend.careers_life') }}" target="_blank" rel="noopener noreferrer">/careers/life-at-catalyst</a>
+                        &nbsp;&middot;&nbsp;
+                        <a href="{{ route('frontend.careers_openings') }}" target="_blank" rel="noopener noreferrer">/careers/current-openings</a>
+                      </td></tr>
                     </tbody>
                   </table>
                   </div>

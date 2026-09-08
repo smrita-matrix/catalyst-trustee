@@ -17,19 +17,31 @@ use Illuminate\Support\Str;
 
 class CareerController extends Controller
 {
-    public function careers()
+    /**
+     * Life at Catalyst: the introduction and the stories.
+     */
+    public function life()
     {
-        $content = CareerPageDetails::whereNull('deleted_at')->latest('id')->first();
+        return view('frontend.careers.life', [
+            'content' => CareerPageDetails::whereNull('deleted_at')->latest('id')->first(),
+            'footer'  => FooterDetails::whereNull('deleted_at')->latest('id')->first(),
+        ]);
+    }
 
-        $openings = CareerOpening::whereNull('deleted_at')
-            ->where('status', 1)
-            ->orderBy('sort_order', 'asc')
-            ->orderBy('id', 'asc')
-            ->get();
-
-        $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
-
-        return view('frontend.careers.index', compact('content', 'openings', 'footer'));
+    /**
+     * Current Openings, with the form for sending in a resume.
+     */
+    public function openings()
+    {
+        return view('frontend.careers.openings', [
+            'content'  => CareerPageDetails::whereNull('deleted_at')->latest('id')->first(),
+            'footer'   => FooterDetails::whereNull('deleted_at')->latest('id')->first(),
+            'openings' => CareerOpening::whereNull('deleted_at')
+                ->where('status', 1)
+                ->orderBy('sort_order', 'asc')
+                ->orderBy('id', 'asc')
+                ->get(),
+        ]);
     }
 
     /** Store an application, keep the CV, then notify both sides. */

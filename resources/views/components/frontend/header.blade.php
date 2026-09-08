@@ -178,11 +178,13 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a href="{{ route('frontend.careers') }}">Careers   <i class="fa fa-angle-down"></i></a>
+                    {{-- The heading opens the list; the two pages under it are
+                         where the visitor goes. --}}
+                    <a class="menu-opener">Careers   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="{{ route('frontend.careers') }}#life-at-catalyst">Life at Catalyst</a></li>
-                        <li><a href="{{ route('frontend.careers') }}#current-openings">Current Openings </a></li>
+                        <li><a href="{{ route('frontend.careers_life') }}">Life at Catalyst</a></li>
+                        <li><a href="{{ route('frontend.careers_openings') }}">Current Openings </a></li>
                       </ul>
                     </div>
                   </li>

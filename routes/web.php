@@ -206,7 +206,13 @@ Route::get('/services/{category}/{slug}', [ServicesSebiController::class, 'show'
 Route::get('/services/{slug}', [ServicesSebiController::class, 'showLegacy'])->name('frontend.product_page_legacy');
 Route::get('/notices-and-announcements', [PublicNoticeController::class, 'notices'])->name('frontend.notices');
 Route::get('/public-notice/{slug}', [PublicNoticeController::class, 'show'])->name('frontend.notice_page');
-Route::get('/careers', [CareerController::class, 'careers'])->name('frontend.careers');
+// Careers is two pages, not one page with two parts.
+Route::get('/careers/life-at-catalyst', [CareerController::class, 'life'])->name('frontend.careers_life');
+Route::get('/careers/current-openings', [CareerController::class, 'openings'])->name('frontend.careers_openings');
+
+// The old single address, kept so existing links and bookmarks still land
+// somewhere sensible.
+Route::get('/careers', fn () => redirect()->route('frontend.careers_life', [], 301))->name('frontend.careers');
 Route::post('/careers', [CareerController::class, 'store'])->name('frontend.careers.store');
 Route::get('/thank-you', [GrievanceController::class, 'thankYou'])->name('frontend.thank_you');
 // One page per form, matching the addresses used on the live site.
