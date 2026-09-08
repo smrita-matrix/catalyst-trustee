@@ -165,10 +165,14 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a class="menu-opener">Newsletter <i class="fa fa-angle-down"></i></a>
+                    <a class="menu-opener">Articles <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="{{ route('frontend.articles') }}">Articles</a></li>
+                        {{-- The heading is "Articles" and the page under it is
+                             "Newsletter". The address still reads
+                             /newsletter/articles so nothing already linked or
+                             bookmarked breaks. --}}
+                        <li><a href="{{ route('frontend.articles') }}">Newsletter</a></li>
                         <li><a href="{{ route('frontend.news_media') }}">News & Media </a></li>
                       </ul>
                     </div>

@@ -1,3 +1,11 @@
+{{-- ================= Back to top =================
+     On every page, because this file is. It stays out of the way until the
+     reader has gone past the first screen. --}}
+<button type="button" id="scroll-to-top" class="scroll-to-top" aria-label="Back to top"
+        aria-hidden="true" tabindex="-1">
+  <i class="fa fa-angle-up" aria-hidden="true"></i>
+</button>
+
 {{-- ================= Site search modal =================
      Opens when the header magnifier is clicked. Results appear as the
      visitor types; the icon is still a plain link to /search so the
@@ -32,6 +40,7 @@
     <script src="{{ versioned_asset('frontend/assets/js/menu-subsub.js') }}"></script>
     <script src="{{ versioned_asset('frontend/assets/js/notice-table.js') }}"></script>
     <script src="{{ versioned_asset('frontend/assets/js/modal-scroll.js') }}"></script>
+    <script src="{{ versioned_asset('frontend/assets/js/scroll-top.js') }}"></script>
     <script src="{{ versioned_asset('frontend/assets/js/grievance-validate.js') }}"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>

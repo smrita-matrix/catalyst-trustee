@@ -321,10 +321,12 @@
                     <svg class="fill-icon">
                       <use href="{{ asset('admin/assets/svg/icon-sprite.svg#stroke-email') }}"></use>
                     </svg>
-                    <span>Newsletter</span>
+                    <span>Articles</span>
                   </a>
                   <ul class="sidebar-submenu" @if ($newsletterActive) style="display: block;" @endif>
-                    <li><a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active' : '' }}">Articles</a></li>
+                    {{-- Named to match the website: the heading is "Articles"
+                         and the page under it is "Newsletter". --}}
+                    <li><a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active' : '' }}">Newsletter</a></li>
                     <li><a href="{{ route('news-media.index') }}" class="{{ request()->routeIs('news-media.*') ? 'active' : '' }}">News &amp; Media</a></li>
                   </ul>
                 </li>

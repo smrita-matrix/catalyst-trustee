@@ -12141,3 +12141,69 @@ a.services-index-card:hover:before {
     margin-top: 90px;
   }
 }
+
+/* ===== Back to top =====
+   Sits clear of the page in the bottom corner, out of sight until the reader
+   has gone past the first screen. */
+.scroll-to-top {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  z-index: 1030;            /* over the page, under the pop-ups */
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #c9624c;
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(40, 30, 28, 0.22);
+  cursor: pointer;
+
+  /* Hidden, and out of the way of clicks and the keyboard, until needed. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s,
+              background-color 0.25s ease;
+}
+
+.scroll-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover,
+.scroll-to-top:focus {
+  background: #a94a37;
+  color: #ffffff;
+  outline: none;
+}
+
+.scroll-to-top:focus-visible {
+  box-shadow: 0 6px 18px rgba(40, 30, 28, 0.22), 0 0 0 3px rgba(201, 98, 76, 0.4);
+}
+
+.scroll-to-top i {
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .scroll-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top {
+    transition: opacity 0.01s, visibility 0.01s;
+    transform: none;
+  }
+}
