@@ -86,9 +86,13 @@
         </section>
         <section class="why-wrap cnt-portfolio-ptb">
           <div class="container-fluid">
-            <div class="heading heading-white heading-center">
+            {{-- The heading stays at the top of the screen while the cards
+                 stack up under it. Without this class it is not pinned, so it
+                 scrolls away and leaves a gap where it used to be. --}}
+            <div class="heading heading-white heading-center why-choose-cata-home-header-sec">
               <h2>{{ $whyChoose?->heading }}</h2>
             </div>
+            <br>
             <div class="row flex">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="cnt-portfolio-video-card-wrapper d-flex flex-column justify-content-center">
