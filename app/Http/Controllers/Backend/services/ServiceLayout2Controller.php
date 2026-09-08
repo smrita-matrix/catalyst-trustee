@@ -97,7 +97,7 @@ class ServiceLayout2Controller extends Controller
 
     private function uploadImage($file, $folder)
     {
-        $destination = public_path('services/layout2/' . $folder);
+        $destination = public_path('service-uploads/layout2/' . $folder);
         if (!is_dir($destination)) {
             mkdir($destination, 0775, true);
         }
@@ -109,7 +109,7 @@ class ServiceLayout2Controller extends Controller
 
     private function deleteImage($fileName, $folder)
     {
-        $path = public_path('services/layout2/' . $folder . '/' . $fileName);
+        $path = public_path('service-uploads/layout2/' . $folder . '/' . $fileName);
         if (is_file($path)) {
             @unlink($path);
         }

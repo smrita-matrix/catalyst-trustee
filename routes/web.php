@@ -198,6 +198,9 @@ Route::get('/leadership', [AboutUsController::class, 'leadership'])->name('front
 Route::get('/group-companies', [AboutUsController::class, 'group_companies'])->name('frontend.group_companies');
 Route::get('/our-journey', [AboutUsController::class, 'our_journey'])->name('frontend.our_journey');
 Route::get('/debenture-trustee-listed', [ServicesSebiController::class, 'debenture_trustee_listed'])->name('frontend.debenture_trustee_listed');
+// Everything we offer, on one page. Registered before the addresses with a
+// slug in them so it is never mistaken for a service name.
+Route::get('/services', [ServicesSebiController::class, 'index'])->name('frontend.services_index');
 Route::get('/services/{category}/{slug}', [ServicesSebiController::class, 'show'])->name('frontend.product_page');
 // Old single-part service address - kept so existing links and bookmarks still work.
 Route::get('/services/{slug}', [ServicesSebiController::class, 'showLegacy'])->name('frontend.product_page_legacy');

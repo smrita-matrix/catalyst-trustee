@@ -25,6 +25,67 @@ class ServicesSebiController extends Controller
     }
 
     /**
+     * The Services page: every service we offer, under its own group.
+     *
+     * The header menu lists these too, but a visitor who clicks "Services"
+     * expects a page, and one that opens in its own tab or is shared as a link
+     * has to stand on its own.
+     */
+    public function index()
+    {
+        $groups = ServiceCategory::whereNull('deleted_at')
+            ->where('status', 1)
+            ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')
+            ->get()
+            ->map(function ($category) {
+                $services = ProductCategory::where('service_category_id', $category->id)
+                    ->whereNull('deleted_at')
+                    ->where('status', 1)
+                    ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')
+                    ->get()
+                    ->each(fn ($p) => $p->setRelation('serviceCategory', $category));
+
+                return ['category' => $category, 'services' => $services];
+            })
+            ->filter(fn ($g) => $g['services']->count())
+            ->values();
+
+        $banner = $this->firstServiceBanner();
+        $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
+
+        return view('frontend.services.index', compact('groups', 'banner', 'footer'));
+    }
+
+    /**
+     * The header picture, borrowed from the first service page that has one.
+     *
+     * This page has no picture of its own to set in the dashboard, and a
+     * service page's banner is the right kind of image for it - changing that
+     * page's banner changes this one too.
+     */
+    private function firstServiceBanner(): ?string
+    {
+        $sources = [
+            [DebentureTrusteeListedDetails::class, 'service-uploads/debenture-trustee-listed/banner/'],
+            [ServiceLayout2Details::class,         'service-uploads/layout2/banner/'],
+            [ServiceLayout3Details::class,         'service-uploads/layout3/banner/'],
+            [ServiceFifDetails::class,             'service-uploads/fif/banner/'],
+        ];
+
+        foreach ($sources as [$model, $path]) {
+            $row = $model::whereNull('deleted_at')
+                ->whereNotNull('banner_background_image')
+                ->latest('id')->first();
+
+            if ($row && is_file(public_path($path . $row->banner_background_image))) {
+                return $path . $row->banner_background_image;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Old address, before the group was part of it: /services/{slug}.
      *
      * Anything already linked or bookmarked still works — it is sent on to the

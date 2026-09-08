@@ -32,7 +32,9 @@
                     </div>
                   </li>
                   <li class="menu-item-has-children">
-                    <a class="menu-opener">Services <i class="fa fa-angle-down"></i></a>
+                    {{-- Goes to the Services page. Hovering still opens the list below it,
+                             so nothing is lost by making the heading itself clickable. --}}
+                    <a href="{{ route('frontend.services_index') }}">Services <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu mega-menu row mega-menu-column-4 scrollbar" id="style-3">
                       <div class="row">
                         <div class="col-md-12">
@@ -41,7 +43,7 @@
                             <div class="col-md-2 list-item {{ $loop->last ? '' : 'border-right-one' }}">
                               <div class="mega-main-heading">
                                 @if(!empty($cat['icon']))
-                                <div class="icon"><img src="{{ asset('services/categories/'.$cat['icon']) }}" alt="icon"></div>
+                                <div class="icon"><img src="{{ asset('service-uploads/categories/'.$cat['icon']) }}" alt="icon"></div>
                                 @endif
                                 <h3><a class="no-link">{{ $cat['name'] }}</a></h3>
                               </div>
@@ -60,6 +62,15 @@
                               </ul>
                             </div>
                             @endforeach
+                          </div>
+
+                          {{-- On a phone the heading opens this list rather than
+                               following its link, so the Services page needs a way
+                               in from here too. --}}
+                          <div class="mega-menu-foot">
+                            <a href="{{ route('frontend.services_index') }}">
+                              View all services <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </a>
                           </div>
                         </div>
                       </div>

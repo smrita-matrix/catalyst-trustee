@@ -61,7 +61,7 @@
                                 <input class="form-control" id="icon" type="file" name="icon" accept=".png,.jpg,.jpeg,.webp,.svg" onchange="previewIcon()">
                                 <small class="d-block text-secondary mt-2"><i class="fa fa-info-circle"></i> Leave empty to keep the current icon. Max 2MB.</small>
                                 <div class="img-preview mt-2" id="icon-preview">
-                                    @if($category->icon)<img id="existing_icon" src="{{ asset('services/categories/'.$category->icon) }}" alt="icon">@endif
+                                    @if($category->icon)<img id="existing_icon" src="{{ asset('service-uploads/categories/'.$category->icon) }}" alt="icon">@endif
                                 </div>
                             </div>
 

@@ -146,7 +146,7 @@ class ServiceCategoryController extends Controller
 
     private function uploadIcon($file)
     {
-        $destination = public_path('services/categories');
+        $destination = public_path('service-uploads/categories');
 
         if (!is_dir($destination)) {
             mkdir($destination, 0775, true);
@@ -160,7 +160,7 @@ class ServiceCategoryController extends Controller
 
     private function deleteIcon($fileName)
     {
-        $path = public_path('services/categories/' . $fileName);
+        $path = public_path('service-uploads/categories/' . $fileName);
         if (is_file($path)) {
             @unlink($path);
         }

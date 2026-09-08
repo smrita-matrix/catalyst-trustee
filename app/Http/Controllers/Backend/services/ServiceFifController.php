@@ -163,7 +163,7 @@ class ServiceFifController extends Controller
 
     private function uploadImage($file, $folder)
     {
-        $destination = public_path('services/fif/' . $folder);
+        $destination = public_path('service-uploads/fif/' . $folder);
         if (!is_dir($destination)) {
             mkdir($destination, 0775, true);
         }
@@ -175,7 +175,7 @@ class ServiceFifController extends Controller
 
     private function deleteImage($fileName, $folder)
     {
-        $path = public_path('services/fif/' . $folder . '/' . $fileName);
+        $path = public_path('service-uploads/fif/' . $folder . '/' . $fileName);
         if (is_file($path)) {
             @unlink($path);
         }

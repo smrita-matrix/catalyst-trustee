@@ -11,7 +11,7 @@
     @include('components.backend.sidebar')
     <!--end sidebar wrapper-->
 
-    @php $imgBase = 'services/debenture-trustee-listed/'; @endphp
+    @php $imgBase = 'service-uploads/debenture-trustee-listed/'; @endphp
 
         <div class="page-body">
           <div class="container-fluid">

@@ -250,7 +250,7 @@ class ServicesSebiDetailsController extends Controller
 
     private function uploadImage($file, $folder)
     {
-        $destination = public_path('services/debenture-trustee-listed/' . $folder);
+        $destination = public_path('service-uploads/debenture-trustee-listed/' . $folder);
 
         if (!is_dir($destination)) {
             mkdir($destination, 0775, true);
@@ -264,7 +264,7 @@ class ServicesSebiDetailsController extends Controller
 
     private function deleteImage($fileName, $folder)
     {
-        $path = public_path('services/debenture-trustee-listed/' . $folder . '/' . $fileName);
+        $path = public_path('service-uploads/debenture-trustee-listed/' . $folder . '/' . $fileName);
         if (is_file($path)) {
             @unlink($path);
         }

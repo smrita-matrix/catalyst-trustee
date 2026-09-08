@@ -11,7 +11,7 @@
     @include('components.backend.sidebar')
     <!--end sidebar wrapper-->
 
-    @php $imgBase = 'services/fif/'; @endphp
+    @php $imgBase = 'service-uploads/fif/'; @endphp
 
         <div class="page-body">
           <div class="container-fluid">

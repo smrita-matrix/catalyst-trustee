@@ -11,7 +11,7 @@
     @include('components.backend.sidebar')
     <!--end sidebar wrapper-->
 
-    @php $imgBase = 'services/layout3/'; @endphp
+    @php $imgBase = 'service-uploads/layout3/'; @endphp
 
         <div class="page-body">
           <div class="container-fluid">

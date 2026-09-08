@@ -12,7 +12,7 @@
       @include('components.frontend.header')
     </header>
 
-  @php $imgBase = 'services/debenture-trustee-listed/'; @endphp
+  @php $imgBase = 'service-uploads/debenture-trustee-listed/'; @endphp
 
   <div id="smooth-wrapper">
     <div id="smooth-content">

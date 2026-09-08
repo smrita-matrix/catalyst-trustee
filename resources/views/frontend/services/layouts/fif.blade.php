@@ -11,7 +11,7 @@
       @include('components.frontend.header')
     </header>
 
-  @php $imgBase = 'services/fif/'; @endphp
+  @php $imgBase = 'service-uploads/fif/'; @endphp
 
   <div id="smooth-wrapper">
     <div id="smooth-content">

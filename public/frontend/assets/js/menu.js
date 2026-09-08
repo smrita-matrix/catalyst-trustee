@@ -12,6 +12,15 @@
  	}
    if(e.target.closest(".menu-item-has-children")){
    	 const hasChildren = e.target.closest(".menu-item-has-children");
+
+      // On a phone, tapping a heading such as "Services" opens its list.
+      // The heading is also a link to its own page, so that tap must not
+      // follow the link - the links inside the list still do.
+      const opener = e.target.closest("a");
+      if (opener && opener.parentElement === hasChildren) {
+        e.preventDefault();
+      }
+
       showSubMenu(hasChildren);
    }
  });
