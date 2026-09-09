@@ -130,8 +130,15 @@ class AppServiceProvider extends ServiceProvider
                     }
 
                     return [
-                        'label'    => $label,
-                        'url'      => $url,
+                        'label' => $label,
+
+                        // A path typed in the dashboard - "/company-overview" -
+                        // has to be completed with the site's own address. On a
+                        // server where the site sits in a folder, a path starting
+                        // with "/" points at the top of the domain instead, and
+                        // every one of these links lands on a Not Found page.
+                        'url' => site_link($url),
+
                         'external' => \Illuminate\Support\Str::startsWith($url, ['http://', 'https://'])
                             && parse_url($url, PHP_URL_HOST) !== $host,
                     ];

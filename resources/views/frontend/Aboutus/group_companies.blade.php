@@ -79,7 +79,7 @@
                     @endforeach
                     @if(!empty($entity['link']))
                     <div class="ctl-trusteeship-limited-content-btn-sec">
-                      <a class="btn-default btn-black" href="{{ $entity['link'] }}">Know More</a>
+                      <a class="btn-default btn-black" href="{{ site_link($entity['link'] ?? '') }}">Know More</a>
                     </div>
                     @endif
                   </div>
@@ -97,7 +97,7 @@
                     @endforeach
                     @if(!empty($entity['link']))
                     <div class="ctl-trusteeship-limited-content-btn-sec">
-                      <a class="btn-default btn-black" href="{{ $entity['link'] }}">Know More</a>
+                      <a class="btn-default btn-black" href="{{ site_link($entity['link'] ?? '') }}">Know More</a>
                     </div>
                     @endif
                   </div>
@@ -157,7 +157,7 @@
             @endif
             @if($difc->button_text)
             <div class="cata-difc-services-main-btn-sec">
-              <a class="btn-default" href="{{ $difc->button_link ?? '#' }}">{{ $difc->button_text }}</a>
+              <a class="btn-default" href="{{ site_link($difc->button_link ?? '') }}">{{ $difc->button_text }}</a>
             </div>
             @endif
           </div>
