@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Accessibility tools
+    |--------------------------------------------------------------------------
+    |
+    | The reading-aids panel in the corner of every page, provided by EqualWeb.
+    | Leave the key empty and the panel is not loaded at all.
+    |
+    */
+
+    'accessibility' => [
+        'key'      => env('ACCESSIBILITY_KEY', ''),
+        'position' => env('ACCESSIBILITY_POSITION', 'right'),
+        'colour'   => env('ACCESSIBILITY_COLOUR', '#c9624c'),
+    ],
+
 ];

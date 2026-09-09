@@ -65,3 +65,5 @@
     <script>
      
     </script>
+
+@include('components.frontend.accessibility')
