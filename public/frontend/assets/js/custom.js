@@ -140,7 +140,10 @@ window.addEventListener("load", function () {
     mouseDrag: true,
     touchDrag: true,
     nav: false,
-    dots: false
+
+    // Dots, now that the banner holds more than one slide - without them
+    // there is nothing to say another is coming, or to go back to one.
+    dots: true
   });
 
   ////////////////////////////

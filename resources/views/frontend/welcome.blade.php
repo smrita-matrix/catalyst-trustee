@@ -11,7 +11,9 @@
     <div id="smooth-wrapper">
       <div id="smooth-content">
         <section class="hero-banner">
-          <div class="owl-carousel banner-slider">
+          {{-- "owl-theme" is what the design's dot styling hangs off; without it the
+               dots are there but have no size. --}}
+          <div class="owl-carousel owl-theme banner-slider">
             @forelse ($banners as $banner)
             <div class="banner-item">
               <img src="{{ $banner->banner_images ? asset('home/banner/' . $banner->banner_images) : asset('frontend/assets/images/banner/a.jpg') }}" alt="{{ strip_tags($banner->banner_heading) }}" />
