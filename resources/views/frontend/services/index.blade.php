@@ -57,17 +57,16 @@
               </span>
               @endif
               <h3>{{ $category->name }}</h3>
-              <span class="services-index-count">{{ $group['services']->count() }} services</span>
             </div>
 
             <div class="row services-index-row">
               @foreach($group['services'] as $service)
               @php $url = $service->url; @endphp
-              <div class="col-sm-3 col-xs-6">
+              <div class="col-sm-3 col-xs-6" data-aos="fade-up" data-aos-duration="800"
+                   data-aos-delay="{{ ($loop->index % 4) * 120 }}">
                 {{-- A service with no page yet is still listed, but is not
                      clickable - a link that goes nowhere is worse than none. --}}
                 <{{ $url ? 'a' : 'div' }} class="services-index-card" @if($url) href="{{ $url }}" @endif>
-                  <span class="services-index-card-icon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
                   <h4 class="services-index-card-title">{{ $service->name }}</h4>
                   @if($url)
                   <span class="services-index-card-cta">Read More <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
