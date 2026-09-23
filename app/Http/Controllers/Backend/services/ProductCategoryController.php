@@ -88,6 +88,19 @@ class ProductCategoryController extends Controller
                 'Key Benefits (image + points + note)',
             ],
         ],
+        'securitisation' => [
+            'for' => 'Securitisation',
+            'sections' => [
+                'Banner',
+                'Opening band (picture beside heading and paragraphs)',
+                'Full-width panel (picture + headed paragraphs on the terracotta)',
+                'Our Experience at a Glance (figure cards)',
+                'Middle band (picture beside heading and paragraphs)',
+                'Capabilities (side tabs, each with points and an optional row of steps)',
+                'Lifecycle strip (sliding row of steps)',
+                'Closing band (picture beside heading and paragraphs)',
+            ],
+        ],
         'fif' => [
             'for' => 'GIFT City style',
             'sections' => [
@@ -189,6 +202,7 @@ class ProductCategoryController extends Controller
             case 'debenture': return redirect()->route('service-layout1.edit', $product->id);
             case 'services2': return redirect()->route('service-layout2.edit', $product->id);
             case 'services3': return redirect()->route('service-layout3.edit', $product->id);
+            case 'securitisation': return redirect()->route('service-securitisation.edit', $product->id);
             case 'fif':       return redirect()->route('service-fif.edit', $product->id);
             default:
                 return redirect()->route('product-category.edit', $product->id)

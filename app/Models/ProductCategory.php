@@ -18,6 +18,7 @@ class ProductCategory extends Model
         'services2'  => 'Layout 2',
         'services3'  => 'Layout 3',
         'fif'        => 'Layout 4',
+        'securitisation' => 'Layout 5 (Securitisation)',
     ];
 
     protected $fillable = [

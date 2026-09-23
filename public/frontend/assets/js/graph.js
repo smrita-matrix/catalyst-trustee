@@ -155,6 +155,9 @@
       document.addEventListener("DOMContentLoaded", function () {
 
           const section = document.querySelector(".performance-wrap");
+          // The chart only exists on the home page, so on every other page
+          // there is nothing to watch and nothing to draw.
+          if (!section) { return; }
           let chartLoaded = false;
 
           const observer = new IntersectionObserver(function(entries) {

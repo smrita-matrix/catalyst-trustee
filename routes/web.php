@@ -41,6 +41,7 @@ use App\Http\Controllers\Backend\services\ServiceCategoryController;
 use App\Http\Controllers\Backend\services\ProductCategoryController;
 use App\Http\Controllers\Backend\services\ServiceLayout3Controller;
 use App\Http\Controllers\Backend\services\ServiceLayout2Controller;
+use App\Http\Controllers\Backend\services\ServiceSecuritisationController;
 use App\Http\Controllers\Backend\services\ServiceFifController;
 // Public Notice controllers
 use App\Http\Controllers\Backend\PublicNotice\NoticeCategoryController;
@@ -147,6 +148,8 @@ Route::get('service-layout3/{product}/edit', [ServiceLayout3Controller::class, '
 Route::match(['put', 'post'], 'service-layout3/{product}', [ServiceLayout3Controller::class, 'update'])->name('service-layout3.update');
 Route::get('service-layout2/{product}/edit', [ServiceLayout2Controller::class, 'edit'])->name('service-layout2.edit');
 Route::match(['put', 'post'], 'service-layout2/{product}', [ServiceLayout2Controller::class, 'update'])->name('service-layout2.update');
+Route::get('service-securitisation/{product}/edit', [ServiceSecuritisationController::class, 'edit'])->name('service-securitisation.edit');
+Route::match(['put', 'post'], 'service-securitisation/{product}', [ServiceSecuritisationController::class, 'update'])->name('service-securitisation.update');
 Route::get('service-fif/{product}/edit', [ServiceFifController::class, 'edit'])->name('service-fif.edit');
 Route::match(['put', 'post'], 'service-fif/{product}', [ServiceFifController::class, 'update'])->name('service-fif.update');
 
