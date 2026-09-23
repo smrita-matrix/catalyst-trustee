@@ -116,32 +116,54 @@
         </div>
       </section>
       @endif
-      @if($difc)
-      <section class="catalyst-difc-services-limited-sec">
+      {{-- A panel for each company in the group. Two looks are approved:
+           the dark grey one Catalyst (DIFC) uses, and the terracotta one
+           Monarch uses. Which a panel wears is set in the dashboard, so a
+           third company can be added without touching this page. --}}
+      @foreach($panels as $panel)
+      @php
+          $warm = ($panel->theme ?? 'dark') === 'terracotta';
+          $sec  = $warm ? 'monarch-catalyst-in-mauritius' : 'catalyst-difc-services-limited-sec';
+          $main = $warm ? 'monarch-catalyst-in-mauritius-main-sec' : 'cata-difc-services-main-sec';
+          $head = $warm ? 'monarch-catalyst-in-mauritius-main-content-sec' : 'cata-difc-services-main-content-sec';
+          $grid = 'cata-difc-services-main-eight-col-sec';
+          $box  = $warm ? 'monarch-catalyst-in-mauritius-service-box' : 'cata-difc-service-box';
+          $icon = 'cata-difc-service-icon';
+          $body = $warm ? 'monarch-catalyst-in-mauritius-service-content' : 'cata-difc-service-content';
+          $tail = 'cata-difc-services-main-content-two-sec';
+          $btn  = $warm ? 'monarch-catalyst-in-mauritius-services-main-btn-sec' : 'cata-difc-services-main-btn-sec';
+          // The design gives the terracotta panel the dark pill button,
+          // which reads against that ground where the pale one does not.
+          $btnClass = $warm ? 'btn-default btn-black' : 'btn-default';
+      @endphp
+      <section class="{{ $sec }}">
         <div class="container-fluid">
-          <div class="cata-difc-services-main-sec">
+          <div class="{{ $main }}">
 
-            <div class="cata-difc-services-main-content-sec">
-              @if($difc->logo_image)
-              <img src="{{ asset('about-us/group-companies/difc/' . $difc->logo_image) }}" alt="">
+            <div class="{{ $head }}">
+              @if($panel->logo_image)
+              <img src="{{ asset('about-us/group-companies/difc/' . $panel->logo_image) }}" alt="{{ $panel->heading }}">
               @endif
               <div class="heading heading-white" data-aos="fade-up" data-aos-duration="1600">
-                <h2>{{ $difc->heading }}</h2>
+                <h2>{{ $panel->heading }}</h2>
               </div>
-              {!! $difc->top_description !!}
+              {!! $panel->top_description !!}
             </div>
-            @if($difc->services && count($difc->services))
-            <div class="cata-difc-services-main-eight-col-sec">
+
+            @if($panel->services && count($panel->services))
+            <div class="{{ $grid }}">
               <div class="row">
-                @foreach($difc->services as $i => $service)
-                <div class="col-md-3">
-                  <div class="cata-difc-service-box" data-aos="fade-up" data-aos-duration="800" data-aos-delay="{{ ($i % 4) * 150 }}">
-                    <div class="cata-difc-service-icon">
+                @foreach($panel->services as $i => $service)
+                {{-- The terracotta panel puts six tiles across, the dark one
+                     four, as the design has them. --}}
+                <div class="{{ $warm ? 'col-md-2 col-sm-4 col-xs-6' : 'col-md-3' }}">
+                  <div class="{{ $box }}" data-aos="fade-up" data-aos-duration="800" data-aos-delay="{{ ($i % 4) * 150 }}">
+                    <div class="{{ $icon }}">
                       @if(!empty($service['icon']))
                       <img src="{{ asset('about-us/group-companies/difc/' . $service['icon']) }}" alt="">
                       @endif
                     </div>
-                    <div class="cata-difc-service-content">
+                    <div class="{{ $body }}">
                       <h4>{{ $service['title'] ?? '' }}</h4>
                     </div>
                   </div>
@@ -150,20 +172,22 @@
               </div>
             </div>
             @endif
-            @if($difc->bottom_description)
-            <div class="cata-difc-services-main-content-two-sec">
-              {!! $difc->bottom_description !!}
+
+            @if($panel->bottom_description)
+            <div class="{{ $tail }}">
+              {!! $panel->bottom_description !!}
             </div>
             @endif
-            @if($difc->button_text)
-            <div class="cata-difc-services-main-btn-sec">
-              <a class="btn-default" href="{{ site_link($difc->button_link ?? '') }}">{{ $difc->button_text }}</a>
+
+            @if($panel->button_text)
+            <div class="{{ $btn }}">
+              <a class="{{ $btnClass }}" href="{{ site_link($panel->button_link ?? '') }}">{{ $panel->button_text }}</a>
             </div>
             @endif
           </div>
         </div>
       </section>
-      @endif
+      @endforeach
        @include('components.frontend.footer')
     </div>
   </div>

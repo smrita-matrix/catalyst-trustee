@@ -130,6 +130,22 @@
                                 <input class="form-control" id="button_link" type="text" name="button_link" value="{{ old('button_link', $difc->button_link) }}" placeholder="e.g. #">
                             </div>
 
+                            {{-- Two panel looks are approved: the dark grey one
+                                 Catalyst (DIFC) uses and the terracotta one Monarch
+                                 uses. Any company added later picks one of them. --}}
+                            <div class="col-lg-6">
+                                <label class="form-label" for="theme">Panel Colour</label>
+                                <select class="form-control" id="theme" name="theme">
+                                    <option value="dark" {{ old('theme', $difc->theme) === 'terracotta' ? '' : 'selected' }}>Dark grey &mdash; as Catalyst (DIFC) uses</option>
+                                    <option value="terracotta" {{ old('theme', $difc->theme) === 'terracotta' ? 'selected' : '' }}>Terracotta &mdash; as Monarch uses</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="form-label" for="sort_order">Order on the page</label>
+                                <input class="form-control" id="sort_order" type="number" name="sort_order" value="{{ old('sort_order', $difc->sort_order) }}" placeholder="0">
+                                <small class="text-secondary">Lower numbers come first.</small>
+                            </div>
+
                             <!-- Form Actions -->
                             <div class="col-12 d-flex justify-content-end gap-2 border-top pt-4 mt-2">
                                 <a href="{{ route('group-companies-difc-details.index') }}" class="btn btn-outline-secondary px-4">Cancel</a>

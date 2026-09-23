@@ -18,7 +18,8 @@ class GroupCompaniesDifcDetailsController extends Controller
     public function index()
     {
         $difc = GroupCompaniesDifcDetails::whereNull('deleted_at')
-            ->orderBy('id', 'desc')
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
 
         return view('backend.about-us.group-companies.difc-details.index', compact('difc'));
@@ -40,6 +41,11 @@ class GroupCompaniesDifcDetailsController extends Controller
             'services'           => $this->buildServices($request, []),
             'button_text'        => $request->button_text,
             'button_link'        => $request->button_link,
+
+            // Which of the two approved panels this company wears, and where
+            // it sits among them.
+            'theme'              => $request->theme === 'terracotta' ? 'terracotta' : 'dark',
+            'sort_order'         => (int) ($request->sort_order ?? 0),
             'created_at'         => Carbon::now(),
             'created_by'         => Auth::id(),
         ];
@@ -77,6 +83,11 @@ class GroupCompaniesDifcDetailsController extends Controller
             'services'           => $services,
             'button_text'        => $request->button_text,
             'button_link'        => $request->button_link,
+
+            // Which of the two approved panels this company wears, and where
+            // it sits among them.
+            'theme'              => $request->theme === 'terracotta' ? 'terracotta' : 'dark',
+            'sort_order'         => (int) ($request->sort_order ?? 0),
             'modified_at'        => Carbon::now(),
             'modified_by'        => Auth::id(),
         ];
@@ -120,6 +131,8 @@ class GroupCompaniesDifcDetailsController extends Controller
             'bottom_description' => 'nullable|string',
             'button_text'        => 'nullable|string|max:100',
             'button_link'        => 'nullable|string|max:255',
+            'theme'              => 'nullable|in:dark,terracotta',
+            'sort_order'         => 'nullable|integer',
             'logo_image'         => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],
             'service_title.*'    => 'nullable|string|max:255',
             'service_icon.*'     => ['nullable', 'file', 'max:8192', $this->imageExtensionRule()],

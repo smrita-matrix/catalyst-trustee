@@ -53,13 +53,17 @@ class AboutUsController extends Controller
     {
         $banner   = GroupCompaniesBannerDetails::whereNull('deleted_at')->latest('id')->first();
         $overview = GroupCompaniesOverviewDetails::whereNull('deleted_at')->latest('id')->first();
-        $difc     = GroupCompaniesDifcDetails::whereNull('deleted_at')->latest('id')->first();
+        // Every company panel on the page, in the order set in the dashboard.
+        // There were only ever meant to be one; Monarch in Mauritius is the
+        // second, and more can be added the same way.
+        $panels   = GroupCompaniesDifcDetails::whereNull('deleted_at')
+            ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
         $footer   = FooterDetails::whereNull('deleted_at')->latest('id')->first();
 
         return view('frontend.Aboutus.group_companies', compact(
             'banner',
             'overview',
-            'difc',
+            'panels',
             'footer'
         ));
     }

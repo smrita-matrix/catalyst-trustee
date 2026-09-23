@@ -20,6 +20,8 @@ class GroupCompaniesDifcDetails extends Model
         'bottom_description',
         'button_text',
         'button_link',
+        'theme',
+        'sort_order',
         'created_at',
         'created_by',
         'modified_at',
