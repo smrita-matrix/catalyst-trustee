@@ -13932,7 +13932,7 @@ a.services-index-card:hover:before {
    that carry only the disclaimer and have no certificates above it. */
 
 .service-disclaimer-sec {
-  padding: 0 0 70px;
+  padding: 70px 0;
 }
 
 .service-disclaimer-sec .dtcn-note-strip {
@@ -13978,5 +13978,9 @@ a.services-index-card:hover:before {
 
   .service-disclaimer-sec .dtcn-note-icon {
     margin: 0 0 12px;
+  }
+
+  .service-disclaimer-sec {
+    padding: 45px 0;
   }
 }
