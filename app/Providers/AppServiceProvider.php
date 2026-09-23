@@ -48,11 +48,13 @@ class AppServiceProvider extends ServiceProvider
                                 // the model rather than letting it fetch its own.
                                 $p->setRelation('serviceCategory', $cat);
 
-                                if (in_array($p->layout, ['debenture', 'services2', 'services3', 'fif'], true)) {
-                                    $link = $p->url ?: '#';
-                                } else {
-                                    $link = '#';
-                                }
+                                // A service is clickable once it has a layout to
+                                // draw it with. Asking the model which layouts
+                                // exist means a new one is linked straight away,
+                                // rather than waiting for this list to be updated.
+                                $link = array_key_exists((string) $p->layout, ProductCategory::LAYOUTS)
+                                    ? ($p->url ?: '#')
+                                    : '#';
                                 return ['title' => $p->name, 'link' => $link];
                             })
                             ->all();
