@@ -13926,3 +13926,57 @@ a.services-index-card:hover:before {
     );
   }
 }
+
+/* ===== A service's disclaimer =====
+   The same strip as the note under the certificates, for the pages
+   that carry only the disclaimer and have no certificates above it. */
+
+.service-disclaimer-sec {
+  padding: 0 0 70px;
+}
+
+.service-disclaimer-sec .dtcn-note-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff3f0;
+  border-left: 5px solid #d57966;
+  border-radius: 4px;
+  padding: 22px 26px 22px 20px;
+  box-shadow: 0 6px 24px rgba(43, 24, 20, 0.07);
+}
+
+.service-disclaimer-sec .dtcn-note-icon {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  background: rgba(213, 121, 102, 0.12);
+  color: #d57966;
+  border-radius: 50%;
+  margin-right: 18px;
+  font-size: 16px;
+}
+
+.service-disclaimer-sec .dtcn-note-strip p {
+  margin: 0;
+  color: #444343;
+  font-size: 15px;
+  font-family: 'Poppins-Regular';
+}
+
+.service-disclaimer-sec .dtcn-note-strip strong {
+  color: #d57966;
+}
+
+@media (max-width: 767px) {
+  .service-disclaimer-sec .dtcn-note-strip {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .service-disclaimer-sec .dtcn-note-icon {
+    margin: 0 0 12px;
+  }
+}

@@ -238,6 +238,7 @@
       </section>
       @endif
 
+      @include('components.frontend.service-disclaimer')
       @include('components.frontend.footer')
     </div>
   </div>

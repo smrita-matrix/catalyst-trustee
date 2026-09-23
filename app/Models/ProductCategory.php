@@ -25,6 +25,7 @@ class ProductCategory extends Model
         'name',
         'slug',
         'layout',
+        'disclaimer',
         'sort_order',
         'status',
         'created_at',

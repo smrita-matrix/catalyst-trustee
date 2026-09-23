@@ -75,6 +75,11 @@
                                     <label class="form-check-label" for="status">Show on website</label>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <label class="form-label" for="disclaimer">Disclaimer</label>
+                                <textarea class="form-control" id="disclaimer" name="disclaimer" rows="3" placeholder="Leave empty if this service needs no disclaimer">{{ old('disclaimer', $product->disclaimer) }}</textarea>
+                                <small class="d-block text-secondary mt-1">Shown in a tinted strip at the foot of this service's page. Services SEBI does not regulate should say so here.</small>
+                            </div>
                             <div class="col-12 d-flex justify-content-end gap-2 border-top pt-4 mt-2">
                                 <a href="{{ route('product-category.index') }}" class="btn btn-outline-secondary px-4">Cancel</a>
                                 <button class="btn btn-primary px-4" type="submit">Update</button>

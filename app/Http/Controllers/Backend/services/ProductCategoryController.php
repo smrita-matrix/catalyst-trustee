@@ -139,6 +139,7 @@ class ProductCategoryController extends Controller
             'name'                => $request->name,
             'slug'                => Str::slug($request->name),
             'layout'              => $request->layout,
+            'disclaimer'          => $request->disclaimer ?: null,
             'sort_order'          => $request->sort_order ?? 0,
             'status'              => $request->has('status') ? 1 : 0,
             'created_at'          => Carbon::now(),
@@ -167,6 +168,7 @@ class ProductCategoryController extends Controller
             'name'                => $request->name,
             'slug'                => Str::slug($request->name),
             'layout'              => $request->layout,
+            'disclaimer'          => $request->disclaimer ?: null,
             'sort_order'          => $request->sort_order ?? 0,
             'status'              => $request->has('status') ? 1 : 0,
             'modified_at'         => Carbon::now(),
@@ -271,6 +273,7 @@ class ProductCategoryController extends Controller
                 },
             ],
             'layout'     => 'nullable|string|in:' . implode(',', array_keys(ProductCategory::LAYOUTS)),
+            'disclaimer' => 'nullable|string|max:2000',
             'sort_order' => 'nullable|integer',
         ];
     }

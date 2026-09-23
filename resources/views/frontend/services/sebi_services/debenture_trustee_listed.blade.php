@@ -192,7 +192,10 @@
       </section>
       @endif
 
-      @if(optional($page)->recognition_heading || (optional($page)->certificates && count($page->certificates)) || trim(strip_tags(optional($page)->recognition_note ?? '')) !== '')
+      @php $recCerts = collect(optional($page)->certificates ?? [])->filter(fn($c) => !empty($c['image']))->count(); @endphp
+      {{-- A heading on its own would leave an empty band, so this section
+           appears only when there is a certificate or a note to show. --}}
+      @if($recCerts || trim(strip_tags(optional($page)->recognition_note ?? '')) !== '')
       <section class="debenture-trustee-certificate-note-sec">
         <div class="container">
           @php $hasCerts = collect(optional($page)->certificates ?? [])->filter(fn($c) => !empty($c['image']))->count() > 0; @endphp
@@ -236,6 +239,7 @@
         </div>
       </section>
       @endif
+        @include('components.frontend.service-disclaimer')
         @include('components.frontend.footer')
     </div>
   </div>
