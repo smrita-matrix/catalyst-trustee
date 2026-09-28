@@ -16,22 +16,43 @@
     if (!toggles.length) { return; }
 
     /*
-     * The open list floats over the menu rather than sitting in it, so the
-     * menu is told how tall to be while it is open - otherwise the last few
-     * entries are cut off by the bottom of the menu.
+     * The open list floats over the menu rather than sitting in it, so two
+     * things have to be arranged as it opens.
+     *
+     * It is lined up with the heading that opened it, so the list appears
+     * beside the words that were clicked rather than at the top of the menu,
+     * which reads as belonging to something else.
+     *
+     * And the menu is told how tall to be while it is open, or the last few
+     * entries are cut off by the bottom of it.
      */
-    function fitMenuTo(li) {
-      var menu  = li.closest('.sub-menu');
-      var panel = li.querySelector('.sebi-compliance-subsub-menu-custom-sec');
-      if (!menu || !panel) { return; }
+    function placeBeside(li) {
+      var menu   = li.closest('.sub-menu');
+      var panel  = li.querySelector('.sebi-compliance-subsub-menu-custom-sec');
+      var toggle = li.querySelector('.subsub-toggle');
+      if (!menu || !panel || !toggle) { return; }
 
-      var needed = panel.getBoundingClientRect().bottom - menu.getBoundingClientRect().top;
+      // On a narrow screen the list sits under its heading in the ordinary
+      // flow, so there is nothing to line up.
+      if (getComputedStyle(panel).position !== 'absolute') {
+        panel.style.top = '';
+        return;
+      }
+
+      var menuTop = menu.getBoundingClientRect().top;
+      var rowTop  = toggle.getBoundingClientRect().top;
+
+      panel.style.top = Math.max(Math.round(rowTop - menuTop) - 10, 0) + 'px';
+
+      var needed = panel.getBoundingClientRect().bottom - menuTop;
       menu.style.minHeight = Math.ceil(needed + 40) + 'px';
     }
 
     function releaseMenu(li) {
-      var menu = li.closest('.sub-menu');
+      var menu  = li.closest('.sub-menu');
+      var panel = li.querySelector('.sebi-compliance-subsub-menu-custom-sec');
       if (menu) { menu.style.minHeight = ''; }
+      if (panel) { panel.style.top = ''; }
     }
 
     function close(li) {
@@ -60,7 +81,7 @@
         if (opening) {
           li.classList.add('is-open');
           toggle.setAttribute('aria-expanded', 'true');
-          fitMenuTo(li);
+          placeBeside(li);
         }
       });
     });
