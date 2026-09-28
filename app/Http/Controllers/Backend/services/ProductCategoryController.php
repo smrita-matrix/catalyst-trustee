@@ -88,6 +88,14 @@ class ProductCategoryController extends Controller
                 'Key Benefits (image + points + note)',
             ],
         ],
+        'documents' => [
+            'for' => 'A page of papers',
+            'sections' => [
+                'Banner',
+                'Heading and a line under it',
+                'Document cards, each one a PDF or a link',
+            ],
+        ],
         'securitisation' => [
             'for' => 'Securitisation',
             'sections' => [
@@ -203,6 +211,7 @@ class ProductCategoryController extends Controller
             case 'services2': return redirect()->route('service-layout2.edit', $product->id);
             case 'services3': return redirect()->route('service-layout3.edit', $product->id);
             case 'securitisation': return redirect()->route('service-securitisation.edit', $product->id);
+            case 'documents': return redirect()->route('service-documents.edit', $product->id);
             case 'fif':       return redirect()->route('service-fif.edit', $product->id);
             default:
                 return redirect()->route('product-category.edit', $product->id)

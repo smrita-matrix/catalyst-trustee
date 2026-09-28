@@ -42,6 +42,7 @@ use App\Http\Controllers\Backend\services\ProductCategoryController;
 use App\Http\Controllers\Backend\services\ServiceLayout3Controller;
 use App\Http\Controllers\Backend\services\ServiceLayout2Controller;
 use App\Http\Controllers\Backend\services\ServiceSecuritisationController;
+use App\Http\Controllers\Backend\services\ServiceDocumentsController;
 use App\Http\Controllers\Backend\services\ServiceFifController;
 // Public Notice controllers
 use App\Http\Controllers\Backend\PublicNotice\NoticeCategoryController;
@@ -151,6 +152,11 @@ Route::get('service-layout2/{product}/edit', [ServiceLayout2Controller::class, '
 Route::match(['put', 'post'], 'service-layout2/{product}', [ServiceLayout2Controller::class, 'update'])->name('service-layout2.update');
 Route::get('service-securitisation/{product}/edit', [ServiceSecuritisationController::class, 'edit'])->name('service-securitisation.edit');
 Route::match(['put', 'post'], 'service-securitisation/{product}', [ServiceSecuritisationController::class, 'update'])->name('service-securitisation.update');
+Route::get('service-documents/{product}/edit', [ServiceDocumentsController::class, 'edit'])->name('service-documents.edit');
+Route::match(['put', 'post'], 'service-documents/{product}', [ServiceDocumentsController::class, 'update'])->name('service-documents.update');
+Route::post('service-documents/{product}/add', [ServiceDocumentsController::class, 'storeDocument'])->name('service-documents.add');
+Route::match(['put', 'post'], 'service-documents/{product}/{id}', [ServiceDocumentsController::class, 'updateDocument'])->name('service-documents.save');
+Route::delete('service-documents/{product}/{id}', [ServiceDocumentsController::class, 'destroyDocument'])->name('service-documents.remove');
 Route::get('service-fif/{product}/edit', [ServiceFifController::class, 'edit'])->name('service-fif.edit');
 Route::match(['put', 'post'], 'service-fif/{product}', [ServiceFifController::class, 'update'])->name('service-fif.update');
 
@@ -220,6 +226,9 @@ Route::get('/services/{category}/{slug}', [ServicesSebiController::class, 'show'
 // Old single-part service address - kept so existing links and bookmarks still work.
 Route::get('/services/{slug}', [ServicesSebiController::class, 'showLegacy'])->name('frontend.product_page_legacy');
 Route::get('/notices-and-announcements', [PublicNoticeController::class, 'notices'])->name('frontend.notices');
+// Default Cases is now a heading with two pages under it; its old address
+// leads to the listed one, which is what used to be there.
+Route::get('/public-notice/default-cases', fn () => redirect()->route('frontend.notice_page', 'listed-issuance-details', 301));
 Route::get('/public-notice/{slug}', [PublicNoticeController::class, 'show'])->name('frontend.notice_page');
 // Careers is two pages, not one page with two parts.
 Route::get('/careers/life-at-catalyst', [CareerController::class, 'life'])->name('frontend.careers_life');

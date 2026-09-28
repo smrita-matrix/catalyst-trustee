@@ -10,6 +10,8 @@ use App\Models\ServiceLayout2Details;
 use App\Models\ServiceLayout3Details;
 use App\Models\ServiceFifDetails;
 use App\Models\ServiceSecuritisationDetails;
+use App\Models\ServiceDocument;
+use App\Models\ServiceDocumentPage;
 use App\Models\ProductCategory;
 use App\Models\ServiceCategory;
 use App\Models\FooterDetails;
@@ -138,6 +140,13 @@ class ServicesSebiController extends Controller
             case 'services3':
                 $page = ServiceLayout3Details::where('product_id', $product->id)->whereNull('deleted_at')->first();
                 return view('frontend.services.layouts.services3', compact('product', 'page', 'footer'));
+
+            case 'documents':
+                $page = ServiceDocumentPage::where('product_id', $product->id)->whereNull('deleted_at')->first();
+                $documents = ServiceDocument::where('product_id', $product->id)
+                    ->whereNull('deleted_at')->where('status', 1)
+                    ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
+                return view('frontend.services.layouts.documents', compact('product', 'page', 'documents', 'footer'));
 
             case 'securitisation':
                 $page = ServiceSecuritisationDetails::where('product_id', $product->id)->whereNull('deleted_at')->first();
