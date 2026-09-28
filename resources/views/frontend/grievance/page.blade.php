@@ -33,8 +33,11 @@
         $hasForm  = in_array($page->form_type, ['sebi', 'non_sebi'], true);
         $contacts = collect($page->contacts ?? [])
             ->filter(fn ($c) => trim(($c['label'] ?? '') . ($c['value'] ?? '')) !== '');
-        $hasAside = $contacts->count() || trim(strip_tags($page->note ?? '')) !== ''
+        $hasSide  = $contacts->count() || trim(strip_tags($page->note ?? '')) !== ''
                     || $page->document_file || $page->external_link;
+        // Beside the form where there is one, otherwise down the middle.
+        $hasAside = $hasForm && $hasSide;
+        $inMiddle = !$hasForm && $hasSide;
       @endphp
 
       <section class="breadcrumb-bg-sec">
@@ -71,7 +74,7 @@
           <div class="row grievance-layout">
             {{-- With no form to fill in, the wording takes the full width unless
                  there is something to sit beside it. --}}
-            <div class="{{ $hasForm || $hasAside ? 'col-md-8' : 'col-md-12' }} col-sm-12 col-xs-12">
+            <div class="{{ $hasAside ? 'col-md-8' : ($inMiddle ? 'col-md-8 col-md-offset-2' : 'col-md-12') }} col-sm-12 col-xs-12">
 
               @if(trim(strip_tags($page->body ?? '')) !== '')
               <div class="grievance-body">
@@ -91,47 +94,18 @@
               </div>
               @endif
 
+              @if($inMiddle)
+              <div class="grievance-middle">
+                @include('frontend.grievance.partials._contacts', ['asList' => true])
+              </div>
+              @endif
+
             </div>
 
-            @if($hasForm || $hasAside)
+            @if($hasAside)
             <div class="col-md-4 col-sm-12 col-xs-12">
               <aside class="grievance-aside">
-
-                @if($contacts->count())
-                <div class="grievance-officer">
-                  @foreach($contacts as $c)
-                  @php $kind = $c['kind'] ?? 'text'; $value = trim($c['value'] ?? ''); @endphp
-                  <p>
-                    @if(trim($c['label'] ?? '') !== '')<strong>{{ $c['label'] }}</strong>@if($value !== '') &ndash; @endif @endif
-                    @if($kind === 'email')
-                      <a href="mailto:{{ $value }}">{{ $value }}</a>
-                    @elseif($kind === 'phone')
-                      <a href="tel:{{ preg_replace('/\s+/', '', $value) }}">{{ $value }}</a>
-                    @else
-                      {{ $value }}
-                    @endif
-                  </p>
-                  @endforeach
-                </div>
-                @endif
-
-                @if($page->document_file || $page->external_link)
-                @php
-                  $docUrl = $page->document_file
-                      ? asset('grievance/documents/' . $page->document_file)
-                      : $page->external_link;
-                @endphp
-                <div class="grievance-doc">
-                  <a class="btn-default" href="{{ $docUrl }}" target="_blank" rel="noopener noreferrer">
-                    {{ $page->document_label ?: 'View Document' }}
-                  </a>
-                </div>
-                @endif
-
-                @if(trim(strip_tags($page->note ?? '')) !== '')
-                <div class="grievance-note">{!! $page->note !!}</div>
-                @endif
-
+                @include('frontend.grievance.partials._contacts', ['asList' => false])
               </aside>
             </div>
             @endif

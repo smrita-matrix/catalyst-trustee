@@ -13984,3 +13984,53 @@ a.services-index-card:hover:before {
     padding: 45px 0;
   }
 }
+
+/* ===== A grievance page with no form =====
+   There is nothing to sit beside, so the page reads down the middle and
+   the contacts become a list, the way the client's own page has them. */
+
+.grievance-middle {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.grievance-contact-list {
+  list-style: disc;
+  padding-left: 22px;
+  margin: 0;
+}
+
+.grievance-contact-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #444343;
+}
+
+.grievance-contact-list li:last-child {
+  margin-bottom: 0;
+}
+
+.grievance-contact-list strong {
+  color: #444343;
+}
+
+.grievance-contact-list a {
+  color: #c9624c;
+}
+
+.grievance-contact-list a:hover,
+.grievance-contact-list a:focus {
+  text-decoration: underline;
+}
+
+/* The button under the list sits with it rather than against the edge. */
+.grievance-middle .grievance-doc {
+  margin-top: 26px;
+}
+
+@media (max-width: 767px) {
+  .grievance-middle {
+    max-width: 100%;
+  }
+}
