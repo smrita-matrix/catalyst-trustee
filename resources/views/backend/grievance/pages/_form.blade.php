@@ -32,6 +32,16 @@
     </div>
 
     <div class="col-lg-4">
+      <label class="form-label" for="link_target">The menu entry opens</label>
+      <select class="form-select" id="link_target" name="link_target">
+        @foreach (\App\Models\GrievancePage::LINK_TARGETS as $key => $label)
+        <option value="{{ $key }}" {{ old('link_target', $page->link_target ?? 'page') === $key ? 'selected' : '' }}>{{ $label }}</option>
+        @endforeach
+      </select>
+      <small class="d-block text-secondary mt-1">Choose the document to send people straight to the PDF, with no page in between.</small>
+    </div>
+
+    <div class="col-lg-4">
       <label class="form-label" for="form_type">Form on the page</label>
       <select class="form-select" id="form_type" name="form_type">
         @foreach (\App\Models\GrievancePage::FORMS as $key => $label)

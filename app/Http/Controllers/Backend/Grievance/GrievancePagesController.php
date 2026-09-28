@@ -84,7 +84,11 @@ class GrievancePagesController extends Controller
     {
         $page = GrievancePage::whereNull('deleted_at')->findOrFail($id);
 
+        // A deleted page keeps its row but frees its address, so the same
+        // one can be used again without the delete having to be undone.
         $page->update([
+            'slug'       => 'deleted-' . $page->id . '-' . $page->slug,
+            'status'     => 0,
             'deleted_at' => Carbon::now(),
             'deleted_by' => Auth::id(),
         ]);
@@ -122,6 +126,8 @@ class GrievancePagesController extends Controller
             'body'             => $request->body,
             'form_type'        => array_key_exists((string) $request->form_type, GrievancePage::FORMS)
                                   ? $request->form_type : 'none',
+            'link_target'      => array_key_exists((string) $request->link_target, GrievancePage::LINK_TARGETS)
+                                  ? $request->link_target : 'page',
             'contacts'         => $this->contacts($request),
             'note'             => $request->note,
             'document_label'   => $request->document_label,
@@ -173,6 +179,7 @@ class GrievancePagesController extends Controller
             'slug'          => 'nullable|string|max:255',
             'sort_order'    => 'nullable|integer',
             'form_type'     => 'nullable|string|in:' . implode(',', array_keys(GrievancePage::FORMS)),
+            'link_target'   => 'nullable|string|in:' . implode(',', array_keys(GrievancePage::LINK_TARGETS)),
             'banner_image'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
             'document_file' => 'nullable|mimes:pdf|max:20480',
             'external_link' => 'nullable|string|max:500',

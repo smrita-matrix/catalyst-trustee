@@ -60,7 +60,12 @@
                   <b>{{ $page->title }}</b>
                   <div class="text-secondary small mt-1">/grievance/{{ $page->slug }}</div>
                 </td>
-                <td>{{ \App\Models\GrievancePage::FORMS[$page->form_type] ?? 'No form' }}</td>
+                <td>
+                  {{ \App\Models\GrievancePage::FORMS[$page->form_type] ?? 'No form' }}
+                  @if ($page->opens_document)
+                  <div class="text-secondary small mt-1">Opens the PDF straight away</div>
+                  @endif
+                </td>
                 <td>{{ $page->sort_order }}</td>
                 <td>
                   <a href="{{ route('grievance-pages.toggle', $page->id) }}"

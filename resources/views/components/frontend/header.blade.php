@@ -162,7 +162,7 @@
                         {{-- The pages under Grievance follow the dashboard, so another
                              one appears here as soon as it is added. --}}
                         @foreach(($grievanceMenu ?? []) as $gp)
-                        <li><a href="{{ route('frontend.grievance_page', $gp->slug) }}">{{ $gp->title }}</a></li>
+                        <li><a href="{{ $gp->url }}" @if($gp->opens_document) target="_blank" rel="noopener noreferrer" @endif>{{ $gp->title }}</a></li>
                         @endforeach
                       </ul>
                     </div>

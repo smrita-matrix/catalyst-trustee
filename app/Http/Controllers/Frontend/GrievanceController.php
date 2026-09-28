@@ -27,6 +27,12 @@ class GrievanceController extends Controller
     {
         $page = GrievancePage::live()->where('slug', $slug)->firstOrFail();
 
+        // An entry that hands the reader its document has no page of its own,
+        // so anyone arriving at the old address gets the document too.
+        if ($page->opens_document) {
+            return redirect($page->document_url);
+        }
+
         return view('frontend.grievance.page', $this->pageData() + compact('page'));
     }
 
