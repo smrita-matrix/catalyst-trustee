@@ -13339,20 +13339,44 @@ animation: none;
   margin-right: 0 !important;
 }
 
-/* The list opens into that free space as a column of its own, level with its
-   heading. Nothing is pushed down and nothing is covered up. */
+/* The list opens into that free space as a column of its own.
+
+   It is placed against the menu, not against the heading it belongs to:
+   measured from the heading, a list in the first column lands on top of
+   the second column. Measured from the menu, every list opens in the same
+   free space on the right, whichever column asked for it. */
 .sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
   position: absolute;
-  top: -12px;
-  left: 100%;
+  top: 34px;
+  left: auto;
+  right: 26px;
   z-index: 5;
   width: 470px;
-  margin-left: 26px;
   padding: 12px 18px;
   background: #ffffff;
   border: 1px solid #f0e4e0;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(40, 30, 28, 0.12);
+}
+
+/* The row the heading sits in stops being the thing the list is measured
+   from, so the panel measures from the menu box instead. The caret keeps
+   its own anchor on the heading. */
+.sebi-compliance-main-menu-custom-sec li.has-subsub {
+  position: static;
+}
+
+.sebi-compliance-main-menu-custom-sec .subsub-toggle {
+  position: relative;
+  display: block;
+}
+
+/* For the panel to measure from the menu box, nothing between it and the
+   menu box is allowed to be a measuring point of its own. These are the
+   grid's own columns, and this applies only inside this one menu. */
+.main_menu .menu > ul > li .sub-menu.mega-menu.notice-mega .list-item,
+.main_menu .menu > ul > li .sub-menu.mega-menu.notice-mega > .row > .col-md-12 {
+  position: static;
 }
 
 /* The panel's own entries need no bottom rule on the last one. */
@@ -13363,7 +13387,6 @@ animation: none;
 @media (max-width: 1399px) {
   .sebi-compliance-main-menu-custom-sec li.has-subsub.is-open > .sebi-compliance-subsub-menu-custom-sec {
     width: 360px;
-    margin-left: 18px;
   }
 }
 
