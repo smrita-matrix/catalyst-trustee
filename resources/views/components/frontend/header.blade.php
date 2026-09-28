@@ -159,8 +159,11 @@
                     <a class="menu-opener">Grievance   <i class="fa fa-angle-down"></i></a>
                     <div class="sub-menu single-column-menu">
                       <ul>
-                        <li><a href="{{ route('frontend.grievance_sebi') }}">For Services Regulated By SEBI</a></li>
-                        <li><a href="{{ route('frontend.grievance_non_sebi') }}">For Services Not Regulated By SEBI</a></li>
+                        {{-- The pages under Grievance follow the dashboard, so another
+                             one appears here as soon as it is added. --}}
+                        @foreach(($grievanceMenu ?? []) as $gp)
+                        <li><a href="{{ route('frontend.grievance_page', $gp->slug) }}">{{ $gp->title }}</a></li>
+                        @endforeach
                       </ul>
                     </div>
                   </li>

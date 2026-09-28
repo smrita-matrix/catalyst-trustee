@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\FooterDetails;
 use App\Models\Grievance;
+use App\Models\GrievancePage;
 use App\Models\GrievancePageDetails;
 use Carbon\Carbon;
 use App\Mail\GrievanceAcknowledgement;
@@ -15,16 +16,18 @@ use Illuminate\Support\Facades\Mail;
 
 class GrievanceController extends Controller
 {
-    /** Grievances about services SEBI regulates. */
-    public function sebiGrievance()
+    /**
+     * One of the pages under Grievance.
+     *
+     * Every one of them - the two about SEBI, the one for GIFT City and
+     * anything added later - is a row, so they all come through here and
+     * are drawn by the same template.
+     */
+    public function grievancePage(string $slug)
     {
-        return view('frontend.grievance.sebi', $this->pageData());
-    }
+        $page = GrievancePage::live()->where('slug', $slug)->firstOrFail();
 
-    /** Grievances about services SEBI does not regulate. */
-    public function nonSebiGrievance()
-    {
-        return view('frontend.grievance.non-sebi', $this->pageData());
+        return view('frontend.grievance.page', $this->pageData() + compact('page'));
     }
 
     /** The wording and officer details both pages share. */

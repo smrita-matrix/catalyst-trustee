@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\ServiceCategory;
+use App\Models\GrievancePage;
 use App\Models\ProductCategory;
 use App\Models\NoticeCategory;
 use App\Models\GrievancePageDetails;
@@ -69,6 +70,12 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $view->with('serviceMenu', $serviceMenu);
+            // The pages under Grievance, in the order the dashboard sets.
+            $grievanceMenu = \Illuminate\Support\Facades\Schema::hasTable('grievance_pages')
+                ? GrievancePage::live()->get()
+                : collect();
+
+            $view->with('grievanceMenu', $grievanceMenu);
         });
 
         // Feed the dynamic "Public Notice" mega-menu to the frontend header.

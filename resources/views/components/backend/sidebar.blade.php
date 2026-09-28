@@ -292,7 +292,7 @@
                   </ul>
                 </li>
 
-                @php $grievanceActive = request()->routeIs('grievance-page.*') || request()->routeIs('grievance-support.*') || request()->routeIs('grievance-submission.*'); @endphp
+                @php $grievanceActive = request()->routeIs('grievance-page.*') || request()->routeIs('grievance-support.*') || request()->routeIs('grievance-submission.*') || request()->routeIs('grievance-pages.*'); @endphp
                 <li class="sidebar-list {{ $grievanceActive ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title {{ $grievanceActive ? 'active' : '' }}" href="#">
@@ -306,6 +306,7 @@
                   </a>
                   <ul class="sidebar-submenu" @if ($grievanceActive) style="display: block;" @endif>
                     <li><a href="{{ route('grievance-page.index') }}" class="{{ request()->routeIs('grievance-page.*') ? 'active' : '' }}">Investor Grievance</a></li>
+                    <li><a href="{{ route('grievance-pages.index') }}" class="{{ request()->routeIs('grievance-pages.*') ? 'active' : '' }}">Pages</a></li>
                     <li><a href="{{ route('grievance-support.index') }}" class="{{ request()->routeIs('grievance-support.*') ? 'active' : '' }}">Contact for Support</a></li>
                     <li><a href="{{ route('grievance-submission.index') }}" class="{{ request()->routeIs('grievance-submission.*') ? 'active' : '' }}">Submissions</a></li>
                   </ul>

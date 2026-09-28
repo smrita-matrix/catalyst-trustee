@@ -47,6 +47,7 @@ use App\Http\Controllers\Backend\services\ServiceFifController;
 use App\Http\Controllers\Backend\PublicNotice\NoticeCategoryController;
 // Grievance controllers
 use App\Http\Controllers\Backend\Grievance\GrievancePageController;
+use App\Http\Controllers\Backend\Grievance\GrievancePagesController;
 use App\Http\Controllers\Backend\Grievance\GrievanceSubmissionController;
 use App\Http\Controllers\Backend\Grievance\SupportController;
 // Careers controllers
@@ -162,6 +163,14 @@ Route::resource('notice-category', NoticeCategoryController::class)
 
 //Grievance
 Route::resource('grievance-page', GrievancePageController::class)->parameters(['grievance-page' => 'content']);
+// Each page in the Grievance menu.
+Route::get('grievance-pages', [GrievancePagesController::class, 'index'])->name('grievance-pages.index');
+Route::get('grievance-pages/create', [GrievancePagesController::class, 'create'])->name('grievance-pages.create');
+Route::post('grievance-pages', [GrievancePagesController::class, 'store'])->name('grievance-pages.store');
+Route::get('grievance-pages/{id}/edit', [GrievancePagesController::class, 'edit'])->name('grievance-pages.edit');
+Route::match(['put', 'post'], 'grievance-pages/{id}', [GrievancePagesController::class, 'update'])->name('grievance-pages.update');
+Route::delete('grievance-pages/{id}', [GrievancePagesController::class, 'destroy'])->name('grievance-pages.destroy');
+Route::get('grievance-pages/{id}/toggle', [GrievancePagesController::class, 'toggle'])->name('grievance-pages.toggle');
 Route::get('grievance-support', [SupportController::class, 'index'])->name('grievance-support.index');
 Route::post('grievance-support', [SupportController::class, 'update'])->name('grievance-support.update');
 Route::delete('grievance-support', [SupportController::class, 'destroy'])->name('grievance-support.destroy');
@@ -221,9 +230,12 @@ Route::get('/careers/current-openings', [CareerController::class, 'openings'])->
 Route::get('/careers', fn () => redirect()->route('frontend.careers_life', [], 301))->name('frontend.careers');
 Route::post('/careers', [CareerController::class, 'store'])->name('frontend.careers.store');
 Route::get('/thank-you', [GrievanceController::class, 'thankYou'])->name('frontend.thank_you');
-// One page per form, matching the addresses used on the live site.
-Route::get('/grievance-redressal-for-services-regulated-by-sebi', [GrievanceController::class, 'sebiGrievance'])->name('frontend.grievance_sebi');
-Route::get('/for-services-not-regulated-by-sebi', [GrievanceController::class, 'nonSebiGrievance'])->name('frontend.grievance_non_sebi');
+// Every page under Grievance lives at the same kind of address, so one more
+// can be added from the dashboard without touching this file.
+Route::get('/grievance/{slug}', [GrievanceController::class, 'grievancePage'])->name('frontend.grievance_page');
+// The two addresses the site used before still work, and lead to the same pages.
+Route::get('/grievance-redressal-for-services-regulated-by-sebi', fn () => redirect()->route('frontend.grievance_page', 'for-services-regulated-by-sebi', 301))->name('frontend.grievance_sebi');
+Route::get('/for-services-not-regulated-by-sebi', fn () => redirect()->route('frontend.grievance_page', 'for-services-not-regulated-by-sebi', 301))->name('frontend.grievance_non_sebi');
 // The old single address still works, and lands on the SEBI form.
 Route::get('/investor-grievance', fn () => redirect()->route('frontend.grievance_sebi', [], 301))->name('frontend.investor_grievance');
 Route::post('/investor-grievance', [GrievanceController::class, 'store'])->name('frontend.investor_grievance.store');
