@@ -13,9 +13,9 @@
 
     <div class="row regul-disclo-stpmt-box-row">
       @forelse($notices as $notice)
-      @php $url = $notice->document_url; @endphp
+      @php $url = $notice->link_url; @endphp
       <div class="col-sm-3 col-xs-6">
-        <{{ $url ? 'a' : 'div' }} class="regul-disclo-stpmt-box-col" @if($url) href="{{ $url }}" target="_blank" rel="noopener noreferrer" @endif>
+        <{{ $url ? 'a' : 'div' }} class="regul-disclo-stpmt-box-col" @if($url) href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif @endif>
           <div class="regul-disclo-stpmt-box-col-icon"><i class="fa fa-calendar"></i></div>
           <h4 class="regul-disclo-stpmt-box-col-title">{{ $notice->title }}</h4>
           @if($notice->description)<p>{{ $notice->description }}</p>@endif

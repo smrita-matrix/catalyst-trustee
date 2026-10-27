@@ -217,7 +217,7 @@
                   <th style="width:230px;">Title <span class="txt-danger">*</span></th>
                   <th>Description</th>
                   <th style="width:240px;">PDF / Link</th>
-                  <th style="width:50px;"></th>
+                  <th style="width:90px;"></th>
                 </tr>
               </thead>
               <tbody id="docs-tbody">
@@ -238,7 +238,12 @@
                     @endif
                     <input class="form-control" type="text" name="doc_link[]" value="{{ $doc->document_file ? '' : $doc->document_link }}" placeholder="or paste a link">
                   </td>
-                  <td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm btn-remove-doc" title="Remove"><i class="fa fa-trash"></i></button></td>
+                  <td class="text-center text-nowrap">
+                    {{-- Its own page (banner + documents) instead of one document. --}}
+                    <a href="{{ route('notice-detail.edit', $doc->id) }}" class="btn btn-sm {{ $doc->has_detail_page ? 'btn-primary' : 'btn-outline-primary' }}"
+                       title="{{ $doc->has_detail_page ? 'Edit its page' : 'Give it a page of its own' }}"><i class="fa fa-file-text-o"></i></a>
+                    <button type="button" class="btn btn-outline-danger btn-sm btn-remove-doc" title="Remove"><i class="fa fa-trash"></i></button>
+                  </td>
                 </tr>
                 @endforeach
               </tbody>
@@ -249,6 +254,8 @@
             These are the documents shown on this page, in this order. Only <b>Title</b> is required —
             upload a PDF or paste a link. Rows deleted here are removed from the website when you save.
             <b>Group</b> is the heading documents are stacked under (e.g. <i>FY 2025-26</i>) for the designs that use it.
+            <br><i class="fa fa-file-text-o"></i> gives a saved row a <b>page of its own</b> — a banner and its documents under headings,
+            like each company under Default Cases. A filled button means the page is on; save this form before using it on a new row.
           </small>
         </div>
       </div>

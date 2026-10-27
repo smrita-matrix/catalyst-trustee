@@ -38,9 +38,9 @@
               <div class="heading heading-center" data-aos="fade-up" data-aos-duration="1000">
                 <h2>What We Do</h2>
                 <p class="services-index-lead">
-                  Catalyst Trusteeship Limited acts as trustee, agent and custodian across regulated
-                  and unregulated markets in India and at GIFT City. Choose a service below to read
-                  what it covers and how we deliver it.
+                  Catalyst Trusteeship Limited acts as trustee across regulated and unregulated
+                  markets in India and at GIFT City. Choose a service below to read what it covers
+                  and how we deliver it.
                 </p>
               </div>
             </div>

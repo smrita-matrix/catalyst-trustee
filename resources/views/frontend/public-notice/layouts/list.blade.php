@@ -13,14 +13,14 @@
 
     <div class="row bomsc-cards-row">
       @forelse($notices as $notice)
-      @php $url = $notice->document_url; @endphp
+      @php $url = $notice->link_url; @endphp
       <div class="col-sm-3 col-xs-12">
-        <{{ $url ? 'a' : 'div' }} class="bomsc-card" @if($url) href="{{ $url }}" target="_blank" rel="noopener noreferrer" @endif>
+        <{{ $url ? 'a' : 'div' }} class="bomsc-card" @if($url) href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif @endif>
           <div class="bomsc-card-icon"><i class="fa fa-calendar"></i></div>
           <h4 class="bomsc-card-title">{{ $notice->title }}</h4>
           @if($notice->description)<p class="bom-cre-rating-para">{{ $notice->description }}</p>@endif
           @if($url)
-          <span class="bomsc-card-cta">View Document <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
+          <span class="bomsc-card-cta">{{ $notice->detail_url ? 'View Details' : 'View Document' }} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
           @endif
         </{{ $url ? 'a' : 'div' }}>
       </div>

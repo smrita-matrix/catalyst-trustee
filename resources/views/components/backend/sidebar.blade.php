@@ -129,7 +129,7 @@
                   </a>
                 </li>
 
-                <li class="sidebar-list {{ request()->routeIs('banner-details.*') || request()->routeIs('marquee-inner.*') || request()->routeIs('about-catalyst-details.*') || request()->routeIs('why-choose-details.*') || request()->routeIs('sebi-service-details.*') || request()->routeIs('non-sebi-service-details.*') || request()->routeIs('gift-city-details.*') || request()->routeIs('leadership-details.*') || request()->routeIs('business-performance-details.*') || request()->routeIs('landmark-details.*') || request()->routeIs('proofs-details.*') || request()->routeIs('testimonial-details.*') || request()->routeIs('cta-details.*') || request()->routeIs('footer-details.*') ? 'active' : '' }}">
+                <li class="sidebar-list {{ request()->routeIs('banner-details.*') || request()->routeIs('marquee-inner.*') || request()->routeIs('global-presence-details.*') || request()->routeIs('about-catalyst-details.*') || request()->routeIs('why-choose-details.*') || request()->routeIs('sebi-service-details.*') || request()->routeIs('non-sebi-service-details.*') || request()->routeIs('gift-city-details.*') || request()->routeIs('leadership-details.*') || request()->routeIs('business-performance-details.*') || request()->routeIs('landmark-details.*') || request()->routeIs('proofs-details.*') || request()->routeIs('testimonial-details.*') || request()->routeIs('cta-details.*') || request()->routeIs('footer-details.*') ? 'active' : '' }}">
                   <i class="fa fa-thumb-tack"> </i>
                   <a class="sidebar-link sidebar-title" href="#">
                     <svg class="stroke-icon">
@@ -143,6 +143,7 @@
                   <ul class="sidebar-submenu">
                     <li><a href="{{ route('banner-details.index') }}" class="{{ request()->routeIs('banner-details.*') ? 'active' : '' }}">Banner</a></li>
                     <li><a href="{{ route('marquee-inner.index') }}" class="{{ request()->routeIs('marquee-inner.*') ? 'active' : '' }}">Marquee Items</a></li>
+                    <li><a href="{{ route('global-presence-details.edit') }}" class="{{ request()->routeIs('global-presence-details.*') ? 'active' : '' }}">Global Presence</a></li>
                     <li><a href="{{ route('about-catalyst-details.index') }}" class="{{ request()->routeIs('about-catalyst-details.*') ? 'active' : '' }}">About Catalyst</a></li>
                     <li><a href="{{ route('why-choose-details.index') }}" class="{{ request()->routeIs('why-choose-details.*') ? 'active' : '' }}">Why Choose Catalyst</a></li>
                     <li><a href="{{ route('sebi-service-details.index') }}" class="{{ request()->routeIs('sebi-service-details.*') ? 'active' : '' }}">SEBI Services</a></li>

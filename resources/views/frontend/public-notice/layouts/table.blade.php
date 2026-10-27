@@ -52,11 +52,11 @@
             </thead>
             <tbody>
               @foreach($notices as $notice)
-              @php $url = $notice->document_url; @endphp
+              @php $url = $notice->link_url; @endphp
               <tr>
                 <td data-label="{{ $category->col_one_label ?: 'Issuer Name' }}">
                   @if($url)
-                    <a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $notice->title }}</a>
+                    <a href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif>{{ $notice->title }}</a>
                   @else
                     {{ $notice->title }}
                   @endif

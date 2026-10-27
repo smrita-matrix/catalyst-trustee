@@ -222,9 +222,6 @@
                      aria-label="Search the website" aria-expanded="false">
                     <img src="{{ asset('frontend/assets/images/icons/search.svg')}}" class="hvr-icon">
                   </a>
-
-
-                  <a class="btn-default" href="{{ optional($siteLinks)->get_started_link ?: route('frontend.contact') }}">{{ optional($siteLinks)->get_started_text ?: 'Get Started' }}</a>
                 </li>
               </ul>
               <!-- mobile menu trigger -->

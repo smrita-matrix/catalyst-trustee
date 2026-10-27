@@ -25,9 +25,9 @@
 
     <div class="row bomsc-cards-row">
       @foreach($items as $notice)
-      @php $url = $notice->document_url; @endphp
+      @php $url = $notice->link_url; @endphp
       <div class="col-sm-6 col-xs-12">
-        <{{ $url ? 'a' : 'div' }} class="bomsc-card" @if($url) href="{{ $url }}" target="_blank" rel="noopener noreferrer" @endif>
+        <{{ $url ? 'a' : 'div' }} class="bomsc-card" @if($url) href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif @endif>
           <span class="bomsc-card-index">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
           <div class="bomsc-card-icon"><i class="fa fa-file-pdf-o"></i></div>
           <h4 class="bomsc-card-title">{{ $notice->title }}</h4>

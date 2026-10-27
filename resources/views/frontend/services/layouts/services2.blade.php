@@ -42,6 +42,9 @@
       </section>
 
       <!-- Nature Of Work -->
+      {{-- Left out when nothing has been filled in, like the sections below -
+           otherwise it leaves an empty picture frame and a large blank gap. --}}
+      @if(optional($page)->nature_image || optional($page)->nature_heading || trim(strip_tags(optional($page)->nature_description ?? '')) !== '')
       <section class="securatization-listed-ptc-one-custom-sec">
         <div class="container">
           <div class="row">
@@ -61,6 +64,7 @@
           </div>
         </div>
       </section>
+      @endif
 
       <!-- Process & Execution -->
       @if(optional($page)->process_heading || optional($page)->process_points || optional($page)->process_image)

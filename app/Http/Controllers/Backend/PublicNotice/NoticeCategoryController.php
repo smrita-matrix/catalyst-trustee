@@ -402,6 +402,7 @@ class NoticeCategoryController extends Controller
         // Anything the admin deleted from the table disappears from the page.
         Notice::where('notice_category_id', $category->id)
             ->whereNull('deleted_at')
+            ->whereNull('parent_notice_id')   // pages inside a notice's page are not in this table
             ->whereNotIn('id', $keptIds ?: [0])
             ->update(['deleted_at' => Carbon::now(), 'deleted_by' => Auth::id()]);
     }

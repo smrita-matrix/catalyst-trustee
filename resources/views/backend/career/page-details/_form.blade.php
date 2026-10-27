@@ -42,7 +42,7 @@
   {{-- ---------------- Intro block ---------------- --}}
   <div class="col-12">
     <div class="card border">
-      <div class="card-header py-2"><b>Intro (above the job openings)</b></div>
+      <div class="card-header py-2"><b>Intro (top of the Life at Catalyst page)</b></div>
       <div class="card-body">
         <div class="row g-4">
           <div class="col-12">
@@ -50,8 +50,9 @@
             <textarea class="form-control" name="intro_heading" rows="2" placeholder="e.g. JOIN CATALYST TRUSTEESHIP LIMITED for all-around expertise…">{{ old('intro_heading', $content->intro_heading) }}</textarea>
           </div>
           <div class="col-12">
-            <label class="form-label">Intro Paragraph</label>
-            <textarea class="form-control" name="intro_text" rows="5" placeholder="The paragraph shown under the heading">{{ old('intro_text', $content->intro_text) }}</textarea>
+            <label class="form-label">Intro Paragraphs</label>
+            <textarea class="form-control" name="intro_text" rows="8" placeholder="The text shown under the heading">{{ old('intro_text', $content->intro_text) }}</textarea>
+            <small class="text-secondary">Leave a blank line between paragraphs.</small>
           </div>
         </div>
       </div>

@@ -2040,9 +2040,11 @@ content: "";
   background-color: #444343;
   margin-right: 0;
   border-radius: 50px 0 0 50px;
-  padding-top: 80px;
+  padding-top: 45px;
 }
-
+.why-wrap.cnt-portfolio-ptb .heading h2 {
+    margin-top: 35px;
+}
 .why-text {
   padding: 70px 70px;
 }
@@ -12034,8 +12036,10 @@ animation: none;
 }
 
 .technology-at-the-core-cus-sec .admission-img img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 550px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -12051,11 +12055,50 @@ animation: none;
 .technology-at-the-core-cus-sec .admission-content .inner {
   position: relative;
   width: 100%;
-  padding: 0 30px;
+  max-width: 720px;
+  padding: 70px 50px;
+}
+
+.technology-at-the-core-cus-sec .admission-content .inner .heading {
+  margin-bottom: 14px;
+}
+
+.technology-at-the-core-cus-sec .admission-content .inner h3 {
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.25;
 }
 
 .technology-at-the-core-cus-sec .admission-content .inner p {
-    color: #ffffff;
+  color: #ffffff;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.technology-at-the-core-cus-sec .admission-content .inner .debenture-trustee-listing-sec {
+  margin: 10px 0 0;
+  padding-left: 0;
+}
+
+.technology-at-the-core-cus-sec .admission-content .inner .debenture-trustee-listing-sec li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+  .technology-at-the-core-cus-sec .admission-img {
+    min-height: 320px;
+  }
+
+  .technology-at-the-core-cus-sec .admission-content .inner {
+    max-width: none;
+    padding: 50px 30px;
+  }
+}
+
+@media (max-width: 575px) {
+  .technology-at-the-core-cus-sec .admission-content .inner {
+    padding: 40px 16px;
+  }
 }
 
 .custom-bo-top-pad {
@@ -12629,7 +12672,7 @@ animation: none;
   .securatization-listed-ptc-process-admission-sec .admission-content .inner,
   .rs-admission .admission-content .inner,
   .fam-inv-fu-ad-sec .fam-inv-fu-ad-content .fam-inv-fu-ad-inner {
-    padding: 60px 45px;
+    padding: 70px 45px;
   }
 }
 
@@ -12838,12 +12881,20 @@ animation: none;
 
 /* The old markup was an <a>, so anything styling those needs to reach these
    too - otherwise the drop-down headings and entries lose their appearance. */
-.main_menu .menu .menu-main > li > .menu-opener,
 .main_menu .menu .menu-main .sub-menu .no-link,
 .main_menu .menu .menu-main .mega-main-heading h3 .no-link {
   display: inline-block;
   color: inherit;
   font: inherit;
+  text-decoration: none;
+}
+
+/* The top-level openers (About, Public Notice, Grievance, Articles, Careers)
+   are <a> tags, so they already take the menu's own font, weight and colour
+   from ".main_menu .menu>ul>li>a". Inheriting here gave them the page's
+   regular font instead, and only Services and Contact read as bold. */
+.main_menu .menu .menu-main > li > .menu-opener {
+  display: inline-block;
   text-decoration: none;
 }
 
@@ -14055,5 +14106,400 @@ a.services-index-card:hover:before {
 @media (max-width: 767px) {
   .grievance-middle {
     max-width: 100%;
+  }
+}
+
+/*=========== A notice's own page (Default Cases > one company) ===========*/
+.notice-detail-sec {
+  padding: 70px 0;
+}
+
+.notice-detail-highlight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  background: #fbf3f0;
+  border: 1px solid #f0dcd5;
+  border-left: 4px solid #c9624c;
+  border-radius: 10px;
+  color: #444343;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+a.notice-detail-highlight:hover,
+a.notice-detail-highlight:focus {
+  color: #444343;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(201, 98, 76, 0.15);
+  transform: translateY(-2px);
+}
+
+.notice-detail-highlight .notice-detail-title {
+  font-family: 'Poppins-SemiBold';
+  font-size: 17px;
+}
+
+.notice-detail-group {
+  margin-bottom: 30px;
+  padding: 26px 28px;
+  background: #ffffff;
+  border: 1px solid #e8e6e1;
+  border-radius: 10px;
+}
+
+.notice-detail-group-title {
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #efedea;
+  font-family: 'Poppins-SemiBold';
+  font-size: 20px;
+  color: #c9624c;
+}
+
+.notice-detail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notice-detail-list li {
+  border-bottom: 1px dashed #ebe8e3;
+}
+
+.notice-detail-list li:last-child {
+  border-bottom: 0;
+}
+
+.notice-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 6px;
+  color: #444343;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+a.notice-detail-row:hover,
+a.notice-detail-row:focus {
+  color: #c9624c;
+  background: #fbf6f4;
+  text-decoration: none;
+}
+
+.notice-detail-icon {
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #c9624c;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.notice-detail-title {
+  flex: 1 1 auto;
+  line-height: 1.5;
+}
+
+.notice-detail-arrow {
+  flex: 0 0 auto;
+  color: #c9624c;
+  font-size: 20px;
+}
+
+@media (max-width: 767px) {
+  .notice-detail-sec {
+    padding: 45px 0;
+  }
+
+  .notice-detail-group {
+    padding: 18px 16px;
+  }
+
+  .notice-detail-highlight {
+    padding: 14px 16px;
+  }
+
+  .notice-detail-highlight .notice-detail-title {
+    font-size: 15px;
+  }
+}
+
+/* ===== Space under the banner =====
+   When a page has no intro block, the full-width orange panel comes straight
+   after the banner and would sit flush against it. */
+.breadcrumb-bg-sec + .securatization-listed-ptc-process-admission-sec {
+  margin-top: 70px;
+}
+
+@media (max-width: 767px) {
+  .breadcrumb-bg-sec + .securatization-listed-ptc-process-admission-sec {
+    margin-top: 45px;
+  }
+}
+
+/* ===== Our Global Presence (home, under the banner) =====
+   A single light strip: the introduction on the left, the financial centres
+   with their landmark drawings in the middle, and the button on the right.
+   The background picture is set from the dashboard; by default it is the
+   dotted world map, kept faint so it reads as texture behind the text. */
+.global-presence-sec {
+  position: relative;
+  background: linear-gradient(90deg, #f6f1ec 0%, #f8f4f0 55%, #f5efea 100%);
+  border-bottom: 1px solid #efe5de;
+  overflow: hidden;
+}
+
+.global-presence-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 34px 0;
+}
+
+/* The map sits behind the introduction, faded out towards the right. */
+.global-presence-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10%;
+  width: 46%;
+  background-image: var(--gp-bg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.gp-intro {
+  position: relative;
+  flex: 1 1 38%;
+  min-width: 0;
+}
+
+.gp-eyebrow {
+  margin: 0 0 10px;
+  color: #c9624c;
+  font-family: 'Poppins-Medium';
+  font-size: 12px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+}
+
+.gp-heading {
+  margin: 0 0 12px;
+  max-width: 440px;
+  font-family: 'CormorantGaramond-Bold';
+  font-size: 32px;
+  line-height: 1.15;
+  color: #3c3a3a;
+}
+
+.gp-desc {
+  margin: 0;
+  max-width: 420px;
+  color: #5a5655;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.gp-locations {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  flex: 0 1 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gp-location {
+  padding: 0 34px;
+  border-left: 1px solid #e2d8d1;
+}
+
+.gp-location:first-child {
+  border-left: 0;
+}
+
+.gp-location-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #3c3a3a;
+  text-decoration: none;
+}
+
+a.gp-location-link:hover,
+a.gp-location-link:focus {
+  color: #c9624c;
+  text-decoration: none;
+}
+
+.gp-location-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  background: #ece3dc;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.gp-location-icon img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+a.gp-location-link:hover .gp-location-icon {
+  transform: translateY(-3px);
+  background: #e6d8cf;
+}
+
+.gp-location-name {
+  font-family: 'Poppins-SemiBold';
+  font-size: 15px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* The short brand-coloured rule under each name. */
+.gp-location-name::after {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 2px;
+  margin: 10px auto 0;
+  background: #c9624c;
+}
+
+.gp-cta {
+  position: relative;
+  flex: 0 0 auto;
+  padding-left: 34px;
+  border-left: 1px solid #e2d8d1;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.gp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  border: 1px solid #c9624c;
+  border-radius: 3px;
+  background: #ffffff;
+  color: #c9624c;
+  font-family: 'Poppins-Medium';
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.gp-btn:hover,
+.gp-btn:focus {
+  background: #c9624c;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.gp-btn .fa {
+  transition: transform 0.25s ease;
+}
+
+.gp-btn:hover .fa {
+  transform: translateX(4px);
+}
+
+/* Narrower desktops: smaller gaps so the three centres still fit. */
+@media (max-width: 1399px) {
+  .global-presence-inner { gap: 28px; }
+  .gp-location { padding: 0 22px; }
+  .gp-cta { padding-left: 24px; }
+  .gp-heading { font-size: 28px; }
+}
+
+/* Tablet: the introduction on top, centres and button underneath. */
+@media (max-width: 1199px) {
+  .global-presence-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .global-presence-inner::before {
+    left: 0;
+    width: 100%;
+  }
+
+  .gp-intro {
+    flex: 1 1 100%;
+  }
+
+  .gp-heading,
+  .gp-desc {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Phone: the centres sit side by side in smaller circles, the button below. */
+@media (max-width: 767px) {
+  .global-presence-inner {
+    width: auto;
+    padding: 30px 16px;
+    gap: 22px;
+  }
+
+  .gp-heading { font-size: 25px; }
+
+  .gp-desc { font-size: 14px; }
+
+  .gp-locations {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .gp-location { padding: 0 12px; }
+
+  .gp-location-icon {
+    width: 62px;
+    height: 62px;
+  }
+
+  .gp-location-icon img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .gp-location-name {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .gp-cta {
+    flex: 1 1 100%;
+    justify-content: center;
+    padding-left: 0;
+    border-left: 0;
   }
 }

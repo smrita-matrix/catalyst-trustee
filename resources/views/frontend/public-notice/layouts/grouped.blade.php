@@ -26,13 +26,13 @@
         <div id="{{ $grpId }}" class="collapse {{ $open ? 'in' : '' }}">
           <div class="row secu-cover-certi-cards-row">
             @foreach($items as $notice)
-            @php $url = $notice->document_url; @endphp
+            @php $url = $notice->link_url; @endphp
             <div class="col-sm-3 col-xs-6">
-              <{{ $url ? 'a' : 'div' }} class="secu-cover-certi-card" @if($url) href="{{ $url }}" target="_blank" rel="noopener noreferrer" @endif>
+              <{{ $url ? 'a' : 'div' }} class="secu-cover-certi-card" @if($url) href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif @endif>
                 <div class="secu-cover-certi-card-icon"><i class="fa fa-file-pdf-o"></i></div>
                 <h4 class="secu-cover-certi-card-title">{{ $notice->title }}</h4>
                 @if($url)
-                <span class="secu-cover-certi-card-cta">View Document <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
+                <span class="secu-cover-certi-card-cta">{{ $notice->detail_url ? 'View Details' : 'View Document' }} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
                 @endif
               </{{ $url ? 'a' : 'div' }}>
             </div>

@@ -177,43 +177,10 @@ window.addEventListener("load", function () {
         
         
 ////////////////////////////
-// Card add one by one
-gsap.registerPlugin(ScrollTrigger);
-let mm = gsap.matchMedia();
-mm.add("(min-width: 992px)", () => {
-    const cards = gsap.utils.toArray(".cnt-portfolio-video-card");
-    // Pin Heading
-    ScrollTrigger.create({
-        trigger: ".why-wrap",
-        start: "top top+=00",
-        endTrigger: ".why-wrap",
-        end: "bottom bottom",
-        pin: ".why-choose-cata-home-header-sec",
-        pinSpacing: false,
-        pinReparent: true
-    });
-    // Pin right image (if used)
-    if (document.querySelector(".sticky-img")) {
-        ScrollTrigger.create({
-            trigger: ".why-wrap",
-            start: "top top+=100",
-            end: "bottom bottom",
-            pin: ".sticky-img",
-            pinSpacing: false
-        });
-    }
-    // Stack cards
-    cards.forEach((card) => {
-        ScrollTrigger.create({
-            trigger: card,
-            start: "top 220px", // space for heading
-            endTrigger: ".why-wrap",
-            end: "bottom bottom",
-            pin: true,
-            pinSpacing: false
-        });
-    });
-});
+// "Why Choose Catalyst" on the home page is not pinned or stacked any more.
+// The pins let go before the last cards had stacked, slid the heading under
+// the fixed header and overlapped the cards, so the section scrolls with the
+// page and every card keeps its own place.
 
 //smooth scrolling
 if($('#smooth-wrapper').length && $('#smooth-content').length){

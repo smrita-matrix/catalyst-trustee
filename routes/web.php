@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\home\BannerDetailsController;
 use App\Http\Controllers\Backend\home\MarqueeInnerDetailsController;
 use App\Http\Controllers\Backend\home\AboutCatalystDetailsController;
 use App\Http\Controllers\Backend\home\WhyChooseDetailsController;
+use App\Http\Controllers\Backend\home\GlobalPresenceDetailsController;
 use App\Http\Controllers\Backend\home\SebiServiceDetailsController;
 use App\Http\Controllers\Backend\home\NonSebiServiceDetailsController;
 use App\Http\Controllers\Backend\home\GiftCityDetailsController;
@@ -46,6 +47,7 @@ use App\Http\Controllers\Backend\services\ServiceDocumentsController;
 use App\Http\Controllers\Backend\services\ServiceFifController;
 // Public Notice controllers
 use App\Http\Controllers\Backend\PublicNotice\NoticeCategoryController;
+use App\Http\Controllers\Backend\PublicNotice\NoticeDetailController;
 // Grievance controllers
 use App\Http\Controllers\Backend\Grievance\GrievancePageController;
 use App\Http\Controllers\Backend\Grievance\GrievancePagesController;
@@ -101,6 +103,9 @@ Route::resource('banner-details', BannerDetailsController::class);
 Route::resource('marquee-inner', MarqueeInnerDetailsController::class);
 Route::resource('about-catalyst-details', AboutCatalystDetailsController::class);
 Route::resource('why-choose-details', WhyChooseDetailsController::class);
+// One strip, one screen: the Global Presence section under the home banner.
+Route::get('global-presence-details', [GlobalPresenceDetailsController::class, 'edit'])->name('global-presence-details.edit');
+Route::put('global-presence-details', [GlobalPresenceDetailsController::class, 'update'])->name('global-presence-details.update');
 Route::resource('sebi-service-details', SebiServiceDetailsController::class);
 Route::resource('non-sebi-service-details', NonSebiServiceDetailsController::class);
 Route::resource('gift-city-details', GiftCityDetailsController::class);
@@ -166,6 +171,11 @@ Route::post('notice-category-banner', [NoticeCategoryController::class, 'updateB
 Route::post('notice-category/{category}/toggle', [NoticeCategoryController::class, 'toggleStatus'])->name('notice-category.toggle');
 Route::resource('notice-category', NoticeCategoryController::class)
     ->parameters(['notice-category' => 'category']);
+// A notice's own page (banner + documents), e.g. one company under Default Cases.
+Route::get('notice-detail/{notice}/edit', [NoticeDetailController::class, 'edit'])->name('notice-detail.edit');
+Route::put('notice-detail/{notice}', [NoticeDetailController::class, 'update'])->name('notice-detail.update');
+Route::post('notice-detail/{notice}/sub-page', [NoticeDetailController::class, 'storeSubPage'])->name('notice-detail.sub-page');
+Route::delete('notice-detail/{notice}', [NoticeDetailController::class, 'destroySubPage'])->name('notice-detail.destroy');
 
 //Grievance
 Route::resource('grievance-page', GrievancePageController::class)->parameters(['grievance-page' => 'content']);
@@ -230,6 +240,10 @@ Route::get('/notices-and-announcements', [PublicNoticeController::class, 'notice
 // leads to the listed one, which is what used to be there.
 Route::get('/public-notice/default-cases', fn () => redirect()->route('frontend.notice_page', 'listed-issuance-details', 301));
 Route::get('/public-notice/{slug}', [PublicNoticeController::class, 'show'])->name('frontend.notice_page');
+// A notice with a page of its own, e.g. one company under Default Cases.
+Route::get('/public-notice/{slug}/{detail}', [PublicNoticeController::class, 'detail'])->name('frontend.notice_detail');
+// A page inside it, e.g. DHFL > DHFL IBC.
+Route::get('/public-notice/{slug}/{detail}/{sub}', [PublicNoticeController::class, 'subPage'])->name('frontend.notice_subpage');
 // Careers is two pages, not one page with two parts.
 Route::get('/careers/life-at-catalyst', [CareerController::class, 'life'])->name('frontend.careers_life');
 Route::get('/careers/current-openings', [CareerController::class, 'openings'])->name('frontend.careers_openings');

@@ -13,9 +13,9 @@
 
     <div class="row auc-cards-row">
       @forelse($notices as $notice)
-      @php $url = $notice->document_url; @endphp
+      @php $url = $notice->link_url; @endphp
       <div class="col-sm-3 col-xs-6">
-        <{{ $url ? 'a' : 'div' }} class="auc-card" @if($url) href="{{ $url }}" target="_blank" rel="noopener noreferrer" @endif>
+        <{{ $url ? 'a' : 'div' }} class="auc-card" @if($url) href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif @endif>
           @if($notice->notice_date)<span class="auc-card-date">{{ $notice->notice_date }}</span>@endif
           <h4 class="auc-card-title">{{ $notice->title }}</h4>
           @if($notice->description)<p class="auc-card-desc">{{ $notice->description }}</p>@endif

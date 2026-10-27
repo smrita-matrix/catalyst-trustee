@@ -46,6 +46,48 @@
             @endforeach
           </div>
         </div>
+        @if ($globalPresence)
+        @php
+          $gpItems = collect($globalPresence->items ?? [])->filter(fn ($i) => trim($i['name'] ?? '') !== '');
+          $gpBg = $globalPresence->background_image
+              ? asset('home/global-presence/' . $globalPresence->background_image)
+              : asset('frontend/assets/images/bg/map.webp');
+        @endphp
+        <section class="global-presence-sec" aria-labelledby="global-presence-heading">
+          <div class="global-presence-inner" style="--gp-bg: url('{{ $gpBg }}');">
+            <div class="gp-intro" data-aos="fade-up" data-aos-duration="1000">
+              @if ($globalPresence->eyebrow)<h6 class="gp-eyebrow">{{ $globalPresence->eyebrow }}</h6>@endif
+              <h2 class="gp-heading" id="global-presence-heading">{{ $globalPresence->heading }}</h2>
+              @if ($globalPresence->description)<p class="gp-desc">{{ $globalPresence->description }}</p>@endif
+            </div>
+
+            @if ($gpItems->count())
+            <ul class="gp-locations">
+              @foreach ($gpItems as $loc)
+              <li class="gp-location" data-aos="fade-up" data-aos-duration="800" data-aos-delay="{{ $loop->index * 120 }}">
+                <{{ !empty($loc['link']) ? 'a' : 'div' }} class="gp-location-link" @if (!empty($loc['link'])) href="{{ site_link($loc['link']) }}" @endif>
+                  <span class="gp-location-icon">
+                    @if (!empty($loc['icon']))
+                    <img src="{{ asset('home/global-presence/' . $loc['icon']) }}" alt="" aria-hidden="true">
+                    @endif
+                  </span>
+                  <span class="gp-location-name">{{ $loc['name'] }}</span>
+                </{{ !empty($loc['link']) ? 'a' : 'div' }}>
+              </li>
+              @endforeach
+            </ul>
+            @endif
+
+            @if ($globalPresence->button_text)
+            <div class="gp-cta">
+              <a class="gp-btn" href="{{ site_link($globalPresence->button_link) }}">
+                {{ $globalPresence->button_text }} <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+            @endif
+          </div>
+        </section>
+        @endif
         <section class="counter-wrap" id="choose">
           <div class="container-fluid">
             <div class="row row-flex">
@@ -88,9 +130,6 @@
         </section>
         <section class="why-wrap cnt-portfolio-ptb">
           <div class="container-fluid">
-            {{-- The heading stays at the top of the screen while the cards
-                 stack up under it. Without this class it is not pinned, so it
-                 scrolls away and leaves a gap where it used to be. --}}
             <div class="heading heading-white heading-center why-choose-cata-home-header-sec">
               <h2>{{ $whyChoose?->heading }}</h2>
             </div>

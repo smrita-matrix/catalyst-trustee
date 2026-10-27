@@ -79,11 +79,12 @@ class NoticeCategory extends Model
             ->orderBy('id', 'asc');
     }
 
-    /** Notices shown on this category's page. */
+    /** Notices shown on this category's page (not the pages inside a notice's page). */
     public function notices()
     {
         return $this->hasMany(Notice::class, 'notice_category_id')
-            ->whereNull('deleted_at');
+            ->whereNull('deleted_at')
+            ->whereNull('parent_notice_id');
     }
 
     /* ------------------------------ Scopes ------------------------------- */

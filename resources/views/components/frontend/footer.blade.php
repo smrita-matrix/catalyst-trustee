@@ -72,7 +72,7 @@
                   <h6><a href="#">Sebi Regulated Services</a></h6>
                   <ul>
                     <li><a href="#">Debenture Trustee Services (Listed)</a></li> 
-                    <li><a href="#">Securatization (Listed PTC </a></li> 
+                    <li><a href="#">Securitisation (Listed PTC) </a></li> 
                     <li><a href="#">Alternative Investment Funds  </a></li> 
                   </ul>
 
@@ -88,7 +88,7 @@
                   <h6><a href="#">Non Sebi Regulated Services</a></h6>
                   <ul>
                     <li><a href="#">Debenture Trustee (Unlisted) </a></li>
-                    <li><a href="#">Securatization Trustee (DA/Unlisted PTC) </a></li>
+                    <li><a href="#">Securitisation Trustee (DA/Unlisted PTC) </a></li>
                     <li><a href="#">Security Trustee </a></li>
                     <li><a href="#">Employee Benefit Trust Management </a></li>
                     <li><a href="#">Share Monitoring </a></li>

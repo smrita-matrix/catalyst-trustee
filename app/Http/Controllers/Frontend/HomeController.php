@@ -19,6 +19,7 @@ use App\Models\ProofsDetails;
 use App\Models\SebiServiceDetails;
 use App\Models\TestimonialDetails;
 use App\Models\WhyChooseDetails;
+use App\Models\GlobalPresenceDetails;
 
 
 
@@ -36,6 +37,7 @@ class HomeController extends Controller
     // Single-record sections (latest active row)
     $about               = AboutCatalystDetails::whereNull('deleted_at')->latest('id')->first();
     $whyChoose           = WhyChooseDetails::whereNull('deleted_at')->latest('id')->first();
+    $globalPresence      = GlobalPresenceDetails::whereNull('deleted_at')->where('status', 1)->latest('id')->first();
     $sebi                = SebiServiceDetails::whereNull('deleted_at')->latest('id')->first();
     $nonSebi             = NonSebiServiceDetails::whereNull('deleted_at')->latest('id')->first();
     $giftCity            = GiftCityDetails::whereNull('deleted_at')->latest('id')->first();
@@ -52,6 +54,7 @@ class HomeController extends Controller
         'marquee',
         'about',
         'whyChoose',
+        'globalPresence',
         'sebi',
         'nonSebi',
         'giftCity',

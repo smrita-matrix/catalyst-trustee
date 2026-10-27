@@ -36,6 +36,73 @@ class PublicNoticeController extends Controller
         return view('frontend.public-notice.page', compact('category', 'notices', 'grouped', 'banner', 'footer'));
     }
 
+    /**
+     * A notice's own page: its banner, then its documents under their headings.
+     * Only reachable while the notice and the page it sits on are both live.
+     */
+    public function detail($slug, $detail)
+    {
+        $category = NoticeCategory::live()
+            ->where('slug', $slug)
+            ->where('link_type', 'page')
+            ->firstOrFail();
+
+        $notice = $category->notices()
+            ->where('status', 1)
+            ->where('has_detail_page', 1)
+            ->where('detail_slug', $detail)
+            ->firstOrFail();
+
+        return $this->detailView($category, $notice);
+    }
+
+    /** A page inside a notice's page, e.g. DHFL > DHFL IBC. */
+    public function subPage($slug, $detail, $sub)
+    {
+        $category = NoticeCategory::live()
+            ->where('slug', $slug)
+            ->where('link_type', 'page')
+            ->firstOrFail();
+
+        $parent = $category->notices()
+            ->where('status', 1)
+            ->where('has_detail_page', 1)
+            ->where('detail_slug', $detail)
+            ->firstOrFail();
+
+        $notice = $parent->subPages()
+            ->where('status', 1)
+            ->where('has_detail_page', 1)
+            ->where('detail_slug', $sub)
+            ->firstOrFail();
+
+        return $this->detailView($category, $notice, $parent);
+    }
+
+    private function detailView(NoticeCategory $category, Notice $notice, ?Notice $parent = null)
+    {
+        $items = $notice->detailItems()->where('status', 1)->get();
+
+        // Consecutive documents under the same heading form one block, so a
+        // stand-alone document between two groups keeps its place.
+        $blocks = [];
+        foreach ($items as $item) {
+            $heading = $item->is_highlight ? null : (trim((string) $item->group_title) ?: null);
+            $last = end($blocks);
+
+            if ($last && !$item->is_highlight && !$last['highlight'] && $last['heading'] === $heading) {
+                $blocks[key($blocks)]['items'][] = $item;
+            } else {
+                $blocks[] = ['heading' => $heading, 'highlight' => (bool) $item->is_highlight, 'items' => [$item]];
+            }
+        }
+
+        $banner = NoticeBannerDetails::whereNull('deleted_at')->latest('id')->first();
+        $footer = FooterDetails::whereNull('deleted_at')->latest('id')->first();
+
+        return view('frontend.public-notice.detail', compact('category', 'notice', 'parent', 'blocks', 'banner', 'footer'));
+    }
+
     public function notices()
     {
         $all = Notice::whereNull('deleted_at')

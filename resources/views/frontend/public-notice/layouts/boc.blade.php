@@ -26,9 +26,9 @@
         <div id="{{ $bocId }}" class="collapse {{ $open ? 'in' : '' }}">
           <div class="row boc-cards-row">
             @foreach($items as $notice)
-            @php $url = $notice->document_url; @endphp
+            @php $url = $notice->link_url; @endphp
             <div class="col-sm-3 col-xs-6">
-              <{{ $url ? 'a' : 'div' }} class="boc-card" @if($url) href="{{ $url }}" target="_blank" rel="noopener noreferrer" @endif>
+              <{{ $url ? 'a' : 'div' }} class="boc-card" @if($url) href="{{ $url }}" @if($notice->opens_in_new_tab) target="_blank" rel="noopener noreferrer" @endif @endif>
                 <div class="boc-card-icon"><i class="fa fa-file-pdf-o"></i></div>
                 <h4 class="boc-card-title">{{ $notice->title }}</h4>
                 @if($url)
